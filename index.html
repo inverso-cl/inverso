@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverso — Tu informe de inversión personalizado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root{--bg:#06090f;--bg-elevated:#0d1117;--bg-card:#131a24;--bg-card-alt:#172032;--accent:#00e8a2;--accent-soft:rgba(0,232,162,.10);--accent-mid:rgba(0,232,162,.25);--blue:#4da6ff;--amber:#ffb347;--red:#ff5c7c;--text:#e8edf5;--text-secondary:#8b97ad;--text-muted:#556178;--border:#1c2636;--border-light:#253246;--radius:14px;--radius-sm:8px}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+        .container{max-width:900px;margin:0 auto;padding:0 1.5rem}
+        h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:700;line-height:1.2}
+        a{color:var(--accent);text-decoration:none}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:10px}
+
+        .site-header{padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(6,9,15,.85);backdrop-filter:blur(24px);position:sticky;top:0;z-index:100}
+        .logo-mark{display:flex;align-items:baseline;gap:3px;font-family:'Fraunces',serif;font-size:1.6rem;font-weight:800;letter-spacing:-1px}
+        .logo-mark .dot{display:inline-block;width:7px;height:7px;background:var(--accent);border-radius:50%;margin-left:1px;transform:translateY(-2px)}
+        .badge-beta{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);background:var(--accent-soft);padding:.3rem .75rem;border-radius:20px;border:1px solid var(--accent-mid)}
+
+        .screen{display:none}.screen.active{display:block}
+
+        .landing-hero{text-align:center;padding:5rem 1.5rem 3rem;position:relative}
+        .landing-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,232,162,.07) 0%,transparent 70%);pointer-events:none}
+        .landing-hero h1{font-size:clamp(2.2rem,5.5vw,3.4rem);margin-bottom:1rem;position:relative}
+        .landing-hero h1 em{font-style:normal;color:var(--accent)}
+        .landing-hero p{color:var(--text-secondary);font-size:1.1rem;max-width:520px;margin:0 auto 1rem;position:relative}
+        .landing-hero .sub{font-size:.85rem;color:var(--text-muted);position:relative}
+
+        .steps-indicator{display:flex;justify-content:center;gap:.5rem;margin:2.5rem auto 2rem;max-width:280px}
+        .step-dot{flex:1;height:4px;border-radius:4px;background:var(--border);transition:background .4s,box-shadow .4s}
+        .step-dot.active{background:var(--accent);box-shadow:0 0 12px rgba(0,232,162,.3)}
+        .step-dot.done{background:var(--accent);opacity:.5}
+
+        .form-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem 2rem;max-width:560px;margin:0 auto;position:relative}
+        .form-card h3{font-size:1.3rem;margin-bottom:.4rem}
+        .form-card .step-desc{color:var(--text-secondary);font-size:.9rem;margin-bottom:2rem}
+
+        .field{margin-bottom:1.5rem}
+        .field label{display:block;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.5rem}
+        .field input,.field select{width:100%;padding:.85rem 1rem;font-size:.95rem;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);transition:border .2s,box-shadow .2s}
+        .field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+        .field input::placeholder{color:var(--text-muted)}
+        .field .hint{font-size:.78rem;color:var(--text-muted);margin-top:.35rem}
+
+        .option-cards{display:grid;gap:.75rem}
+        .option-card{background:var(--bg-elevated);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.2rem;cursor:pointer;transition:all .25s;display:flex;align-items:flex-start;gap:.8rem}
+        .option-card:hover{border-color:var(--border-light);background:var(--bg-card-alt)}
+        .option-card.selected{border-color:var(--accent);background:var(--accent-soft)}
+        .option-card .icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+        .option-card .opt-title{font-weight:600;font-size:.95rem}
+        .option-card .opt-desc{font-size:.8rem;color:var(--text-secondary);margin-top:.15rem}
+
+        .btn-row{display:flex;gap:.75rem;margin-top:2rem;justify-content:flex-end}
+        .btn{padding:.8rem 1.8rem;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:all .25s}
+        .btn-primary{background:var(--accent);color:var(--bg)}
+        .btn-primary:hover{box-shadow:0 4px 24px rgba(0,232,162,.3);transform:translateY(-1px)}
+        .btn-secondary{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+        .btn-secondary:hover{border-color:var(--text-secondary)}
+        .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+        #report{padding-bottom:4rem}
+        .report-header{text-align:center;padding:3.5rem 1.5rem 2rem;position:relative}
+        .report-header::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse at 50% 0%,rgba(0,232,162,.06) 0%,transparent 70%);pointer-events:none}
+        .report-header h1{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:.5rem;position:relative}
+        .report-header p{color:var(--text-secondary);position:relative}
+        .report-actions{display:flex;justify-content:center;gap:.75rem;margin:1.5rem 0 0;position:relative}
+
+        .profile-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;margin:2rem auto;max-width:900px;display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem;justify-content:center}
+        .profile-item{text-align:center}
+        .profile-item .pi-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted)}
+        .profile-item .pi-value{font-size:1.1rem;font-weight:600;margin-top:.15rem}
+
+        .section-block{margin:3rem auto;max-width:900px}
+        .section-title{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+        .section-title .s-icon{font-size:1.3rem}
+        .section-title h2{font-size:1.35rem}
+        .section-title .s-badge{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:.2rem .6rem;border-radius:4px;background:var(--accent-soft);color:var(--accent)}
+
+        .info-box{background:var(--bg-card-alt);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1.2rem 1.5rem;margin-bottom:1.5rem}
+        .info-box h4{font-size:.95rem;margin-bottom:.4rem;color:var(--accent);font-family:'DM Sans',sans-serif;font-weight:600}
+        .info-box p{font-size:.88rem;color:var(--text-secondary);line-height:1.7}
+
+        .product-grid{display:grid;gap:1rem}
+        .product-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.8rem;transition:border-color .25s,transform .25s}
+        .product-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+        .product-card.recommended{border-color:var(--accent);box-shadow:0 0 30px rgba(0,232,162,.07)}
+        .product-card .rec-badge{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;background:var(--accent);color:var(--bg);padding:.2rem .6rem;border-radius:4px;margin-bottom:.75rem}
+        .product-card .pc-name{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;margin-bottom:.2rem}
+        .product-card .pc-type{font-size:.8rem;color:var(--text-muted);margin-bottom:1rem}
+        .pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.75rem}
+        .pc-stat{background:var(--bg-elevated);border-radius:var(--radius-sm);padding:.75rem .9rem;text-align:center}
+        .pc-stat .stat-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}
+        .pc-stat .stat-value{font-size:1.1rem;font-weight:700;margin-top:.15rem}
+        .pc-stat .positive{color:var(--accent)}.pc-stat .negative{color:var(--red)}.pc-stat .neutral{color:var(--text)}
+        .pc-explanation{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+        .pc-explanation strong{color:var(--text)}
+
+        .risk-visual{display:flex;gap:3px;align-items:center;justify-content:center}
+        .risk-visual .rv-bar{width:8px;height:18px;border-radius:3px;background:var(--border)}
+        .risk-visual.rl-1 .rv-bar:nth-child(-n+1){background:var(--accent)}
+        .risk-visual.rl-2 .rv-bar:nth-child(-n+2){background:var(--accent)}
+        .risk-visual.rl-3 .rv-bar:nth-child(-n+3){background:var(--amber)}
+        .risk-visual.rl-4 .rv-bar:nth-child(-n+4){background:var(--amber)}
+        .risk-visual.rl-5 .rv-bar:nth-child(-n+5){background:var(--red)}
+
+        .chart-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
+        .chart-wrapper h4{font-size:.95rem;margin-bottom:.3rem}
+        .chart-wrapper .chart-sub{font-size:.8rem;color:var(--text-muted);margin-bottom:1rem}
+        canvas{width:100%!important;max-height:320px}
+
+        .scenario-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1.5rem}
+        .scenario-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1.5rem;text-align:center}
+        .scenario-card .sc-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.5rem}
+        .scenario-card .sc-value{font-size:1.6rem;font-weight:700;font-family:'Fraunces',serif}
+        .scenario-card .sc-detail{font-size:.8rem;color:var(--text-secondary);margin-top:.3rem}
+        .sc-pessimistic .sc-value{color:var(--red)}.sc-moderate .sc-value{color:var(--amber)}.sc-optimistic .sc-value{color:var(--accent)}
+
+        .glossary-grid{display:grid;gap:.75rem}
+        .glossary-item{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+        .glossary-item summary{padding:1rem 1.3rem;cursor:pointer;font-weight:600;font-size:.95rem;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+        .glossary-item summary:hover{background:var(--bg-card-alt)}
+        .glossary-item summary::after{content:'+';font-size:1.2rem;color:var(--text-muted)}
+        .glossary-item[open] summary::after{content:'−';color:var(--accent)}
+        .glossary-item .gloss-body{padding:0 1.3rem 1.2rem;font-size:.88rem;color:var(--text-secondary);line-height:1.75}
+
+        .deposit-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:.5rem}
+        .deposit-table th{text-align:left;padding:.75rem 1rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);border-bottom:1px solid var(--border)}
+        .deposit-table td{padding:.85rem 1rem;font-size:.9rem;border-bottom:1px solid var(--border)}
+        .deposit-table tr:last-child td{border-bottom:none}
+        .deposit-table .highlight-row{background:var(--accent-soft)}
+        .deposit-table .highlight-row td:first-child{border-left:3px solid var(--accent)}
+
+        .report-footer{text-align:center;padding:3rem 1.5rem;border-top:1px solid var(--border);color:var(--text-muted);font-size:.8rem;margin-top:3rem}
+
+        @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+        .anim-up{animation:fadeUp .6s ease-out both}
+        .anim-up-d1{animation-delay:.1s}.anim-up-d2{animation-delay:.2s}.anim-up-d3{animation-delay:.3s}.anim-up-d4{animation-delay:.4s}
+
+        @media(max-width:640px){.site-header{padding:1rem}.form-card{padding:1.8rem 1.3rem}.profile-bar{padding:1.2rem;gap:1rem 1.5rem}.product-card{padding:1.2rem}.pc-stats{grid-template-columns:repeat(2,1fr)}.scenario-grid{grid-template-columns:1fr}.btn-row{flex-direction:column}.btn{width:100%;text-align:center}}
+
+        .loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}
+        .loading-overlay.hide{opacity:0;pointer-events:none}
+        .loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+        .loading-text{color:var(--text-secondary);margin-top:1rem;font-size:.9rem}
+        @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
+</head>
+<body>
+<header class="site-header"><div class="logo-mark">inverso<span class="dot"></span></div><span class="badge-beta">Beta · BCI</span></header>
+<div class="loading-overlay" id="loadingOverlay" style="display:none;"><div class="loading-spinner"></div><p class="loading-text">Generando tu informe personalizado...</p></div>
+
+<div class="screen active" id="questionnaire">
+    <section class="landing-hero">
+        <h1 class="anim-up">Descubre dónde invertir<br><em>tu dinero</em></h1>
+        <p class="anim-up anim-up-d1">Responde unas preguntas y te generamos un informe personalizado con las mejores opciones en fondos mutuos y depósitos a plazo.</p>
+        <p class="sub anim-up anim-up-d2">100% gratis · Sin registro · Datos de BCI</p>
+    </section>
+    <div class="steps-indicator"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+
+    <div class="form-card anim-up anim-up-d2" id="step0">
+        <h3>Primero, cuéntanos de ti</h3><p class="step-desc">No almacenamos ningún dato personal.</p>
+        <div class="field"><label>Tu nombre</label><input type="text" id="userName" placeholder="Ej: Mario" autocomplete="off"></div>
+        <div class="field"><label>Tu edad</label><input type="number" id="userAge" placeholder="Ej: 28" min="18" max="99"><p class="hint">Mínimo 18 años</p></div>
+        <div class="btn-row"><button class="btn btn-primary" onclick="nextStep(1)">Continuar →</button></div>
+    </div>
+
+    <div class="form-card" id="step1" style="display:none">
+        <h3>¿Cuánto y por cuánto tiempo?</h3><p class="step-desc">Esto nos ayuda a encontrar las opciones más adecuadas.</p>
+        <div class="field"><label>Monto a invertir (CLP)</label><input type="text" id="userAmount" placeholder="Ej: 5.000.000" oninput="formatMoney(this)"><p class="hint">Ingresa el monto en pesos chilenos</p></div>
+        <div class="field"><label>Horizonte de inversión</label><select id="userHorizon"><option value="">Selecciona...</option><option value="corto">Corto plazo (menos de 1 año)</option><option value="medio">Mediano plazo (1 a 3 años)</option><option value="largo">Largo plazo (más de 3 años)</option></select></div>
+        <div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(0)">← Atrás</button><button class="btn btn-primary" onclick="nextStep(2)">Continuar →</button></div>
+    </div>
+
+    <div class="form-card" id="step2" style="display:none">
+        <h3>¿Cómo te llevas con el riesgo?</h3><p class="step-desc">No hay respuesta correcta. Cada perfil tiene productos ideales.</p>
+        <div class="option-cards" id="riskCards">
+            <div class="option-card" onclick="selectOption('risk','conservador',this)"><span class="icon">🛡️</span><div><div class="opt-title">Conservador</div><div class="opt-desc">Prefiero no perder plata aunque gane poco. La seguridad es lo primero.</div></div></div>
+            <div class="option-card" onclick="selectOption('risk','moderado',this)"><span class="icon">⚖️</span><div><div class="opt-title">Moderado</div><div class="opt-desc">Acepto algo de riesgo si me permite ganar más a mediano plazo.</div></div></div>
+            <div class="option-card" onclick="selectOption('risk','agresivo',this)"><span class="icon">🚀</span><div><div class="opt-title">Agresivo</div><div class="opt-desc">Estoy dispuesto a perder en el corto plazo para ganar más en el largo plazo.</div></div></div>
+        </div>
+        <div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(1)">← Atrás</button><button class="btn btn-primary" onclick="nextStep(3)">Continuar →</button></div>
+    </div>
+
+    <div class="form-card" id="step3" style="display:none">
+        <h3>¿Cuál es tu objetivo?</h3><p class="step-desc">Esto nos permite afinar la recomendación.</p>
+        <div class="option-cards" id="objectiveCards">
+            <div class="option-card" onclick="selectOption('objective','ahorrar',this)"><span class="icon">🏦</span><div><div class="opt-title">Ahorrar / Fondo de emergencia</div><div class="opt-desc">Quiero que mi plata rente más que en la cuenta corriente.</div></div></div>
+            <div class="option-card" onclick="selectOption('objective','meta',this)"><span class="icon">🎯</span><div><div class="opt-title">Meta específica</div><div class="opt-desc">Viaje, auto, pie de departamento u otra meta concreta.</div></div></div>
+            <div class="option-card" onclick="selectOption('objective','crecer',this)"><span class="icon">📈</span><div><div class="opt-title">Hacer crecer mi capital</div><div class="opt-desc">Quiero invertir para que mi plata crezca en el tiempo.</div></div></div>
+            <div class="option-card" onclick="selectOption('objective','jubilacion',this)"><span class="icon">🏖️</span><div><div class="opt-title">Complementar jubilación</div><div class="opt-desc">Pensar en el futuro y generar ingresos para el retiro.</div></div></div>
+        </div>
+        <div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(2)">← Atrás</button><button class="btn btn-primary" onclick="generateReport()">Generar mi informe →</button></div>
+    </div>
+</div>
+
+<div class="screen" id="report">
+    <section class="report-header">
+        <h1 class="anim-up">Tu informe personalizado</h1>
+        <p class="anim-up anim-up-d1" id="reportSubtitle"></p>
+        <div class="report-actions anim-up anim-up-d2">
+            <button class="btn btn-primary" onclick="downloadPDF()">📄 Descargar PDF</button>
+            <button class="btn btn-secondary" onclick="startOver()">🔄 Hacer otro informe</button>
+        </div>
+    </section>
+    <div class="container"><div class="profile-bar anim-up anim-up-d2" id="profileBar"></div></div>
+    <div class="container" id="reportContent"></div>
+    <footer class="report-footer">
+        <p>Inverso Beta v0.2 — Los datos mostrados son de referencia y no constituyen asesoría financiera.</p>
+        <p>Siempre consulta con un profesional antes de invertir. Hecho en Chile con <span style="color:var(--accent);">♥</span></p>
+    </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const BCI_FUNDS=[
+{name:"BCI Depósito Efectivo",type:"Fondo Mutuo · Renta Fija",category:"deuda",risk:1,currency:"CLP",fee:.60,rent30:.42,rentYTD:2.15,rent12:5.10,minInvest:5000,profile:"conservador",horizon:["corto","medio","largo"],desc:"Invierte en depósitos bancarios y títulos de corto plazo. Ideal para quienes buscan un lugar seguro donde estacionar su dinero con algo de rentabilidad."},
+{name:"BCI De Personas",type:"Fondo Mutuo · Renta Fija",category:"deuda",risk:2,currency:"CLP",fee:.71,rent30:.48,rentYTD:2.50,rent12:5.60,minInvest:5000,profile:"conservador",horizon:["corto","medio"],desc:"Fondo orientado a personas naturales que buscan rentabilidad estable en instrumentos de deuda nacional."},
+{name:"BCI Competitivo",type:"Fondo Mutuo · Renta Fija",category:"deuda",risk:2,currency:"CLP",fee:1.19,rent30:.55,rentYTD:3.20,rent12:6.40,minInvest:10000,profile:"conservador",horizon:["medio","largo"],desc:"Invierte en bonos y depósitos con plazos más largos, buscando superar la inflación de forma consistente."},
+{name:"BCI Renta Estratégica",type:"Fondo Mutuo · Balanceado",category:"balanceado",risk:3,currency:"CLP",fee:1.85,rent30:.75,rentYTD:4.20,rent12:7.80,minInvest:25000,profile:"moderado",horizon:["medio","largo"],desc:"Mezcla renta fija y renta variable en proporciones equilibradas. Busca crecer más que los fondos conservadores sin exponerse tanto como los accionarios."},
+{name:"BCI Gestión Global Dinámica",type:"Fondo Mutuo · Balanceado",category:"balanceado",risk:3,currency:"CLP",fee:2.38,rent30:1.20,rentYTD:5.80,rent12:9.50,minInvest:50000,profile:"moderado",horizon:["medio","largo"],desc:"Invierte globalmente con una estrategia dinámica que ajusta su exposición a renta variable según las condiciones del mercado."},
+{name:"BCI Acciones Nacionales",type:"Fondo Mutuo · Accionario",category:"accionario",risk:4,currency:"CLP",fee:2.98,rent30:2.40,rentYTD:8.90,rent12:15.20,minInvest:25000,profile:"agresivo",horizon:["largo"],desc:"Invierte en acciones de empresas chilenas listadas en bolsa. Puede rentar mucho pero también caer con fuerza en periodos cortos."},
+{name:"BCI Selección Bursátil",type:"Fondo Mutuo · Accionario",category:"accionario",risk:4,currency:"CLP",fee:2.68,rent30:1.80,rentYTD:7.60,rent12:13.40,minInvest:25000,profile:"agresivo",horizon:["largo"],desc:"Selecciona las mejores acciones chilenas según análisis fundamental. Mayor concentración que el índice general."},
+{name:"BCI Acciones USA",type:"Fondo Mutuo · Accionario",category:"accionario",risk:5,currency:"USD",fee:3.20,rent30:-1.50,rentYTD:12.30,rent12:22.10,minInvest:50000,profile:"agresivo",horizon:["largo"],desc:"Invierte en acciones de empresas estadounidenses. Tiene riesgo de tipo de cambio (dólar) además del riesgo de mercado."},
+{name:"BCI Dólar Cash",type:"Fondo Mutuo · Money Market USD",category:"deuda",risk:2,currency:"USD",fee:.95,rent30:-.80,rentYTD:-2.10,rent12:1.20,minInvest:50000,profile:"conservador",horizon:["corto","medio"],desc:"Permite tener exposición al dólar de forma simple. Útil para diversificar o protegerse ante caídas del peso chileno."}
+];
+const BCI_DEPOSITS=[{plazo:30,tasa:.35,tasaAnual:4.20,minMonto:500000},{plazo:60,tasa:.72,tasaAnual:4.38,minMonto:500000},{plazo:90,tasa:1.10,tasaAnual:4.47,minMonto:500000},{plazo:180,tasa:2.25,tasaAnual:4.56,minMonto:1000000},{plazo:360,tasa:4.65,tasaAnual:4.65,minMonto:1000000}];
+
+let currentStep=0;
+const userData={name:'',age:0,amount:0,horizon:'',risk:'',objective:''};
+
+function formatMoney(i){let v=i.value.replace(/\D/g,'');if(v)v=parseInt(v).toLocaleString('es-CL');i.value=v}
+function parseMoney(s){return parseInt(s.replace(/\D/g,''))||0}
+function selectOption(t,v,el){el.parentElement.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');userData[t]=v}
+function updateSteps(s){document.querySelectorAll('.step-dot').forEach((d,i)=>{d.classList.remove('active','done');if(i===s)d.classList.add('active');if(i<s)d.classList.add('done')})}
+function showStep(n){for(let i=0;i<4;i++)document.getElementById('step'+i).style.display=i===n?'block':'none';updateSteps(n);currentStep=n;window.scrollTo({top:200,behavior:'smooth'})}
+
+function nextStep(n){
+    if(currentStep===0){const nm=document.getElementById('userName').value.trim(),ag=parseInt(document.getElementById('userAge').value);if(!nm){alert('Ingresa tu nombre');return}if(!ag||ag<18){alert('Ingresa una edad válida (18+)');return}userData.name=nm;userData.age=ag}
+    if(currentStep===1){const am=parseMoney(document.getElementById('userAmount').value),hz=document.getElementById('userHorizon').value;if(!am||am<10000){alert('Ingresa un monto válido (mínimo $10.000)');return}if(!hz){alert('Selecciona un horizonte');return}userData.amount=am;userData.horizon=hz}
+    if(currentStep===2&&!userData.risk){alert('Selecciona tu perfil de riesgo');return}
+    showStep(n);
+}
+function prevStep(n){showStep(n)}
+
+function generateReport(){
+    if(!userData.objective){alert('Selecciona tu objetivo');return}
+    const ov=document.getElementById('loadingOverlay');ov.style.display='flex';
+    setTimeout(()=>{buildReport();document.getElementById('questionnaire').classList.remove('active');document.getElementById('report').classList.add('active');ov.classList.add('hide');setTimeout(()=>{ov.style.display='none';ov.classList.remove('hide')},500);window.scrollTo({top:0})},1800);
+}
+
+function buildReport(){
+    const{name,age,amount,horizon,risk,objective}=userData;
+    document.getElementById('reportSubtitle').textContent=`Preparado para ${name}, ${age} años · ${new Date().toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'})}`;
+    const hL={corto:'Corto plazo (<1 año)',medio:'Mediano plazo (1-3 años)',largo:'Largo plazo (>3 años)'},rL={conservador:'Conservador 🛡️',moderado:'Moderado ⚖️',agresivo:'Agresivo 🚀'},oL={ahorrar:'Ahorro',meta:'Meta específica',crecer:'Crecimiento',jubilacion:'Jubilación'};
+    document.getElementById('profileBar').innerHTML=`<div class="profile-item"><div class="pi-label">Monto</div><div class="pi-value">$${amount.toLocaleString('es-CL')}</div></div><div class="profile-item"><div class="pi-label">Horizonte</div><div class="pi-value">${hL[horizon]}</div></div><div class="profile-item"><div class="pi-label">Perfil</div><div class="pi-value">${rL[risk]}</div></div><div class="profile-item"><div class="pi-label">Objetivo</div><div class="pi-value">${oL[objective]}</div></div>`;
+
+    const mF=BCI_FUNDS.filter(f=>{if(risk==='conservador'&&f.risk>2)return false;if(risk==='moderado'&&f.risk>3)return false;if(!f.horizon.includes(horizon))return false;if(amount<f.minInvest)return false;return true}).sort((a,b)=>b.rent12-a.rent12);
+    const bF=mF[0],mD=BCI_DEPOSITS.filter(d=>amount>=d.minMonto);
+    let h='';
+
+    h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">🧠</span><h2>Entendiendo tu perfil</h2></div><div class="info-box"><h4>¿Qué significa ser ${risk}?</h4><p>${getPE(risk)}</p></div><div class="info-box"><h4>Tu horizonte: ${hL[horizon]}</h4><p>${getHE(horizon)}</p></div></div>`;
+
+    h+=`<div class="section-block anim-up anim-up-d1"><div class="section-title"><span class="s-icon">📊</span><h2>Fondos mutuos recomendados</h2><span class="s-badge">${mF.length} opciones</span></div><div class="info-box"><h4>¿Qué es un fondo mutuo?</h4><p>Es una "billetera colectiva": muchas personas ponen su dinero junto y un equipo profesional lo invierte por ellos. Tú compras "cuotas" del fondo. Con poca plata accedes a inversiones diversificadas que por tu cuenta serían imposibles.</p></div><div class="product-grid">`;
+    mF.forEach((f,i)=>{const r=i===0;h+=`<div class="product-card ${r?'recommended':''}">${r?'<span class="rec-badge">★ Más compatible contigo</span>':''}<div class="pc-name">${f.name}</div><div class="pc-type">${f.type} · ${f.currency}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">Rent. 30 días</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Rent. año</div><div class="stat-value ${f.rent12>=0?'positive':'negative'}">${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Comisión anual</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Riesgo</div><div class="stat-value"><div class="risk-visual rl-${f.risk}">${'<div class="rv-bar"></div>'.repeat(5)}</div></div></div></div><div class="pc-explanation"><strong>¿Qué hace este fondo?</strong> ${f.desc}</div></div>`});
+    h+=`</div></div>`;
+
+    h+=`<div class="section-block anim-up anim-up-d2"><div class="section-title"><span class="s-icon">🏦</span><h2>Depósitos a plazo BCI</h2></div><div class="info-box"><h4>¿Qué es un depósito a plazo?</h4><p>Le prestas tu dinero al banco por un tiempo fijo y a cambio te paga intereses. Es la inversión más segura en Chile porque está garantizada por el Estado (FOGADE). La contra: no puedes retirar tu plata antes del vencimiento.</p></div><div class="chart-wrapper"><h4>Simulación: Tu dinero en depósitos a plazo</h4><p class="chart-sub">Cuánto ganarías depositando $${amount.toLocaleString('es-CL')} según el plazo</p><table class="deposit-table"><thead><tr><th>Plazo</th><th>Tasa período</th><th>Tasa anual</th><th>Ganancia bruta</th><th>Recibirías</th></tr></thead><tbody>`;
+    mD.forEach(d=>{const g=Math.round(amount*d.tasa/100),t=amount+g,iB=horizon==='corto'?d.plazo<=90:horizon==='medio'?d.plazo===180:d.plazo===360;h+=`<tr class="${iB?'highlight-row':''}"><td><strong>${d.plazo} días</strong></td><td>${d.tasa.toFixed(2)}%</td><td>${d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${g.toLocaleString('es-CL')}</td><td><strong>$${t.toLocaleString('es-CL')}</strong></td></tr>`});
+    h+=`</tbody></table></div></div>`;
+
+    const yrs=horizon==='corto'?1:horizon==='medio'?3:5;
+    h+=`<div class="section-block anim-up anim-up-d3"><div class="section-title"><span class="s-icon">🔮</span><h2>Simulación y escenarios</h2></div><div class="info-box"><h4>¿Cómo leer esta simulación?</h4><p>Proyectamos cómo podría crecer tu inversión en 3 escenarios. <strong>Esto NO es una promesa de rentabilidad</strong> — es una estimación basada en datos históricos.</p></div><div class="chart-wrapper"><h4>Proyección a ${yrs} ${yrs===1?'año':'años'}</h4><p class="chart-sub">Basado en ${bF?bF.name:'tu perfil de riesgo'}</p><canvas id="projectionChart"></canvas></div><div class="scenario-grid">${buildScenarios(amount,risk,horizon)}</div></div>`;
+
+    if(bF){h+=`<div class="section-block anim-up anim-up-d4"><div class="section-title"><span class="s-icon">⚡</span><h2>¿Fondo mutuo o depósito a plazo?</h2></div><div class="info-box"><h4>La respuesta corta</h4><p>${getCA(risk,horizon)}</p></div><div class="chart-wrapper"><h4>Comparación directa a 12 meses</h4><p class="chart-sub">${bF.name} vs Depósito a Plazo 360 días</p><canvas id="comparisonChart"></canvas></div></div>`}
+
+    h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">📚</span><h2>Glosario</h2><span class="s-badge">Aprende</span></div><p style="color:var(--text-secondary);margin-bottom:1.5rem;font-size:.9rem">Términos financieros explicados de forma simple.</p><div class="glossary-grid">${buildGlossary()}</div></div>`;
+
+    document.getElementById('reportContent').innerHTML=h;
+    setTimeout(()=>{buildPC(amount,risk,horizon);if(bF)buildCC(amount,bF)},300);
+}
+
+function getPE(r){return{conservador:'Eres un inversionista conservador. Priorizas no perder tu capital sobre obtener grandes ganancias. Los depósitos a plazo y fondos de renta fija son tus productos ideales. Obtendrás rentabilidades modestas pero estables.',moderado:'Eres un inversionista moderado. Aceptas cierta volatilidad a cambio de mayor rentabilidad potencial. Los fondos balanceados son tu zona ideal. Tu inversión puede bajar en meses puntuales, pero tiende a recuperarse en plazos de 1 a 3 años.',agresivo:'Eres un inversionista agresivo. Estás dispuesto a ver caídas importantes en el corto plazo para obtener las mayores ganancias a largo plazo. Los fondos accionarios son tu terreno. Requieren paciencia pero históricamente son los que más rentan en horizontes de 5+ años.'}[r]}
+
+function getHE(h){return{corto:'Con un horizonte menor a 1 año, lo más importante es la liquidez y la seguridad. No es momento para riesgos con acciones. Los depósitos a plazo y fondos de renta fija de corto plazo son tu mejor opción.',medio:'Con 1 a 3 años de horizonte, tienes margen para tolerar fluctuaciones. Puedes considerar fondos balanceados o depósitos a plazo renovables. La clave es diversificar entre seguridad y crecimiento.',largo:'Con más de 3 años tienes la ventaja más poderosa: el tiempo. Puedes tolerar caídas temporales porque tienes años para recuperarte. Históricamente, a mayor plazo, mayor beneficio de invertir en renta variable.'}[h]}
+
+function getCA(r,h){if(r==='conservador'||h==='corto')return`Para tu perfil <strong>${r}</strong>, un depósito a plazo es probablemente tu mejor opción. Tasa garantizada, sin sorpresas, capital protegido. Los fondos de renta fija son alternativa similar pero con la ventaja de rescatar antes.`;if(r==='moderado')return`Lo ideal es <strong>combinar ambos</strong>. Depósito a plazo para seguridad y fondo balanceado para mayor rentabilidad. Regla simple: pon en depósito lo que podrías necesitar urgente, y en fondo mutuo el resto.`;return`Con perfil <strong>agresivo</strong> y horizonte largo, los fondos accionarios probablemente te rentarán más. Históricamente superan la renta fija en periodos largos. Pero mantén siempre un "colchón" en depósito a plazo (3-6 meses de gastos).`}
+
+function buildScenarios(a,r,h){const y=h==='corto'?1:h==='medio'?3:5,rt={conservador:{p:.02,m:.045,o:.06},moderado:{p:-.02,m:.07,o:.12},agresivo:{p:-.08,m:.10,o:.18}}[r];const pV=Math.round(a*Math.pow(1+rt.p,y)),mV=Math.round(a*Math.pow(1+rt.m,y)),oV=Math.round(a*Math.pow(1+rt.o,y));return`<div class="scenario-card sc-pessimistic"><div class="sc-label">Escenario pesimista</div><div class="sc-value">$${pV.toLocaleString('es-CL')}</div><div class="sc-detail">${rt.p>=0?'+':''}${(rt.p*100).toFixed(1)}% anual × ${y} ${y===1?'año':'años'}</div></div><div class="scenario-card sc-moderate"><div class="sc-label">Escenario moderado</div><div class="sc-value">$${mV.toLocaleString('es-CL')}</div><div class="sc-detail">+${(rt.m*100).toFixed(1)}% anual × ${y} ${y===1?'año':'años'}</div></div><div class="scenario-card sc-optimistic"><div class="sc-label">Escenario optimista</div><div class="sc-value">$${oV.toLocaleString('es-CL')}</div><div class="sc-detail">+${(rt.o*100).toFixed(1)}% anual × ${y} ${y===1?'año':'años'}</div></div>`}
+
+function buildPC(a,r,h){const ctx=document.getElementById('projectionChart');if(!ctx)return;const y=h==='corto'?1:h==='medio'?3:5,rt={conservador:{p:.02,m:.045,o:.06},moderado:{p:-.02,m:.07,o:.12},agresivo:{p:-.08,m:.10,o:.18}}[r],mo=y*12,lb=[],pD=[],mD=[],oD=[];for(let i=0;i<=mo;i++){if(i%(y<=1?1:3)===0||i===mo){lb.push(i===0?'Hoy':`Mes ${i}`);pD.push(Math.round(a*Math.pow(1+rt.p/12,i)));mD.push(Math.round(a*Math.pow(1+rt.m/12,i)));oD.push(Math.round(a*Math.pow(1+rt.o/12,i)))}}
+new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:'Optimista',data:oD,borderColor:'#00e8a2',backgroundColor:'rgba(0,232,162,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Moderado',data:mD,borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Pesimista',data:pD,borderColor:'#ff5c7c',backgroundColor:'rgba(255,92,124,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:'#8b97ad',font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:'#556178',font:{family:'DM Sans',size:11}},grid:{color:'#1c2636'}},y:{ticks:{color:'#556178',font:{family:'DM Sans',size:11},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:'#1c2636'}}}}})}
+
+function buildCC(a,f){const ctx=document.getElementById('comparisonChart');if(!ctx)return;const lb=[],fD=[],dD=[],fR=f.rent12/100,dR=.0465;for(let m=0;m<=12;m++){lb.push(m===0?'Hoy':`Mes ${m}`);fD.push(Math.round(a*Math.pow(1+fR/12,m)));dD.push(Math.round(a*(1+dR*m/12)))}
+new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:f.name,data:fD,borderColor:'#00e8a2',backgroundColor:'rgba(0,232,162,.08)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Depósito a Plazo 360d',data:dD,borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.08)',fill:true,tension:.1,pointRadius:0,borderWidth:2,borderDash:[6,4]}]},options:{responsive:true,plugins:{legend:{labels:{color:'#8b97ad',font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:'#556178',font:{family:'DM Sans',size:11}},grid:{color:'#1c2636'}},y:{ticks:{color:'#556178',font:{family:'DM Sans',size:11},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:'#1c2636'}}}}})}
+
+function buildGlossary(){const t=[{t:'Fondo Mutuo',d:'Es como una "vaquita" de inversión. Muchas personas juntan su dinero y un administrador profesional lo invierte. Tú compras "cuotas" y ganas o pierdes según cómo le vaya al conjunto.'},{t:'Depósito a Plazo (DAP)',d:'Le prestas tu dinero al banco por un período fijo. A cambio te paga intereses. Es la inversión más segura en Chile. Protegido por FOGADE.'},{t:'Renta Fija',d:'Inversiones donde sabes (más o menos) cuánto vas a ganar: bonos, depósitos a plazo, letras hipotecarias. Riesgo bajo, ganancia modesta.'},{t:'Renta Variable',d:'Inversiones donde NO sabes cuánto vas a ganar: principalmente acciones. Pueden subir o bajar mucho, pero históricamente rentan más a largo plazo.'},{t:'Rentabilidad',d:'Lo que ganas o pierdes, expresado como %. Si pones $1.000.000 y al año tienes $1.050.000, tu rentabilidad fue +5%. La rentabilidad pasada no garantiza la futura.'},{t:'Comisión (TAC)',d:'El costo que cobra la administradora por manejar tu plata. Se expresa como % anual. Comisiones más bajas = mejor para ti.'},{t:'Cuota',d:'La "acción" de un fondo mutuo. Si al fondo le va bien, el valor de tu cuota sube. Si le va mal, baja.'},{t:'Diversificación',d:'"No pongas todos los huevos en la misma canasta." Repartir tu plata en distintos tipos de inversión para reducir el riesgo.'},{t:'Liquidez',d:'Qué tan rápido puedes convertir tu inversión en plata. Fondo mutuo: alta (1-3 días). Depósito a plazo: baja (esperar vencimiento).'},{t:'Horizonte de inversión',d:'Por cuánto tiempo planeas mantener tu inversión. A mayor horizonte, más riesgo puedes tolerar. Es el factor más importante.'},{t:'Volatilidad',d:'Cuánto sube y baja el valor de una inversión. Alta volatilidad = muchos altibajos (acciones). Baja = estable (depósitos).'},{t:'UF',d:'Unidad de Fomento. Se ajusta diariamente según inflación. Muchos instrumentos financieros en Chile están en UF para proteger tu inversión.'},{t:'FOGADE',d:'Fondo de Garantía de Depósitos. Garantiza tus depósitos hasta ~108 UF por persona por banco si el banco quiebra. Solo aplica a depósitos, NO a fondos mutuos.'},{t:'Rescate',d:'Cuando sacas tu dinero de un fondo mutuo. Recibes tu plata en 1 a 10 días hábiles según el tipo de fondo.'}];return t.map(i=>`<details class="glossary-item"><summary>${i.t}</summary><div class="gloss-body">${i.d}</div></details>`).join('')}
+
+async function downloadPDF(){const b=event.target;b.textContent='⏳ Generando...';b.disabled=true;try{const{jsPDF}=window.jspdf,p=new jsPDF('p','mm','a4');p.setFont('helvetica','bold');p.setFontSize(22);p.setTextColor(0,232,162);p.text('inverso',20,25);p.setFontSize(10);p.setTextColor(150,150,150);p.text('Tu informe de inversión personalizado',20,32);p.setFontSize(11);p.setTextColor(60,60,60);p.text(document.getElementById('reportSubtitle').textContent,20,42);let y=55;p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(30,30,30);p.text('Resumen',20,y);y+=8;p.setFont('helvetica','normal');p.setFontSize(10);p.setTextColor(80,80,80);p.text(`Monto: $${userData.amount.toLocaleString('es-CL')}`,20,y);y+=6;p.text(`Horizonte: ${userData.horizon}`,20,y);y+=6;p.text(`Perfil: ${userData.risk}`,20,y);y+=6;p.text(`Objetivo: ${userData.objective}`,20,y);y+=12;const mF=BCI_FUNDS.filter(f=>{if(userData.risk==='conservador'&&f.risk>2)return false;if(userData.risk==='moderado'&&f.risk>3)return false;if(!f.horizon.includes(userData.horizon))return false;if(userData.amount<f.minInvest)return false;return true}).sort((a,b)=>b.rent12-a.rent12);p.setFont('helvetica','bold');p.setFontSize(13);p.text('Fondos mutuos recomendados',20,y);y+=8;mF.forEach(f=>{if(y>260){p.addPage();y=20}p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(40,40,40);p.text(f.name,20,y);y+=5;p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(100,100,100);p.text(`Rent.12m: ${f.rent12>=0?'+':''}${f.rent12}% | Comisión: ${f.fee}% | Riesgo: ${f.risk}/5`,20,y);y+=5;const l=p.splitTextToSize(f.desc,170);p.text(l,20,y);y+=l.length*4.5+5});if(y>230){p.addPage();y=20}p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(30,30,30);p.text('Depósitos a plazo BCI',20,y);y+=8;BCI_DEPOSITS.filter(d=>userData.amount>=d.minMonto).forEach(d=>{const g=Math.round(userData.amount*d.tasa/100);p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(80,80,80);p.text(`${d.plazo} días — Tasa: ${d.tasaAnual}% anual — Ganancia: +$${g.toLocaleString('es-CL')}`,20,y);y+=6});y+=10;if(y>270){p.addPage();y=20}p.setFontSize(8);p.setTextColor(150,150,150);p.text('Inverso Beta — Datos de referencia, no constituyen asesoría financiera.',20,y);p.save(`Inverso_${userData.name}_${new Date().toISOString().slice(0,10)}.pdf`)}catch(e){console.error(e);alert('Error generando PDF.')}b.textContent='📄 Descargar PDF';b.disabled=false}
+
+function startOver(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');showStep(0);Object.keys(userData).forEach(k=>userData[k]=typeof userData[k]==='number'?0:'');document.getElementById('userName').value='';document.getElementById('userAge').value='';document.getElementById('userAmount').value='';document.getElementById('userHorizon').value='';document.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));window.scrollTo({top:0})}
+</script>
+</body>
+</html>
