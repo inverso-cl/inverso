@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        :root{--bg:#06090f;--bg-elevated:#0d1117;--bg-card:#131a24;--bg-card-alt:#172032;--accent:#00e8a2;--accent-soft:rgba(0,232,162,.10);--accent-mid:rgba(0,232,162,.25);--blue:#4da6ff;--amber:#ffb347;--red:#ff5c7c;--text:#e8edf5;--text-secondary:#8b97ad;--text-muted:#556178;--border:#1c2636;--border-light:#253246;--radius:14px;--radius-sm:8px}
+        :root{--bg:#06090f;--bg-elevated:#0d1117;--bg-card:#131a24;--bg-card-alt:#172032;--accent:#00c98b;--accent-soft:rgba(0,232,162,.10);--accent-mid:rgba(0,232,162,.25);--blue:#4da6ff;--amber:#ffb347;--red:#ff5c7c;--text:#e8edf5;--text-secondary:#8b97ad;--text-muted:#556178;--border:#1c2636;--border-light:#253246;--radius:14px;--radius-sm:8px;--header-bg:rgba(6,9,15,.85);--chart-grid:#1c2636;--chart-text:#556178;--chart-legend:#8b97ad}
+        [data-theme="light"]{--bg:#f4f6f9;--bg-elevated:#ffffff;--bg-card:#ffffff;--bg-card-alt:#f0f2f5;--accent:#00a876;--accent-soft:rgba(0,168,118,.08);--accent-mid:rgba(0,168,118,.20);--blue:#2b7de9;--amber:#e09422;--red:#e04460;--text:#1a1f2e;--text-secondary:#556178;--text-muted:#8b97ad;--border:#dfe3ea;--border-light:#c8cdd6;--header-bg:rgba(244,246,249,.9);--chart-grid:#dfe3ea;--chart-text:#8b97ad;--chart-legend:#556178}
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
         .container{max-width:900px;margin:0 auto;padding:0 1.5rem}
@@ -16,10 +17,13 @@
         a{color:var(--accent);text-decoration:none}
         ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:10px}
 
-        .site-header{padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(6,9,15,.85);backdrop-filter:blur(24px);position:sticky;top:0;z-index:100}
+        .site-header{padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--header-bg);backdrop-filter:blur(24px);position:sticky;top:0;z-index:100}
         .logo-mark{display:flex;align-items:baseline;gap:3px;font-family:'Fraunces',serif;font-size:1.6rem;font-weight:800;letter-spacing:-1px}
         .logo-mark .dot{display:inline-block;width:7px;height:7px;background:var(--accent);border-radius:50%;margin-left:1px;transform:translateY(-2px)}
         .badge-beta{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);background:var(--accent-soft);padding:.3rem .75rem;border-radius:20px;border:1px solid var(--accent-mid)}
+        .header-right{display:flex;align-items:center;gap:.75rem}
+        .theme-toggle{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:.4rem .7rem;cursor:pointer;font-size:.85rem;display:flex;align-items:center;gap:.4rem;color:var(--text-secondary);transition:all .2s}
+        .theme-toggle:hover{border-color:var(--accent);color:var(--text)}
 
         .screen{display:none}.screen.active{display:block}
 
@@ -150,7 +154,7 @@
     </style>
 </head>
 <body>
-<header class="site-header"><div class="logo-mark">inverso<span class="dot"></span></div><span class="badge-beta">Beta · BCI</span></header>
+<header class="site-header"><div class="logo-mark">inverso<span class="dot"></span></div><div class="header-right"><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Claro</button><span class="badge-beta">Beta · BCI</span></div></header>
 <div class="loading-overlay" id="loadingOverlay" style="display:none;"><div class="loading-spinner"></div><p class="loading-text">Generando tu informe personalizado...</p></div>
 
 <div class="screen active" id="questionnaire">
@@ -291,15 +295,104 @@ function getCA(r,h){if(r==='conservador'||h==='corto')return`Para tu perfil <str
 
 function buildScenarios(a,r,h){const y=h==='corto'?1:h==='medio'?3:5,rt={conservador:{p:.02,m:.045,o:.06},moderado:{p:-.02,m:.07,o:.12},agresivo:{p:-.08,m:.10,o:.18}}[r];const pV=Math.round(a*Math.pow(1+rt.p,y)),mV=Math.round(a*Math.pow(1+rt.m,y)),oV=Math.round(a*Math.pow(1+rt.o,y));return`<div class="scenario-card sc-pessimistic"><div class="sc-label">Escenario pesimista</div><div class="sc-value">$${pV.toLocaleString('es-CL')}</div><div class="sc-detail">${rt.p>=0?'+':''}${(rt.p*100).toFixed(1)}% anual × ${y} ${y===1?'año':'años'}</div></div><div class="scenario-card sc-moderate"><div class="sc-label">Escenario moderado</div><div class="sc-value">$${mV.toLocaleString('es-CL')}</div><div class="sc-detail">+${(rt.m*100).toFixed(1)}% anual × ${y} ${y===1?'año':'años'}</div></div><div class="scenario-card sc-optimistic"><div class="sc-label">Escenario optimista</div><div class="sc-value">$${oV.toLocaleString('es-CL')}</div><div class="sc-detail">+${(rt.o*100).toFixed(1)}% anual × ${y} ${y===1?'año':'años'}</div></div>`}
 
-function buildPC(a,r,h){const ctx=document.getElementById('projectionChart');if(!ctx)return;const y=h==='corto'?1:h==='medio'?3:5,rt={conservador:{p:.02,m:.045,o:.06},moderado:{p:-.02,m:.07,o:.12},agresivo:{p:-.08,m:.10,o:.18}}[r],mo=y*12,lb=[],pD=[],mD=[],oD=[];for(let i=0;i<=mo;i++){if(i%(y<=1?1:3)===0||i===mo){lb.push(i===0?'Hoy':`Mes ${i}`);pD.push(Math.round(a*Math.pow(1+rt.p/12,i)));mD.push(Math.round(a*Math.pow(1+rt.m/12,i)));oD.push(Math.round(a*Math.pow(1+rt.o/12,i)))}}
-new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:'Optimista',data:oD,borderColor:'#00e8a2',backgroundColor:'rgba(0,232,162,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Moderado',data:mD,borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Pesimista',data:pD,borderColor:'#ff5c7c',backgroundColor:'rgba(255,92,124,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:'#8b97ad',font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:'#556178',font:{family:'DM Sans',size:11}},grid:{color:'#1c2636'}},y:{ticks:{color:'#556178',font:{family:'DM Sans',size:11},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:'#1c2636'}}}}})}
+function getChartColors(){const s=getComputedStyle(document.documentElement);return{grid:s.getPropertyValue('--chart-grid').trim()||'#1c2636',text:s.getPropertyValue('--chart-text').trim()||'#556178',legend:s.getPropertyValue('--chart-legend').trim()||'#8b97ad'}}
 
-function buildCC(a,f){const ctx=document.getElementById('comparisonChart');if(!ctx)return;const lb=[],fD=[],dD=[],fR=f.rent12/100,dR=.0465;for(let m=0;m<=12;m++){lb.push(m===0?'Hoy':`Mes ${m}`);fD.push(Math.round(a*Math.pow(1+fR/12,m)));dD.push(Math.round(a*(1+dR*m/12)))}
-new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:f.name,data:fD,borderColor:'#00e8a2',backgroundColor:'rgba(0,232,162,.08)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Depósito a Plazo 360d',data:dD,borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.08)',fill:true,tension:.1,pointRadius:0,borderWidth:2,borderDash:[6,4]}]},options:{responsive:true,plugins:{legend:{labels:{color:'#8b97ad',font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:'#556178',font:{family:'DM Sans',size:11}},grid:{color:'#1c2636'}},y:{ticks:{color:'#556178',font:{family:'DM Sans',size:11},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:'#1c2636'}}}}})}
+function buildPC(a,r,h){const ctx=document.getElementById('projectionChart');if(!ctx)return;const cc=getChartColors();const y=h==='corto'?1:h==='medio'?3:5,rt={conservador:{p:.02,m:.045,o:.06},moderado:{p:-.02,m:.07,o:.12},agresivo:{p:-.08,m:.10,o:.18}}[r],mo=y*12,lb=[],pD=[],mD=[],oD=[];for(let i=0;i<=mo;i++){if(i%(y<=1?1:3)===0||i===mo){lb.push(i===0?'Hoy':`Mes ${i}`);pD.push(Math.round(a*Math.pow(1+rt.p/12,i)));mD.push(Math.round(a*Math.pow(1+rt.m/12,i)));oD.push(Math.round(a*Math.pow(1+rt.o/12,i)))}}
+new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:'Optimista',data:oD,borderColor:'#00c98b',backgroundColor:'rgba(0,201,139,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Moderado',data:mD,borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Pesimista',data:pD,borderColor:'#ff5c7c',backgroundColor:'rgba(255,92,124,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:cc.legend,font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:cc.text,font:{family:'DM Sans',size:11}},grid:{color:cc.grid}},y:{ticks:{color:cc.text,font:{family:'DM Sans',size:11},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:cc.grid}}}}})}
+
+function buildCC(a,f){const ctx=document.getElementById('comparisonChart');if(!ctx)return;const cc=getChartColors();const lb=[],fD=[],dD=[],fR=f.rent12/100,dR=.0465;for(let m=0;m<=12;m++){lb.push(m===0?'Hoy':`Mes ${m}`);fD.push(Math.round(a*Math.pow(1+fR/12,m)));dD.push(Math.round(a*(1+dR*m/12)))}
+new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:f.name,data:fD,borderColor:'#00c98b',backgroundColor:'rgba(0,201,139,.08)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Depósito a Plazo 360d',data:dD,borderColor:'#4da6ff',backgroundColor:'rgba(77,166,255,.08)',fill:true,tension:.1,pointRadius:0,borderWidth:2,borderDash:[6,4]}]},options:{responsive:true,plugins:{legend:{labels:{color:cc.legend,font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:cc.text,font:{family:'DM Sans',size:11}},grid:{color:cc.grid}},y:{ticks:{color:cc.text,font:{family:'DM Sans',size:11},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:cc.grid}}}}})}
 
 function buildGlossary(){const t=[{t:'Fondo Mutuo',d:'Es como una "vaquita" de inversión. Muchas personas juntan su dinero y un administrador profesional lo invierte. Tú compras "cuotas" y ganas o pierdes según cómo le vaya al conjunto.'},{t:'Depósito a Plazo (DAP)',d:'Le prestas tu dinero al banco por un período fijo. A cambio te paga intereses. Es la inversión más segura en Chile. Protegido por FOGADE.'},{t:'Renta Fija',d:'Inversiones donde sabes (más o menos) cuánto vas a ganar: bonos, depósitos a plazo, letras hipotecarias. Riesgo bajo, ganancia modesta.'},{t:'Renta Variable',d:'Inversiones donde NO sabes cuánto vas a ganar: principalmente acciones. Pueden subir o bajar mucho, pero históricamente rentan más a largo plazo.'},{t:'Rentabilidad',d:'Lo que ganas o pierdes, expresado como %. Si pones $1.000.000 y al año tienes $1.050.000, tu rentabilidad fue +5%. La rentabilidad pasada no garantiza la futura.'},{t:'Comisión (TAC)',d:'El costo que cobra la administradora por manejar tu plata. Se expresa como % anual. Comisiones más bajas = mejor para ti.'},{t:'Cuota',d:'La "acción" de un fondo mutuo. Si al fondo le va bien, el valor de tu cuota sube. Si le va mal, baja.'},{t:'Diversificación',d:'"No pongas todos los huevos en la misma canasta." Repartir tu plata en distintos tipos de inversión para reducir el riesgo.'},{t:'Liquidez',d:'Qué tan rápido puedes convertir tu inversión en plata. Fondo mutuo: alta (1-3 días). Depósito a plazo: baja (esperar vencimiento).'},{t:'Horizonte de inversión',d:'Por cuánto tiempo planeas mantener tu inversión. A mayor horizonte, más riesgo puedes tolerar. Es el factor más importante.'},{t:'Volatilidad',d:'Cuánto sube y baja el valor de una inversión. Alta volatilidad = muchos altibajos (acciones). Baja = estable (depósitos).'},{t:'UF',d:'Unidad de Fomento. Se ajusta diariamente según inflación. Muchos instrumentos financieros en Chile están en UF para proteger tu inversión.'},{t:'FOGADE',d:'Fondo de Garantía de Depósitos. Garantiza tus depósitos hasta ~108 UF por persona por banco si el banco quiebra. Solo aplica a depósitos, NO a fondos mutuos.'},{t:'Rescate',d:'Cuando sacas tu dinero de un fondo mutuo. Recibes tu plata en 1 a 10 días hábiles según el tipo de fondo.'}];return t.map(i=>`<details class="glossary-item"><summary>${i.t}</summary><div class="gloss-body">${i.d}</div></details>`).join('')}
 
-async function downloadPDF(){const b=event.target;b.textContent='⏳ Generando...';b.disabled=true;try{const{jsPDF}=window.jspdf,p=new jsPDF('p','mm','a4');p.setFont('helvetica','bold');p.setFontSize(22);p.setTextColor(0,232,162);p.text('inverso',20,25);p.setFontSize(10);p.setTextColor(150,150,150);p.text('Tu informe de inversión personalizado',20,32);p.setFontSize(11);p.setTextColor(60,60,60);p.text(document.getElementById('reportSubtitle').textContent,20,42);let y=55;p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(30,30,30);p.text('Resumen',20,y);y+=8;p.setFont('helvetica','normal');p.setFontSize(10);p.setTextColor(80,80,80);p.text(`Monto: $${userData.amount.toLocaleString('es-CL')}`,20,y);y+=6;p.text(`Horizonte: ${userData.horizon}`,20,y);y+=6;p.text(`Perfil: ${userData.risk}`,20,y);y+=6;p.text(`Objetivo: ${userData.objective}`,20,y);y+=12;const mF=BCI_FUNDS.filter(f=>{if(userData.risk==='conservador'&&f.risk>2)return false;if(userData.risk==='moderado'&&f.risk>3)return false;if(!f.horizon.includes(userData.horizon))return false;if(userData.amount<f.minInvest)return false;return true}).sort((a,b)=>b.rent12-a.rent12);p.setFont('helvetica','bold');p.setFontSize(13);p.text('Fondos mutuos recomendados',20,y);y+=8;mF.forEach(f=>{if(y>260){p.addPage();y=20}p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(40,40,40);p.text(f.name,20,y);y+=5;p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(100,100,100);p.text(`Rent.12m: ${f.rent12>=0?'+':''}${f.rent12}% | Comisión: ${f.fee}% | Riesgo: ${f.risk}/5`,20,y);y+=5;const l=p.splitTextToSize(f.desc,170);p.text(l,20,y);y+=l.length*4.5+5});if(y>230){p.addPage();y=20}p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(30,30,30);p.text('Depósitos a plazo BCI',20,y);y+=8;BCI_DEPOSITS.filter(d=>userData.amount>=d.minMonto).forEach(d=>{const g=Math.round(userData.amount*d.tasa/100);p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(80,80,80);p.text(`${d.plazo} días — Tasa: ${d.tasaAnual}% anual — Ganancia: +$${g.toLocaleString('es-CL')}`,20,y);y+=6});y+=10;if(y>270){p.addPage();y=20}p.setFontSize(8);p.setTextColor(150,150,150);p.text('Inverso Beta — Datos de referencia, no constituyen asesoría financiera.',20,y);p.save(`Inverso_${userData.name}_${new Date().toISOString().slice(0,10)}.pdf`)}catch(e){console.error(e);alert('Error generando PDF.')}b.textContent='📄 Descargar PDF';b.disabled=false}
+async function downloadPDF(){const b=event.target;b.textContent='⏳ Generando...';b.disabled=true;
+try{const{jsPDF}=window.jspdf,p=new jsPDF('p','mm','a4');
+const W=210,H=297,M=20,CW=W-2*M;
+const accent=[0,169,118],dark=[26,31,46],mid=[85,97,120],light=[143,155,173];
+function line(y,c){p.setDrawColor(...c||[223,227,234]);p.setLineWidth(.3);p.line(M,y,W-M,y)}
+function badge(x,y,txt,bg,fg){p.setFillColor(...bg);p.roundedRect(x,y-3.5,p.getTextWidth(txt)+6,5.5,2,2,'F');p.setFont('helvetica','bold');p.setFontSize(6.5);p.setTextColor(...fg);p.text(txt,x+3,y)}
+function checkPage(y,need){if(y+need>H-20){p.addPage();return 25}return y}
+// Header band
+p.setFillColor(...accent);p.rect(0,0,W,28,'F');
+p.setFont('helvetica','bold');p.setFontSize(24);p.setTextColor(255,255,255);p.text('inverso',M,18);
+p.setFontSize(9);p.setTextColor(255,255,255);p.text('Informe de Inversion Personalizado',M+55,18);
+badge(W-M-22,18,'BETA',[255,255,255],accent);
+// Date & user
+let y=38;p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(...mid);
+p.text(document.getElementById('reportSubtitle').textContent,M,y);y+=10;
+// Profile box
+p.setFillColor(244,246,249);p.roundedRect(M,y,CW,22,3,3,'F');
+p.setFont('helvetica','bold');p.setFontSize(7);p.setTextColor(...mid);
+const cols=[['MONTO',`$${userData.amount.toLocaleString('es-CL')}`],['HORIZONTE',userData.horizon],['PERFIL',userData.risk],['OBJETIVO',userData.objective]];
+cols.forEach((c,i)=>{const x=M+6+i*(CW/4);p.setFont('helvetica','normal');p.setFontSize(6.5);p.setTextColor(...mid);p.text(c[0],x,y+8);p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dark);p.text(c[1],x,y+15)});
+y+=30;line(y,light);y+=8;
+// Section: Profile
+p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(...dark);p.text('Tu Perfil de Inversionista',M,y);y+=7;
+p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(...mid);
+const profLines=p.splitTextToSize(getPE(userData.risk),CW);p.text(profLines,M,y);y+=profLines.length*4.5+4;
+const horLines=p.splitTextToSize(getHE(userData.horizon),CW);p.text(horLines,M,y);y+=horLines.length*4.5+8;
+line(y);y+=8;
+// Section: Funds
+const mF=BCI_FUNDS.filter(f=>{if(userData.risk==='conservador'&&f.risk>2)return false;if(userData.risk==='moderado'&&f.risk>3)return false;if(!f.horizon.includes(userData.horizon))return false;if(userData.amount<f.minInvest)return false;return true}).sort((a,b)=>b.rent12-a.rent12);
+p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(...dark);p.text('Fondos Mutuos Recomendados',M,y);
+badge(M+p.getTextWidth('Fondos Mutuos Recomendados  ')+4,y,`${mF.length} OPCIONES`,accent,[255,255,255]);y+=8;
+mF.forEach((f,i)=>{y=checkPage(y,30);
+p.setFillColor(i===0?244:250,i===0?255:251,i===0?250:252);p.roundedRect(M,y-1,CW,26,2,2,'F');
+if(i===0){p.setDrawColor(...accent);p.setLineWidth(.5);p.roundedRect(M,y-1,CW,26,2,2,'S');badge(M+3,y+3,'MAS COMPATIBLE',accent,[255,255,255])}
+p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(...dark);p.text(f.name,M+4,y+(i===0?10:6));
+p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...mid);p.text(f.type+' · '+f.currency,M+4,y+(i===0?15:11));
+const statsX=M+CW-70;
+p.setFont('helvetica','bold');p.setFontSize(9);
+p.setTextColor(f.rent12>=0?0:224,f.rent12>=0?169:68,f.rent12>=0?118:96);
+p.text(`${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}% anual`,statsX,y+(i===0?10:6));
+p.setFont('helvetica','normal');p.setFontSize(7.5);p.setTextColor(...mid);
+p.text(`Comision: ${f.fee}% | Riesgo: ${f.risk}/5`,statsX,y+(i===0?15:11));
+const descLines=p.splitTextToSize(f.desc,CW-8);p.setFontSize(7.5);p.setTextColor(...light);p.text(descLines,M+4,y+(i===0?20:16));
+y+=28+descLines.length*2});
+y+=4;line(y);y+=8;
+// Section: Deposits
+y=checkPage(y,40);
+p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(...dark);p.text('Depositos a Plazo BCI',M,y);y+=8;
+// Table header
+p.setFillColor(244,246,249);p.rect(M,y-1,CW,7,'F');
+p.setFont('helvetica','bold');p.setFontSize(7);p.setTextColor(...mid);
+['Plazo','Tasa Anual','Ganancia','Recibirias'].forEach((h,i)=>p.text(h,M+4+i*(CW/4),y+3));y+=9;
+BCI_DEPOSITS.filter(d=>userData.amount>=d.minMonto).forEach((d,i)=>{
+y=checkPage(y,7);const g=Math.round(userData.amount*d.tasa/100),t=userData.amount+g;
+const iB=userData.horizon==='corto'?d.plazo<=90:userData.horizon==='medio'?d.plazo===180:d.plazo===360;
+if(iB){p.setFillColor(240,255,248);p.rect(M,y-3,CW,7,'F')}
+p.setFont('helvetica',iB?'bold':'normal');p.setFontSize(8.5);p.setTextColor(...dark);
+p.text(`${d.plazo} dias`,M+4,y+1);
+p.text(`${d.tasaAnual.toFixed(2)}%`,M+4+CW/4,y+1);
+p.setTextColor(...accent);p.text(`+$${g.toLocaleString('es-CL')}`,M+4+2*CW/4,y+1);
+p.setTextColor(...dark);p.text(`$${t.toLocaleString('es-CL')}`,M+4+3*CW/4,y+1);y+=7});
+y+=6;line(y);y+=8;
+// Scenarios
+y=checkPage(y,35);
+p.setFont('helvetica','bold');p.setFontSize(13);p.setTextColor(...dark);p.text('Escenarios de Proyeccion',M,y);y+=8;
+const yrs=userData.horizon==='corto'?1:userData.horizon==='medio'?3:5;
+const rt={conservador:{p:.02,m:.045,o:.06},moderado:{p:-.02,m:.07,o:.12},agresivo:{p:-.08,m:.10,o:.18}}[userData.risk];
+const scenarios=[{l:'Pesimista',r:rt.p,c:[224,68,96]},{l:'Moderado',r:rt.m,c:[224,148,34]},{l:'Optimista',r:rt.o,c:accent}];
+const boxW=(CW-8)/3;
+scenarios.forEach((s,i)=>{const bx=M+i*(boxW+4),val=Math.round(userData.amount*Math.pow(1+s.r,yrs));
+p.setFillColor(244,246,249);p.roundedRect(bx,y,boxW,20,2,2,'F');
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...mid);p.text(s.l,bx+boxW/2,y+7,{align:'center'});
+p.setFont('helvetica','bold');p.setFontSize(11);p.setTextColor(...s.c);p.text(`$${val.toLocaleString('es-CL')}`,bx+boxW/2,y+15,{align:'center'})});
+y+=28;
+// Footer
+y=checkPage(y,15);line(y,[200,205,212]);y+=6;
+p.setFontSize(7);p.setTextColor(...light);p.text('Inverso Beta — Los datos mostrados son de referencia y no constituyen asesoria financiera.',M,y);y+=4;
+p.text('Siempre consulta con un profesional antes de invertir. Generado en inverso-ten.vercel.app',M,y);
+p.save(`Inverso_${userData.name}_${new Date().toISOString().slice(0,10)}.pdf`)}catch(e){console.error(e);alert('Error generando PDF.')}b.textContent='📄 Descargar PDF';b.disabled=false}
+
+function toggleTheme(){const html=document.documentElement,btn=document.getElementById('themeBtn');
+if(html.getAttribute('data-theme')==='light'){html.removeAttribute('data-theme');btn.textContent='☀️ Claro'}
+else{html.setAttribute('data-theme','light');btn.textContent='🌙 Oscuro'}
+// Rebuild charts if report is visible
+if(document.getElementById('report').classList.contains('active')){const pc=document.getElementById('projectionChart'),cc=document.getElementById('comparisonChart');
+if(pc){const p=Chart.getChart(pc);if(p)p.destroy()}if(cc){const c=Chart.getChart(cc);if(c)c.destroy()}
+const mF=BCI_FUNDS.filter(f=>{if(userData.risk==='conservador'&&f.risk>2)return false;if(userData.risk==='moderado'&&f.risk>3)return false;if(!f.horizon.includes(userData.horizon))return false;if(userData.amount<f.minInvest)return false;return true}).sort((a,b)=>b.rent12-a.rent12);
+setTimeout(()=>{buildPC(userData.amount,userData.risk,userData.horizon);if(mF[0])buildCC(userData.amount,mF[0])},100)}}
 
 function startOver(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');showStep(0);Object.keys(userData).forEach(k=>userData[k]=typeof userData[k]==='number'?0:'');document.getElementById('userName').value='';document.getElementById('userAge').value='';document.getElementById('userAmount').value='';document.getElementById('userHorizon').value='';document.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));window.scrollTo({top:0})}
 </script>
