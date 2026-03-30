@@ -1,7 +1,5 @@
 // Datos actualizados: 2025-12-29
 // Fuentes: CMF, sitios de cada administradora, Morningstar, Rankia
-// Fondos principales de: BCI, Banchile, BancoEstado, Scotiabank, Santander
-// Para actualizar: reemplaza este archivo con datos más recientes
 const FUNDS_DATA = [
   {"name":"BCI Rendimiento","provider":"BCI","currency":"CLP","category":"deuda","risk":1,"rent30":0.38,"rent12":4.85,"fee":0.60},
   {"name":"BCI Monetario I","provider":"BCI","currency":"CLP","category":"deuda","risk":1,"rent30":0.40,"rent12":5.10,"fee":0.50},
@@ -48,4 +46,38 @@ const FUNDS_DATA = [
   {"name":"Santander Acciones Globales","provider":"Santander","currency":"USD","category":"accionario","risk":5,"rent30":-0.80,"rent12":18.00,"fee":3.05},
   {"name":"Santander Latam Equity","provider":"Santander","currency":"CLP","category":"accionario","risk":5,"rent30":2.50,"rent12":15.80,"fee":3.00}
 ];
+
+const DEPOSITS_DATA = {
+  "BCI": [
+    {"plazo":30,"tasa":0.34,"tasaAnual":4.15,"minMonto":500000},
+    {"plazo":90,"tasa":1.08,"tasaAnual":4.40,"minMonto":500000},
+    {"plazo":180,"tasa":2.22,"tasaAnual":4.50,"minMonto":1000000},
+    {"plazo":360,"tasa":4.60,"tasaAnual":4.60,"minMonto":1000000}
+  ],
+  "Banchile": [
+    {"plazo":30,"tasa":0.33,"tasaAnual":4.05,"minMonto":500000},
+    {"plazo":90,"tasa":1.05,"tasaAnual":4.28,"minMonto":500000},
+    {"plazo":180,"tasa":2.18,"tasaAnual":4.42,"minMonto":1000000},
+    {"plazo":360,"tasa":4.55,"tasaAnual":4.55,"minMonto":1000000}
+  ],
+  "BancoEstado": [
+    {"plazo":30,"tasa":0.35,"tasaAnual":4.25,"minMonto":250000},
+    {"plazo":90,"tasa":1.12,"tasaAnual":4.55,"minMonto":250000},
+    {"plazo":180,"tasa":2.30,"tasaAnual":4.66,"minMonto":500000},
+    {"plazo":360,"tasa":4.75,"tasaAnual":4.75,"minMonto":500000}
+  ],
+  "Scotiabank": [
+    {"plazo":30,"tasa":0.32,"tasaAnual":3.95,"minMonto":500000},
+    {"plazo":90,"tasa":1.02,"tasaAnual":4.15,"minMonto":500000},
+    {"plazo":180,"tasa":2.15,"tasaAnual":4.35,"minMonto":1000000},
+    {"plazo":360,"tasa":4.45,"tasaAnual":4.45,"minMonto":1000000}
+  ],
+  "Santander": [
+    {"plazo":30,"tasa":0.33,"tasaAnual":4.10,"minMonto":500000},
+    {"plazo":90,"tasa":1.06,"tasaAnual":4.32,"minMonto":500000},
+    {"plazo":180,"tasa":2.20,"tasaAnual":4.46,"minMonto":1000000},
+    {"plazo":360,"tasa":4.58,"tasaAnual":4.58,"minMonto":1000000}
+  ]
+};
+
 const DATA_DATE = "2025-12-29";
