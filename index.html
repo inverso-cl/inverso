@@ -16,316 +16,258 @@
 .screen{display:none}.screen.active{display:block}
 .landing-hero{text-align:center;padding:5rem 1.5rem 3rem;position:relative}.landing-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,232,162,.07) 0%,transparent 70%);pointer-events:none}.landing-hero h1{font-size:clamp(2.2rem,5.5vw,3.4rem);margin-bottom:1rem;position:relative}.landing-hero h1 em{font-style:normal;color:var(--accent)}.landing-hero p{color:var(--text-secondary);font-size:1.1rem;max-width:520px;margin:0 auto 1rem;position:relative}.landing-hero .sub{font-size:.85rem;color:var(--text-muted);position:relative}
 .data-status{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--text-muted);background:var(--bg-card);padding:.3rem .8rem;border-radius:20px;border:1px solid var(--border);margin-top:.5rem}.data-status .dg{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.steps-indicator{display:flex;justify-content:center;gap:.5rem;margin:2.5rem auto 2rem;max-width:340px}.step-dot{flex:1;height:4px;border-radius:4px;background:var(--border);transition:background .4s,box-shadow .4s}.step-dot.active{background:var(--accent);box-shadow:0 0 12px rgba(0,232,162,.3)}.step-dot.done{background:var(--accent);opacity:.5}
+.steps-indicator{display:flex;justify-content:center;gap:.5rem;margin:2.5rem auto 2rem;max-width:340px}.step-dot{flex:1;height:4px;border-radius:4px;background:var(--border);transition:background .4s}.step-dot.active{background:var(--accent);box-shadow:0 0 12px rgba(0,232,162,.3)}.step-dot.done{background:var(--accent);opacity:.5}
 .form-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem 2rem;max-width:560px;margin:0 auto}.form-card h3{font-size:1.3rem;margin-bottom:.4rem}.form-card .step-desc{color:var(--text-secondary);font-size:.9rem;margin-bottom:2rem}
-.field{margin-bottom:1.5rem}.field label{display:block;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.5rem}.field input,.field select{width:100%;padding:.85rem 1rem;font-size:.95rem;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);transition:border .2s,box-shadow .2s}.field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}.field input::placeholder{color:var(--text-muted)}.field .hint{font-size:.78rem;color:var(--text-muted);margin-top:.35rem}
+.field{margin-bottom:1.5rem}.field label{display:block;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.5rem}.field input,.field select{width:100%;padding:.85rem 1rem;font-size:.95rem;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);transition:border .2s}.field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}.field input::placeholder{color:var(--text-muted)}.field .hint{font-size:.78rem;color:var(--text-muted);margin-top:.35rem}
 .option-cards{display:grid;gap:.75rem}.option-card{background:var(--bg-elevated);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.2rem;cursor:pointer;transition:all .25s;display:flex;align-items:flex-start;gap:.8rem}.option-card:hover{border-color:var(--border-light);background:var(--bg-card-alt)}.option-card.selected{border-color:var(--accent);background:var(--accent-soft)}.option-card .icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}.option-card .opt-title{font-weight:600;font-size:.95rem}.option-card .opt-desc{font-size:.8rem;color:var(--text-secondary);margin-top:.15rem}
 .btn-row{display:flex;gap:.75rem;margin-top:2rem;justify-content:flex-end}.btn{padding:.8rem 1.8rem;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:all .25s}.btn-primary{background:var(--accent);color:#06090f}.btn-primary:hover{box-shadow:0 4px 24px rgba(0,232,162,.3);transform:translateY(-1px)}.btn-secondary{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}.btn-secondary:hover{border-color:var(--text-secondary)}.btn:disabled{opacity:.4;cursor:not-allowed}
-#report{padding-bottom:4rem}.report-header{text-align:center;padding:3.5rem 1.5rem 2rem;position:relative}.report-header::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse at 50% 0%,rgba(0,232,162,.06) 0%,transparent 70%);pointer-events:none}.report-header h1{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:.5rem;position:relative}.report-header p{color:var(--text-secondary);position:relative}.report-actions{display:flex;justify-content:center;gap:.75rem;margin:1.5rem 0 0;position:relative;flex-wrap:wrap}
-.profile-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;margin:2rem auto;max-width:900px;display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem;justify-content:center}.profile-item{text-align:center}.profile-item .pi-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted)}.profile-item .pi-value{font-size:1.05rem;font-weight:600;margin-top:.15rem}
-/* Executive summary */
-.exec-summary{background:linear-gradient(135deg,var(--bg-card) 0%,var(--bg-card-alt) 100%);border:1.5px solid var(--accent);border-radius:var(--radius);padding:2rem;margin:2rem auto;max-width:900px;box-shadow:0 0 40px rgba(0,232,162,.06)}.exec-summary h3{font-size:1.2rem;margin-bottom:1.2rem;color:var(--accent);text-align:center}.exec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}.exec-item{background:var(--bg-elevated);border-radius:var(--radius-sm);padding:1rem;text-align:center}.exec-item .ei-icon{font-size:1.5rem;margin-bottom:.3rem}.exec-item .ei-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted)}.exec-item .ei-value{font-size:1.1rem;font-weight:700;margin-top:.2rem}.exec-item .ei-detail{font-size:.75rem;color:var(--text-secondary);margin-top:.15rem}.exec-item .ei-value.positive{color:var(--accent)}.exec-reason{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.85rem;color:var(--text-secondary);line-height:1.7;text-align:center}
-.section-block{margin:3rem auto;max-width:900px}.section-title{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);flex-wrap:wrap}.section-title .s-icon{font-size:1.3rem}.section-title h2{font-size:1.35rem}.section-title .s-badge{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:.2rem .6rem;border-radius:4px;background:var(--accent-soft);color:var(--accent)}
-.info-box{background:var(--bg-card-alt);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1.2rem 1.5rem;margin-bottom:1.5rem}.info-box h4{font-size:.95rem;margin-bottom:.4rem;color:var(--accent);font-family:'DM Sans',sans-serif;font-weight:600}.info-box p{font-size:.88rem;color:var(--text-secondary);line-height:1.7}.info-box.tip{border-left-color:var(--amber)}.info-box.tip h4{color:var(--amber)}
-.product-grid{display:grid;gap:1rem}.product-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.8rem;transition:border-color .25s,transform .25s}.product-card:hover{border-color:var(--border-light);transform:translateY(-2px)}.product-card.recommended{border-color:var(--accent);box-shadow:0 0 30px rgba(0,232,162,.07)}.product-card .rec-badge{display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;background:var(--accent);color:#06090f;padding:.2rem .6rem;border-radius:4px;margin-bottom:.75rem;margin-right:.4rem}.product-card .cat-badge{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:.2rem .5rem;border-radius:4px;margin-bottom:.75rem}.cat-badge.best-rf{background:rgba(77,166,255,.15);color:var(--blue)}.cat-badge.best-bal{background:rgba(255,179,71,.15);color:var(--amber)}.cat-badge.best-acc{background:rgba(255,92,124,.15);color:var(--red)}.product-card .pc-name{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;margin-bottom:.2rem}.product-card .pc-type{font-size:.8rem;color:var(--text-muted);margin-bottom:1rem}
-.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:.75rem}.pc-stat{background:var(--bg-elevated);border-radius:var(--radius-sm);padding:.75rem .9rem;text-align:center}.pc-stat .stat-label{font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}.pc-stat .stat-value{font-size:1rem;font-weight:700;margin-top:.15rem}.pc-stat .positive{color:var(--accent)}.pc-stat .negative{color:var(--red)}.pc-stat .neutral{color:var(--text)}
-.pc-explanation{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.85rem;color:var(--text-secondary);line-height:1.7}.pc-explanation strong{color:var(--text)}.pc-projection{background:var(--accent-soft);border-radius:var(--radius-sm);padding:.8rem 1rem;margin-top:.75rem;font-size:.85rem;color:var(--text)}.pc-projection .proj-val{font-weight:700;color:var(--accent);font-size:1.05rem}
-.risk-visual{display:flex;gap:3px;align-items:center;justify-content:center}.risk-visual .rv-bar{width:7px;height:16px;border-radius:2px;background:var(--border)}.risk-visual.rl-1 .rv-bar:nth-child(-n+1){background:var(--accent)}.risk-visual.rl-2 .rv-bar:nth-child(-n+2){background:var(--accent)}.risk-visual.rl-3 .rv-bar:nth-child(-n+3){background:var(--amber)}.risk-visual.rl-4 .rv-bar:nth-child(-n+4){background:var(--amber)}.risk-visual.rl-5 .rv-bar:nth-child(-n+5){background:var(--red)}
-.chart-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}.chart-wrapper h4{font-size:.95rem;margin-bottom:.3rem}.chart-wrapper .chart-sub{font-size:.8rem;color:var(--text-muted);margin-bottom:1rem}canvas{width:100%!important;max-height:320px}
-.scenario-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1.5rem}.scenario-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;text-align:center}.scenario-card .sc-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.4rem}.scenario-card .sc-value{font-size:1.5rem;font-weight:700;font-family:'Fraunces',serif}.scenario-card .sc-detail{font-size:.78rem;color:var(--text-secondary);margin-top:.25rem}.sc-pessimistic .sc-value{color:var(--red)}.sc-moderate .sc-value{color:var(--amber)}.sc-optimistic .sc-value{color:var(--accent)}
-.comp-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:.5rem;font-size:.85rem}.comp-table th{text-align:left;padding:.7rem .8rem;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);border-bottom:1px solid var(--border)}.comp-table td{padding:.7rem .8rem;border-bottom:1px solid var(--border)}.comp-table tr:last-child td{border-bottom:none}.comp-table .highlight-row{background:var(--accent-soft)}.comp-table .highlight-row td:first-child{border-left:3px solid var(--accent)}.comp-table .best{color:var(--accent);font-weight:700}
-.tab-bar{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}.tab-btn{padding:.5rem 1rem;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text-secondary);transition:all .2s}.tab-btn.active{background:var(--accent);color:#06090f;border-color:var(--accent)}.tab-btn:hover:not(.active){border-color:var(--accent);color:var(--text)}.tab-content{display:none}.tab-content.active{display:block}
-.glossary-grid{display:grid;gap:.75rem}.glossary-item{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}.glossary-item summary{padding:1rem 1.3rem;cursor:pointer;font-weight:600;font-size:.95rem;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;transition:background .2s}.glossary-item summary:hover{background:var(--bg-card-alt)}.glossary-item summary::after{content:'+';font-size:1.2rem;color:var(--text-muted)}.glossary-item[open] summary::after{content:'−';color:var(--accent)}.glossary-item .gloss-body{padding:0 1.3rem 1.2rem;font-size:.88rem;color:var(--text-secondary);line-height:1.75}
-.report-footer{text-align:center;padding:3rem 1.5rem;border-top:1px solid var(--border);color:var(--text-muted);font-size:.8rem;margin-top:3rem}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}.anim-up{animation:fadeUp .6s ease-out both}.anim-up-d1{animation-delay:.1s}.anim-up-d2{animation-delay:.2s}.anim-up-d3{animation-delay:.3s}.anim-up-d4{animation-delay:.4s}
-@media(max-width:640px){.site-header{padding:1rem}.form-card{padding:1.8rem 1.3rem}.profile-bar{padding:1.2rem;gap:1rem 1.5rem}.product-card{padding:1.2rem}.pc-stats{grid-template-columns:repeat(2,1fr)}.scenario-grid{grid-template-columns:1fr}.btn-row{flex-direction:column}.btn{width:100%;text-align:center}.tab-bar{gap:.3rem}.tab-btn{padding:.4rem .7rem;font-size:.7rem}.exec-grid{grid-template-columns:1fr 1fr}}
-.loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}.loading-overlay.hide{opacity:0;pointer-events:none}.loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}.loading-text{color:var(--text-secondary);margin-top:1rem;font-size:.9rem}@keyframes spin{to{transform:rotate(360deg)}}
+/* Report nav tabs */
+.report-nav{position:sticky;top:56px;z-index:90;background:var(--bg);border-bottom:1px solid var(--border);padding:.75rem 1rem;display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;backdrop-filter:blur(12px)}.rnav-btn{padding:.45rem .9rem;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text-muted);transition:all .2s}.rnav-btn.active{background:var(--accent);color:#06090f;border-color:var(--accent)}.rnav-btn:hover:not(.active){border-color:var(--accent);color:var(--text)}
+.report-page{display:none}.report-page.active{display:block}
+#report .report-header{text-align:center;padding:3rem 1.5rem 1.5rem;position:relative}#report .report-header h1{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:.5rem}#report .report-header p{color:var(--text-secondary)}.report-actions{display:flex;justify-content:center;gap:.75rem;margin:1rem 0 0;flex-wrap:wrap}
+.profile-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.5rem auto;max-width:900px;display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:center}.profile-item{text-align:center}.profile-item .pi-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted)}.profile-item .pi-value{font-size:1rem;font-weight:600;margin-top:.1rem}
+.exec-summary{background:linear-gradient(135deg,var(--bg-card) 0%,var(--bg-card-alt) 100%);border:1.5px solid var(--accent);border-radius:var(--radius);padding:1.8rem;margin:1.5rem auto;max-width:900px;box-shadow:0 0 40px rgba(0,232,162,.06)}.exec-summary h3{font-size:1.1rem;margin-bottom:1rem;color:var(--accent);text-align:center}.exec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem}.exec-item{background:var(--bg-elevated);border-radius:var(--radius-sm);padding:.9rem;text-align:center}.exec-item .ei-icon{font-size:1.3rem;margin-bottom:.2rem}.exec-item .ei-label{font-size:.6rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted)}.exec-item .ei-value{font-size:1rem;font-weight:700;margin-top:.15rem}.exec-item .ei-detail{font-size:.72rem;color:var(--text-secondary);margin-top:.1rem}.exec-item .ei-value.positive{color:var(--accent)}.exec-reason{margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--border);font-size:.82rem;color:var(--text-secondary);line-height:1.7;text-align:center}
+.section-block{margin:2rem auto;max-width:900px}.section-title{display:flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);flex-wrap:wrap}.section-title .s-icon{font-size:1.2rem}.section-title h2{font-size:1.25rem}.section-title .s-badge{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:.2rem .5rem;border-radius:4px;background:var(--accent-soft);color:var(--accent)}
+.info-box{background:var(--bg-card-alt);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1rem 1.2rem;margin-bottom:1.2rem}.info-box h4{font-size:.9rem;margin-bottom:.3rem;color:var(--accent);font-family:'DM Sans',sans-serif;font-weight:600}.info-box p{font-size:.85rem;color:var(--text-secondary);line-height:1.7}.info-box.tip{border-left-color:var(--amber)}.info-box.tip h4{color:var(--amber)}
+.product-grid{display:grid;gap:1rem}.product-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;transition:border-color .25s,transform .25s;cursor:pointer}.product-card:hover{border-color:var(--border-light);transform:translateY(-2px)}.product-card.recommended{border-color:var(--accent);box-shadow:0 0 30px rgba(0,232,162,.07)}.product-card .rec-badge{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;background:var(--accent);color:#06090f;padding:.2rem .5rem;border-radius:4px;margin-bottom:.6rem;margin-right:.3rem}.product-card .cat-badge{display:inline-block;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:.2rem .5rem;border-radius:4px;margin-bottom:.6rem}.cat-badge.best-rf{background:rgba(77,166,255,.15);color:var(--blue)}.cat-badge.best-bal{background:rgba(255,179,71,.15);color:var(--amber)}.cat-badge.best-acc{background:rgba(255,92,124,.15);color:var(--red)}
+.product-card .pc-name{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;margin-bottom:.15rem}.product-card .pc-type{font-size:.75rem;color:var(--text-muted);margin-bottom:.8rem}
+.pc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:.6rem}.pc-stat{background:var(--bg-elevated);border-radius:var(--radius-sm);padding:.6rem .7rem;text-align:center}.pc-stat .stat-label{font-size:.55rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}.pc-stat .stat-value{font-size:.95rem;font-weight:700;margin-top:.1rem}.pc-stat .positive{color:var(--accent)}.pc-stat .negative{color:var(--red)}.pc-stat .neutral{color:var(--text)}
+.pc-projection{background:var(--accent-soft);border-radius:var(--radius-sm);padding:.7rem .9rem;margin-top:.7rem;font-size:.82rem;color:var(--text)}.pc-projection .proj-val{font-weight:700;color:var(--accent);font-size:1rem}
+.pc-click-hint{font-size:.7rem;color:var(--text-muted);margin-top:.5rem;text-align:right}
+.risk-visual{display:flex;gap:3px;align-items:center;justify-content:center}.risk-visual .rv-bar{width:6px;height:14px;border-radius:2px;background:var(--border)}.risk-visual.rl-1 .rv-bar:nth-child(-n+1){background:var(--accent)}.risk-visual.rl-2 .rv-bar:nth-child(-n+2){background:var(--accent)}.risk-visual.rl-3 .rv-bar:nth-child(-n+3){background:var(--amber)}.risk-visual.rl-4 .rv-bar:nth-child(-n+4){background:var(--amber)}.risk-visual.rl-5 .rv-bar:nth-child(-n+5){background:var(--red)}
+.chart-wrapper{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem}.chart-wrapper h4{font-size:.9rem;margin-bottom:.2rem}.chart-wrapper .chart-sub{font-size:.75rem;color:var(--text-muted);margin-bottom:.8rem}canvas{width:100%!important;max-height:300px}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1rem}.scenario-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center}.scenario-card .sc-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.3rem}.scenario-card .sc-value{font-size:1.3rem;font-weight:700;font-family:'Fraunces',serif}.scenario-card .sc-detail{font-size:.72rem;color:var(--text-secondary);margin-top:.2rem}.sc-pessimistic .sc-value{color:var(--red)}.sc-moderate .sc-value{color:var(--amber)}.sc-optimistic .sc-value{color:var(--accent)}
+/* Simulator */
+.sim-controls{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}.sim-field label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);display:block;margin-bottom:.3rem}.sim-field .sim-val{font-size:1.1rem;font-weight:700;color:var(--accent);margin-bottom:.4rem}.sim-field input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+/* Comparator */
+.comp-select{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}.comp-select select{width:100%;padding:.7rem;font-family:'DM Sans',sans-serif;font-size:.85rem;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text)}.comp-select select:focus{outline:none;border-color:var(--accent)}.comp-vs{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:start}.comp-vs-divider{display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;color:var(--text-muted);padding-top:2rem}.comp-fund{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem}.comp-fund h4{font-size:1rem;margin-bottom:.8rem}.comp-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem}.comp-row:last-child{border:none}.comp-row .cr-label{color:var(--text-muted)}.comp-row .cr-val{font-weight:600}.comp-row .cr-val.positive{color:var(--accent)}.comp-row .cr-val.negative{color:var(--red)}.comp-winner{text-align:center;margin-top:1rem;padding:1rem;background:var(--accent-soft);border-radius:var(--radius-sm);font-size:.9rem}
+.comp-table{width:100%;border-collapse:separate;border-spacing:0;font-size:.82rem}.comp-table th{text-align:left;padding:.6rem .7rem;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);border-bottom:1px solid var(--border)}.comp-table td{padding:.6rem .7rem;border-bottom:1px solid var(--border)}.comp-table tr:last-child td{border-bottom:none}.comp-table .highlight-row{background:var(--accent-soft)}.comp-table .highlight-row td:first-child{border-left:3px solid var(--accent)}.comp-table .best{color:var(--accent);font-weight:700}
+.tab-bar{display:flex;gap:.4rem;margin-bottom:.8rem;flex-wrap:wrap}.tab-btn{padding:.4rem .8rem;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text-secondary);transition:all .2s}.tab-btn.active{background:var(--accent);color:#06090f;border-color:var(--accent)}.tab-btn:hover:not(.active){border-color:var(--accent)}.tab-content{display:none}.tab-content.active{display:block}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}.modal-overlay.show{display:flex}.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);max-width:600px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;position:relative}.modal-close{position:absolute;top:1rem;right:1rem;background:var(--bg-elevated);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);font-size:1.1rem;transition:all .2s}.modal-close:hover{border-color:var(--accent);color:var(--text)}.modal h3{font-size:1.2rem;margin-bottom:.3rem}.modal .m-type{font-size:.8rem;color:var(--text-muted);margin-bottom:1.2rem}.modal .m-section{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border)}.modal .m-section h4{font-size:.85rem;color:var(--accent);font-family:'DM Sans',sans-serif;font-weight:600;margin-bottom:.5rem}.modal .m-section p{font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+.glossary-grid{display:grid;gap:.6rem}.glossary-item{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}.glossary-item summary{padding:.8rem 1.1rem;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center}.glossary-item summary:hover{background:var(--bg-card-alt)}.glossary-item summary::after{content:'+';font-size:1.1rem;color:var(--text-muted)}.glossary-item[open] summary::after{content:'−';color:var(--accent)}.glossary-item .gloss-body{padding:0 1.1rem 1rem;font-size:.85rem;color:var(--text-secondary);line-height:1.75}
+.report-footer{text-align:center;padding:2rem 1.5rem;border-top:1px solid var(--border);color:var(--text-muted);font-size:.75rem;margin-top:2rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.anim-up{animation:fadeUp .5s ease-out both}.anim-up-d1{animation-delay:.1s}.anim-up-d2{animation-delay:.2s}.anim-up-d3{animation-delay:.3s}
+@media(max-width:640px){.site-header{padding:1rem}.form-card{padding:1.5rem 1.2rem}.profile-bar{padding:1rem;gap:.8rem 1.2rem}.product-card{padding:1.1rem}.pc-stats{grid-template-columns:repeat(2,1fr)}.scenario-grid{grid-template-columns:1fr}.btn-row{flex-direction:column}.btn{width:100%;text-align:center}.sim-controls{grid-template-columns:1fr}.comp-select{grid-template-columns:1fr}.comp-vs{grid-template-columns:1fr}.comp-vs-divider{padding:0}.report-nav{gap:.3rem}.rnav-btn{padding:.35rem .6rem;font-size:.7rem}.exec-grid{grid-template-columns:1fr 1fr}}
+.loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}.loading-overlay.hide{opacity:0;pointer-events:none}.loading-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}.loading-text{color:var(--text-secondary);margin-top:1rem;font-size:.85rem}@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="logo-mark">inverso<span class="dot"></span></div><div class="header-right"><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Claro</button><span class="badge-beta">Beta · 5 bancos</span></div></header>
-<div class="loading-overlay" id="loadingOverlay" style="display:none;"><div class="loading-spinner"></div><p class="loading-text">Generando tu informe personalizado...</p></div>
+<header class="site-header"><div class="logo-mark">inverso<span class="dot"></span></div><div class="header-right"><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button><span class="badge-beta">Beta</span></div></header>
+<div class="loading-overlay" id="ov" style="display:none"><div class="loading-spinner"></div><p class="loading-text">Generando tu informe...</p></div>
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalBody"></div></div>
 
+<!-- QUESTIONNAIRE -->
 <div class="screen active" id="questionnaire">
-<section class="landing-hero"><h1 class="anim-up">Descubre dónde invertir<br><em>tu dinero</em></h1><p class="anim-up anim-up-d1">Responde unas preguntas y te generamos un informe personalizado con fondos mutuos y depósitos a plazo de múltiples bancos.</p><p class="sub anim-up anim-up-d2">100% gratis · Sin registro · BCI · Banchile · BancoEstado · Scotiabank · Santander</p><div class="data-status anim-up anim-up-d3"><span class="dg"></span> <span id="dst">Cargando...</span></div></section>
+<section class="landing-hero"><h1 class="anim-up">Descubre dónde invertir<br><em>tu dinero</em></h1><p class="anim-up anim-up-d1">Informe personalizado con fondos mutuos y depósitos a plazo de 5 bancos chilenos.</p><p class="sub anim-up anim-up-d2">100% gratis · BCI · Banchile · BancoEstado · Scotiabank · Santander</p><div class="data-status anim-up anim-up-d3"><span class="dg"></span> <span id="dst"></span></div></section>
 <div class="steps-indicator"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
-
-<div class="form-card anim-up anim-up-d2" id="step0">
-<h3>Primero, cuéntanos de ti</h3><p class="step-desc">No almacenamos ningún dato personal.</p>
-<div class="field"><label>Tu nombre</label><input type="text" id="userName" placeholder="Ej: Mario" autocomplete="off"></div>
-<div class="field"><label>Tu edad</label><input type="number" id="userAge" placeholder="Ej: 28" min="18" max="99"><p class="hint">Mínimo 18 años</p></div>
-<div class="btn-row"><button class="btn btn-primary" onclick="nextStep(1)">Continuar →</button></div>
-</div>
-<div class="form-card" id="step1" style="display:none">
-<h3>¿Cuánto y por cuánto tiempo?</h3><p class="step-desc">Esto nos ayuda a encontrar las opciones más adecuadas.</p>
-<div class="field"><label>Monto a invertir (CLP)</label><input type="text" id="userAmount" placeholder="Ej: 5.000.000" oninput="formatMoney(this)"><p class="hint">Monto en pesos chilenos</p></div>
-<div class="field"><label>Horizonte de inversión</label><select id="userHorizon"><option value="">Selecciona...</option><option value="corto">Corto plazo (menos de 1 año)</option><option value="medio">Mediano plazo (1 a 3 años)</option><option value="largo">Largo plazo (más de 3 años)</option></select></div>
-<div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(0)">← Atrás</button><button class="btn btn-primary" onclick="nextStep(2)">Continuar →</button></div>
-</div>
-<div class="form-card" id="step2" style="display:none">
-<h3>¿Tienes banco de preferencia?</h3><p class="step-desc">Si eres cliente de un banco, podemos priorizar sus productos. Si no, te mostramos lo mejor de todos.</p>
-<div class="option-cards">
-<div class="option-card" onclick="autoAdvance('bank','todos',this,3)"><span class="icon">🌐</span><div><div class="opt-title">Cualquier banco</div><div class="opt-desc">Muéstrame lo mejor de todos.</div></div></div>
-<div class="option-card" onclick="autoAdvance('bank','BCI',this,3)"><span class="icon">🏦</span><div><div class="opt-title">BCI</div><div class="opt-desc">Soy cliente BCI, prioriza sus productos.</div></div></div>
-<div class="option-card" onclick="autoAdvance('bank','Banchile',this,3)"><span class="icon">🏦</span><div><div class="opt-title">Banchile (Banco de Chile)</div><div class="opt-desc">Soy cliente del Banco de Chile.</div></div></div>
-</div>
-<div class="option-cards" style="margin-top:.75rem">
-<div class="option-card" onclick="autoAdvance('bank','BancoEstado',this,3)"><span class="icon">🏦</span><div><div class="opt-title">BancoEstado</div><div class="opt-desc">Soy cliente de BancoEstado.</div></div></div>
-<div class="option-card" onclick="autoAdvance('bank','Scotiabank',this,3)"><span class="icon">🏦</span><div><div class="opt-title">Scotiabank</div><div class="opt-desc">Soy cliente de Scotiabank.</div></div></div>
-<div class="option-card" onclick="autoAdvance('bank','Santander',this,3)"><span class="icon">🏦</span><div><div class="opt-title">Santander</div><div class="opt-desc">Soy cliente de Santander.</div></div></div>
-</div>
-<div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(1)">← Atrás</button></div>
-</div>
-<div class="form-card" id="step3" style="display:none">
-<h3>¿Cómo te llevas con el riesgo?</h3><p class="step-desc">Selecciona y avanza automáticamente.</p>
-<div class="option-cards">
-<div class="option-card" onclick="autoAdvance('risk','conservador',this,4)"><span class="icon">🛡️</span><div><div class="opt-title">Conservador</div><div class="opt-desc">Prefiero no perder plata aunque gane poco.</div></div></div>
-<div class="option-card" onclick="autoAdvance('risk','moderado',this,4)"><span class="icon">⚖️</span><div><div class="opt-title">Moderado</div><div class="opt-desc">Acepto algo de riesgo si me permite ganar más.</div></div></div>
-<div class="option-card" onclick="autoAdvance('risk','agresivo',this,4)"><span class="icon">🚀</span><div><div class="opt-title">Agresivo</div><div class="opt-desc">Dispuesto a perder en el corto plazo para ganar más en el largo.</div></div></div>
-</div>
-<div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(2)">← Atrás</button></div>
-</div>
-<div class="form-card" id="step4" style="display:none">
-<h3>¿Cuál es tu objetivo?</h3><p class="step-desc">Selecciona y generamos tu informe.</p>
-<div class="option-cards">
-<div class="option-card" onclick="autoGenerate('objective','ahorrar',this)"><span class="icon">🏦</span><div><div class="opt-title">Ahorrar / Fondo de emergencia</div><div class="opt-desc">Que mi plata rente más que en la cuenta corriente.</div></div></div>
-<div class="option-card" onclick="autoGenerate('objective','meta',this)"><span class="icon">🎯</span><div><div class="opt-title">Meta específica</div><div class="opt-desc">Viaje, auto, pie u otra meta concreta.</div></div></div>
-<div class="option-card" onclick="autoGenerate('objective','crecer',this)"><span class="icon">📈</span><div><div class="opt-title">Hacer crecer mi capital</div><div class="opt-desc">Que mi plata crezca en el tiempo.</div></div></div>
-<div class="option-card" onclick="autoGenerate('objective','jubilacion',this)"><span class="icon">🏖️</span><div><div class="opt-title">Complementar jubilación</div><div class="opt-desc">Generar ingresos para el retiro.</div></div></div>
-</div>
-<div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(3)">← Atrás</button></div>
-</div>
+<div class="form-card anim-up anim-up-d2" id="step0"><h3>Cuéntanos de ti</h3><p class="step-desc">No almacenamos datos.</p><div class="field"><label>Nombre</label><input type="text" id="uName" placeholder="Ej: Mario" autocomplete="off"></div><div class="field"><label>Edad</label><input type="number" id="uAge" placeholder="Ej: 28" min="18" max="99"><p class="hint">Mínimo 18</p></div><div class="btn-row"><button class="btn btn-primary" onclick="nextStep(1)">Continuar →</button></div></div>
+<div class="form-card" id="step1" style="display:none"><h3>¿Cuánto y por cuánto tiempo?</h3><p class="step-desc">Nos ayuda a encontrar lo mejor para ti.</p><div class="field"><label>Monto (CLP)</label><input type="text" id="uAmt" placeholder="Ej: 5.000.000" oninput="fmtM(this)"><p class="hint">Pesos chilenos</p></div><div class="field"><label>Horizonte</label><select id="uHz"><option value="">Selecciona...</option><option value="corto">Corto plazo (&lt;1 año)</option><option value="medio">Mediano (1-3 años)</option><option value="largo">Largo (&gt;3 años)</option></select></div><div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(0)">←</button><button class="btn btn-primary" onclick="nextStep(2)">Continuar →</button></div></div>
+<div class="form-card" id="step2" style="display:none"><h3>¿Banco de preferencia?</h3><p class="step-desc">Si eres cliente de un banco, priorizamos sus productos.</p><div class="option-cards"><div class="option-card" onclick="autoAdv('bank','todos',this,3)"><span class="icon">🌐</span><div><div class="opt-title">Cualquier banco</div><div class="opt-desc">Lo mejor de todos.</div></div></div><div class="option-card" onclick="autoAdv('bank','BCI',this,3)"><span class="icon">🏦</span><div><div class="opt-title">BCI</div></div></div><div class="option-card" onclick="autoAdv('bank','Banchile',this,3)"><span class="icon">🏦</span><div><div class="opt-title">Banchile</div></div></div></div><div class="option-cards" style="margin-top:.6rem"><div class="option-card" onclick="autoAdv('bank','BancoEstado',this,3)"><span class="icon">🏦</span><div><div class="opt-title">BancoEstado</div></div></div><div class="option-card" onclick="autoAdv('bank','Scotiabank',this,3)"><span class="icon">🏦</span><div><div class="opt-title">Scotiabank</div></div></div><div class="option-card" onclick="autoAdv('bank','Santander',this,3)"><span class="icon">🏦</span><div><div class="opt-title">Santander</div></div></div></div><div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(1)">←</button></div></div>
+<div class="form-card" id="step3" style="display:none"><h3>¿Cómo te llevas con el riesgo?</h3><p class="step-desc">Selecciona y avanza.</p><div class="option-cards"><div class="option-card" onclick="autoAdv('risk','conservador',this,4)"><span class="icon">🛡️</span><div><div class="opt-title">Conservador</div><div class="opt-desc">No perder plata aunque gane poco.</div></div></div><div class="option-card" onclick="autoAdv('risk','moderado',this,4)"><span class="icon">⚖️</span><div><div class="opt-title">Moderado</div><div class="opt-desc">Algo de riesgo por más ganancia.</div></div></div><div class="option-card" onclick="autoAdv('risk','agresivo',this,4)"><span class="icon">🚀</span><div><div class="opt-title">Agresivo</div><div class="opt-desc">Máxima ganancia a largo plazo.</div></div></div></div><div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(2)">←</button></div></div>
+<div class="form-card" id="step4" style="display:none"><h3>¿Cuál es tu objetivo?</h3><p class="step-desc">Selecciona y generamos tu informe.</p><div class="option-cards"><div class="option-card" onclick="autoGen('objective','ahorrar',this)"><span class="icon">🏦</span><div><div class="opt-title">Ahorrar</div><div class="opt-desc">Rentar más que la cuenta corriente.</div></div></div><div class="option-card" onclick="autoGen('objective','meta',this)"><span class="icon">🎯</span><div><div class="opt-title">Meta específica</div><div class="opt-desc">Viaje, auto, pie, etc.</div></div></div><div class="option-card" onclick="autoGen('objective','crecer',this)"><span class="icon">📈</span><div><div class="opt-title">Crecer capital</div><div class="opt-desc">Que mi plata crezca.</div></div></div><div class="option-card" onclick="autoGen('objective','jubilacion',this)"><span class="icon">🏖️</span><div><div class="opt-title">Jubilación</div><div class="opt-desc">Ingresos para el retiro.</div></div></div></div><div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(3)">←</button></div></div>
 </div>
 
+<!-- REPORT -->
 <div class="screen" id="report">
-<section class="report-header"><h1 class="anim-up">Tu informe personalizado</h1><p class="anim-up anim-up-d1" id="reportSubtitle"></p>
-<div class="report-actions anim-up anim-up-d2"><button class="btn btn-primary" onclick="downloadPDF()">📄 Descargar PDF</button><button class="btn btn-secondary" onclick="startOver()">🔄 Nuevo informe</button></div></section>
-<div class="container"><div class="profile-bar anim-up anim-up-d2" id="profileBar"></div></div>
-<div class="container" id="execSummaryContainer"></div>
-<div class="container" id="reportContent"></div>
-<footer class="report-footer"><p id="footerText"></p><p>Siempre consulta con un profesional antes de invertir. Hecho en Chile con <span style="color:var(--accent);">♥</span></p></footer>
+<div class="report-header"><h1 class="anim-up">Tu informe personalizado</h1><p class="anim-up anim-up-d1" id="rSub"></p><div class="report-actions anim-up anim-up-d2"><button class="btn btn-primary" onclick="dlPDF()">📄 PDF</button><button class="btn btn-secondary" onclick="restart()">🔄 Nuevo</button></div></div>
+<div class="container"><div class="profile-bar anim-up anim-up-d2" id="pBar"></div></div>
+<nav class="report-nav anim-up anim-up-d3" id="rNav"></nav>
+<div class="container" id="rPages"></div>
+<footer class="report-footer"><p id="fTxt"></p><p>No constituye asesoría financiera. Hecho en Chile con <span style="color:var(--accent);">♥</span></p></footer>
 </div>
 
 <script src="funds-data.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-if(typeof FUNDS_DATA==='undefined'){window.FUNDS_DATA=[];window.DEPOSITS_DATA={};window.DATA_DATE='sin datos'}
+if(typeof FUNDS_DATA==='undefined'){window.FUNDS_DATA=[];window.DEPOSITS_DATA={};window.DATA_DATE='—'}
 FUNDS_DATA.forEach(f=>{f.horizon=f.risk<=1?['corto','medio','largo']:f.risk<=2?['corto','medio']:f.risk<=3?['medio','largo']:['largo'];f.profile=f.risk<=2?'conservador':f.risk<=3?'moderado':'agresivo'});
-const provs=[...new Set(FUNDS_DATA.map(f=>f.provider))];
-document.getElementById('dst').textContent=`${FUNDS_DATA.length} fondos de ${provs.length} bancos · Datos al ${DATA_DATE}`;
-document.getElementById('footerText').textContent=`Inverso v0.6 — ${FUNDS_DATA.length} fondos reales. Datos al ${DATA_DATE}. No constituye asesoría financiera.`;
-const catL={deuda:'Renta Fija',accionario:'Accionario',balanceado:'Balanceado'};
-const STEPS=5;let currentStep=0;const userData={name:'',age:0,amount:0,horizon:'',risk:'',objective:'',bank:'todos'};
-function formatMoney(i){let v=i.value.replace(/\D/g,'');if(v)v=parseInt(v).toLocaleString('es-CL');i.value=v}
-function parseMoney(s){return parseInt(s.replace(/\D/g,''))||0}
-function selectOption(t,v,el){const p=el.closest('.option-cards');p.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');userData[t]=v}
-function autoAdvance(t,v,el,next){selectOption(t,v,el);setTimeout(()=>showStep(next),500)}
-function autoGenerate(t,v,el){selectOption(t,v,el);setTimeout(()=>generateReport(),600)}
-function updateSteps(s){document.querySelectorAll('.step-dot').forEach((d,i)=>{d.classList.remove('active','done');if(i===s)d.classList.add('active');if(i<s)d.classList.add('done')})}
-function showStep(n){for(let i=0;i<STEPS;i++)document.getElementById('step'+i).style.display=i===n?'block':'none';updateSteps(n);currentStep=n;window.scrollTo({top:200,behavior:'smooth'})}
-function nextStep(n){
-if(currentStep===0){const nm=document.getElementById('userName').value.trim(),ag=parseInt(document.getElementById('userAge').value);if(!nm){alert('Ingresa tu nombre');return}if(!ag||ag<18){alert('Edad válida (18+)');return}userData.name=nm;userData.age=ag}
-if(currentStep===1){const am=parseMoney(document.getElementById('userAmount').value),hz=document.getElementById('userHorizon').value;if(!am||am<10000){alert('Monto mínimo $10.000');return}if(!hz){alert('Selecciona horizonte');return}userData.amount=am;userData.horizon=hz}
-showStep(n)}
+const P=[...new Set(FUNDS_DATA.map(f=>f.provider))],CL={deuda:'Renta Fija',accionario:'Accionario',balanceado:'Balanceado'};
+document.getElementById('dst').textContent=`${FUNDS_DATA.length} fondos · ${P.length} bancos · ${DATA_DATE}`;
+document.getElementById('fTxt').textContent=`Inverso v0.7 · ${FUNDS_DATA.length} fondos · Datos al ${DATA_DATE}`;
+const STEPS=5;let cStep=0;const U={name:'',age:0,amount:0,horizon:'',risk:'',objective:'',bank:'todos'};
+function fmtM(i){let v=i.value.replace(/\D/g,'');if(v)v=parseInt(v).toLocaleString('es-CL');i.value=v}
+function parseM(s){return parseInt(s.replace(/\D/g,''))||0}
+function selOpt(t,v,el){el.closest('.option-cards').querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');U[t]=v}
+function autoAdv(t,v,el,n){selOpt(t,v,el);setTimeout(()=>showStep(n),400)}
+function autoGen(t,v,el){selOpt(t,v,el);setTimeout(()=>genReport(),500)}
+function updSteps(s){document.querySelectorAll('.step-dot').forEach((d,i)=>{d.classList.remove('active','done');if(i===s)d.classList.add('active');if(i<s)d.classList.add('done')})}
+function showStep(n){for(let i=0;i<STEPS;i++)document.getElementById('step'+i).style.display=i===n?'block':'none';updSteps(n);cStep=n;window.scrollTo({top:200,behavior:'smooth'})}
+function nextStep(n){if(cStep===0){const nm=document.getElementById('uName').value.trim(),ag=parseInt(document.getElementById('uAge').value);if(!nm)return alert('Ingresa nombre');if(!ag||ag<18)return alert('Edad 18+');U.name=nm;U.age=ag}if(cStep===1){const am=parseM(document.getElementById('uAmt').value),hz=document.getElementById('uHz').value;if(!am||am<10000)return alert('Mínimo $10.000');if(!hz)return alert('Selecciona horizonte');U.amount=am;U.horizon=hz}showStep(n)}
 function prevStep(n){showStep(n)}
-function generateReport(){const ov=document.getElementById('loadingOverlay');ov.style.display='flex';setTimeout(()=>{buildReport();document.getElementById('questionnaire').classList.remove('active');document.getElementById('report').classList.add('active');ov.classList.add('hide');setTimeout(()=>{ov.style.display='none';ov.classList.remove('hide')},500);window.scrollTo({top:0})},1200)}
-
-function getEligible(){const{horizon,risk,bank}=userData;return FUNDS_DATA.filter(f=>{if(risk==='conservador'&&f.risk>2)return false;if(risk==='moderado'&&f.risk>3)return false;if(!f.horizon.includes(horizon))return false;if(bank!=='todos'&&f.provider!==bank)return false;return true})}
-
-function getBestPerBank(eligible){const bp={};eligible.forEach(f=>{if(!bp[f.provider]||f.rent12>bp[f.provider].rent12)bp[f.provider]=f});return Object.values(bp).sort((a,b)=>b.rent12-a.rent12)}
-
-function projectAmount(amount,rate12,years){return Math.round(amount*Math.pow(1+rate12/100,years))}
+function genReport(){document.getElementById('ov').style.display='flex';setTimeout(()=>{buildReport();document.getElementById('questionnaire').classList.remove('active');document.getElementById('report').classList.add('active');document.getElementById('ov').classList.add('hide');setTimeout(()=>{document.getElementById('ov').style.display='none';document.getElementById('ov').classList.remove('hide')},500);window.scrollTo({top:0})},1e3)}
+function getEl(){const{horizon:h,risk:r,bank:b}=U;return FUNDS_DATA.filter(f=>{if(r==='conservador'&&f.risk>2)return!1;if(r==='moderado'&&f.risk>3)return!1;if(!f.horizon.includes(h))return!1;if(b!=='todos'&&f.provider!==b)return!1;return!0})}
+function getBPB(el){const bp={};el.forEach(f=>{if(!bp[f.provider]||f.rent12>bp[f.provider].rent12)bp[f.provider]=f});return Object.values(bp).sort((a,b)=>b.rent12-a.rent12)}
+function proj(a,r,y){return Math.round(a*Math.pow(1+r/100,y))}
 
 function buildReport(){
-const{name,age,amount,horizon,risk,objective,bank}=userData;
-document.getElementById('reportSubtitle').textContent=`Preparado para ${name}, ${age} años · ${new Date().toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'})}`;
-const hL={corto:'Corto plazo (<1 año)',medio:'Mediano plazo (1-3 años)',largo:'Largo plazo (>3 años)'};
-const rL={conservador:'Conservador 🛡️',moderado:'Moderado ⚖️',agresivo:'Agresivo 🚀'};
-const oL={ahorrar:'Ahorro',meta:'Meta específica',crecer:'Crecimiento',jubilacion:'Jubilación'};
-const yrs=horizon==='corto'?1:horizon==='medio'?3:5;
+const{name,age,amount,horizon,risk,objective,bank}=U;const yrs=horizon==='corto'?1:horizon==='medio'?3:5;
+document.getElementById('rSub').textContent=`Para ${name}, ${age} años · ${new Date().toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'})}`;
+const hL={corto:'<1 año',medio:'1-3 años',largo:'>3 años'},rL={conservador:'Conservador 🛡️',moderado:'Moderado ⚖️',agresivo:'Agresivo 🚀'},oL={ahorrar:'Ahorro',meta:'Meta',crecer:'Crecimiento',jubilacion:'Jubilación'};
+document.getElementById('pBar').innerHTML=[['Monto','$'+amount.toLocaleString('es-CL')],['Horizonte',hL[horizon]],['Perfil',rL[risk]],['Objetivo',oL[objective]],bank!=='todos'?['Banco',bank]:null].filter(Boolean).map(([l,v])=>`<div class="profile-item"><div class="pi-label">${l}</div><div class="pi-value">${v}</div></div>`).join('');
+const el=getEl(),matched=getBPB(el),best=matched[0];
+const bestRF=el.filter(f=>f.category==='deuda').sort((a,b)=>b.rent12-a.rent12)[0];
+const bestBal=el.filter(f=>f.category==='balanceado').sort((a,b)=>b.rent12-a.rent12)[0];
+const bestAcc=el.filter(f=>f.category==='accionario').sort((a,b)=>b.rent12-a.rent12)[0];
+const pIdeal=horizon==='corto'?90:horizon==='medio'?180:360;
+let bDep=null,bDB='';const dBanks=bank!=='todos'?[bank]:Object.keys(DEPOSITS_DATA);
+dBanks.forEach(bk=>{if(!DEPOSITS_DATA[bk])return;const d=DEPOSITS_DATA[bk].find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(d&&(!bDep||d.tasaAnual>bDep.tasaAnual)){bDep=d;bDB=bk}});
+const dGain=bDep?Math.round(amount*bDep.tasa/100):0;
+const projBest=best?proj(amount,best.rent12,yrs):amount;
 
-document.getElementById('profileBar').innerHTML=`<div class="profile-item"><div class="pi-label">Monto</div><div class="pi-value">$${amount.toLocaleString('es-CL')}</div></div><div class="profile-item"><div class="pi-label">Horizonte</div><div class="pi-value">${hL[horizon]}</div></div><div class="profile-item"><div class="pi-label">Perfil</div><div class="pi-value">${rL[risk]}</div></div><div class="profile-item"><div class="pi-label">Objetivo</div><div class="pi-value">${oL[objective]}</div></div>${bank!=='todos'?`<div class="profile-item"><div class="pi-label">Banco</div><div class="pi-value">${bank}</div></div>`:''}`;
+// Build nav
+const tabs=[{id:'pg-summary',label:'📋 Resumen',icon:''},{id:'pg-funds',label:'📊 Fondos'},{id:'pg-deposits',label:'🏦 Depósitos'},{id:'pg-sim',label:'🔮 Simulador'},{id:'pg-compare',label:'⚡ Comparar'},{id:'pg-catalog',label:'📋 Catálogo'},{id:'pg-glossary',label:'📚 Glosario'}];
+document.getElementById('rNav').innerHTML=tabs.map((t,i)=>`<button class="rnav-btn ${i===0?'active':''}" onclick="showPage('${t.id}')">${t.label}</button>`).join('');
 
-const eligible=getEligible();const matched=getBestPerBank(eligible);const best=matched[0];
-const bestRF=eligible.filter(f=>f.category==='deuda').sort((a,b)=>b.rent12-a.rent12)[0];
-const bestBal=eligible.filter(f=>f.category==='balanceado').sort((a,b)=>b.rent12-a.rent12)[0];
-const bestAcc=eligible.filter(f=>f.category==='accionario').sort((a,b)=>b.rent12-a.rent12)[0];
+let pages='';
 
-// Best deposit
-const plazoIdeal=horizon==='corto'?90:horizon==='medio'?180:360;
-let bestDep=null,bestDepBank='';
-Object.keys(DEPOSITS_DATA).forEach(bk=>{if(bank!=='todos'&&bk!==bank)return;const d=DEPOSITS_DATA[bk].find(d=>d.plazo===plazoIdeal&&amount>=d.minMonto);if(d&&(!bestDep||d.tasaAnual>bestDep.tasaAnual)){bestDep=d;bestDepBank=bk}});
-const depGain=bestDep?Math.round(amount*bestDep.tasa/100):0;
+// PAGE: Summary
+pages+=`<div class="report-page active" id="pg-summary">
+<div class="exec-summary"><h3>📋 Resumen ejecutivo</h3><div class="exec-grid">
+<div class="exec-item"><div class="ei-icon">📊</div><div class="ei-label">Mejor fondo</div><div class="ei-value">${best?best.name:'—'}</div><div class="ei-detail">${best?best.provider+' · '+CL[best.category]:''}</div></div>
+<div class="exec-item"><div class="ei-icon">💰</div><div class="ei-label">Proyección ${yrs}${yrs===1?' año':' años'}</div><div class="ei-value positive">$${projBest.toLocaleString('es-CL')}</div><div class="ei-detail">+$${(projBest-amount).toLocaleString('es-CL')} ganancia</div></div>
+<div class="exec-item"><div class="ei-icon">🏦</div><div class="ei-label">Mejor DAP</div><div class="ei-value">${bDB} ${pIdeal}d</div><div class="ei-detail">${bDep?bDep.tasaAnual+'% · +$'+dGain.toLocaleString('es-CL'):''}</div></div>
+<div class="exec-item"><div class="ei-icon">⚡</div><div class="ei-label">Fondo vs DAP</div><div class="ei-value positive">+$${((projBest-amount)-dGain).toLocaleString('es-CL')}</div><div class="ei-detail">a favor del fondo en ${yrs}${yrs===1?' año':' años'}</div></div>
+</div><div class="exec-reason">${best?`<strong>${best.name}</strong> (${best.provider}) es tu top porque ofrece ${best.rent12.toFixed(2)}% anual, compatible con tu perfil ${risk} y horizonte ${horizon}.`:''}</div></div>
+<div class="section-block"><div class="section-title"><span class="s-icon">🧠</span><h2>Tu perfil</h2></div>
+<div class="info-box"><h4>Perfil ${risk}</h4><p>${getPE(risk)}</p></div>
+<div class="info-box"><h4>Horizonte: ${hL[horizon]}</h4><p>${getHE(horizon)}</p></div></div>
+<div class="section-block"><div class="section-title"><span class="s-icon">💡</span><h2>Consejos para ti</h2></div>${getTips(objective)}</div>
+</div>`;
 
-// Executive Summary
-const projBest=best?projectAmount(amount,best.rent12,yrs):amount;
-const gainBest=projBest-amount;
-let reason=`Elegimos <strong>${best?best.name:'—'}</strong> de ${best?best.provider:'—'} como tu mejor opción porque `;
-if(risk==='conservador')reason+=`ofrece la mayor rentabilidad (${best?best.rent12.toFixed(2):'0'}% anual) entre los fondos de bajo riesgo disponibles${bank!=='todos'?' en '+bank:''}. Tu capital está protegido con fluctuaciones mínimas.`;
-else if(risk==='moderado')reason+=`combina buen retorno (${best?best.rent12.toFixed(2):'0'}% anual) con riesgo controlado. Ideal para tu horizonte de ${yrs} ${yrs===1?'año':'años'}.`;
-else reason+=`tiene la mayor rentabilidad (${best?best.rent12.toFixed(2):'0'}% anual) compatible con tu perfil agresivo y horizonte largo.`;
+// PAGE: Funds
+pages+=`<div class="report-page" id="pg-funds"><div class="section-block"><div class="section-title"><span class="s-icon">📊</span><h2>Fondos recomendados</h2><span class="s-badge">${matched.length} ${bank!=='todos'?'de '+bank:'bancos'}</span></div>
+<div class="info-box"><h4>¿Por qué estos?</h4><p>El mejor fondo de ${bank!=='todos'?bank:'cada banco'} para perfil ${risk}, horizonte ${horizon}, ordenados por rentabilidad 12m. Haz click en uno para ver más detalle.</p></div><div class="product-grid">`;
+matched.forEach((f,i)=>{const badges=[];if(i===0)badges.push('<span class="rec-badge">★ Top</span>');if(bestRF&&f.name===bestRF.name)badges.push('<span class="cat-badge best-rf">Mejor RF</span>');if(bestBal&&f.name===bestBal.name)badges.push('<span class="cat-badge best-bal">Mejor Bal</span>');if(bestAcc&&f.name===bestAcc.name)badges.push('<span class="cat-badge best-acc">Mejor Acc</span>');
+const p=proj(amount,f.rent12,yrs),g=p-amount;
+pages+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${JSON.stringify(f).replace(/"/g,'&quot;')})">${badges.join('')}<div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent12>=0?'positive':'negative'}">${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Comisión</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Riesgo</div><div class="stat-value"><div class="risk-visual rl-${f.risk}">${'<div class="rv-bar"></div>'.repeat(5)}</div></div></div></div><div class="pc-projection">📈 $${amount.toLocaleString('es-CL')} × ${yrs}${yrs===1?' año':' años'} → <span class="proj-val">$${p.toLocaleString('es-CL')}</span> (+$${g.toLocaleString('es-CL')})</div><div class="pc-click-hint">Click para ver detalle →</div></div>`});
+pages+=`</div></div></div>`;
 
-document.getElementById('execSummaryContainer').innerHTML=`<div class="exec-summary anim-up anim-up-d3"><h3>📋 Resumen ejecutivo</h3>
-<div class="exec-grid">
-<div class="exec-item"><div class="ei-icon">📊</div><div class="ei-label">Mejor fondo para ti</div><div class="ei-value">${best?best.name:'—'}</div><div class="ei-detail">${best?best.provider+' · '+catL[best.category]:''}</div></div>
-<div class="exec-item"><div class="ei-icon">💰</div><div class="ei-label">Proyección a ${yrs} ${yrs===1?'año':'años'}</div><div class="ei-value positive">$${projBest.toLocaleString('es-CL')}</div><div class="ei-detail">Ganancia estimada: +$${gainBest.toLocaleString('es-CL')}</div></div>
-<div class="exec-item"><div class="ei-icon">🏦</div><div class="ei-label">Mejor depósito a plazo</div><div class="ei-value">${bestDepBank||'—'} ${plazoIdeal}d</div><div class="ei-detail">${bestDep?bestDep.tasaAnual+'% anual · +$'+depGain.toLocaleString('es-CL'):''}</div></div>
-<div class="exec-item"><div class="ei-icon">⚡</div><div class="ei-label">Diferencia fondo vs DAP</div><div class="ei-value positive">+$${(gainBest-depGain).toLocaleString('es-CL')}</div><div class="ei-detail">a favor del fondo en ${yrs} ${yrs===1?'año':'años'}</div></div>
-</div><div class="exec-reason">${reason}</div></div>`;
+// PAGE: Deposits
+pages+=`<div class="report-page" id="pg-deposits"><div class="section-block"><div class="section-title"><span class="s-icon">🏦</span><h2>Depósitos a plazo</h2></div>
+<div class="info-box"><h4>¿Qué es?</h4><p>Prestas plata al banco por un plazo fijo. Garantizado por FOGADE hasta ~108 UF.</p></div>`;
+// Comparison table
+pages+=`<div class="chart-wrapper"><h4>Comparativa a ${pIdeal} días con $${amount.toLocaleString('es-CL')}</h4><table class="comp-table"><thead><tr><th>Banco</th><th>Tasa anual</th><th>Ganancia</th><th>Total</th></tr></thead><tbody>`;
+dBanks.forEach(bk=>{if(!DEPOSITS_DATA[bk])return;const d=DEPOSITS_DATA[bk].find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(!d)return;const g=Math.round(amount*d.tasa/100),t=amount+g;
+pages+=`<tr class="${bk===bDB?'highlight-row':''}"><td><strong>${bk}</strong>${bk===bDB?' ★':''}</td><td>${d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${g.toLocaleString('es-CL')}</td><td><strong>$${t.toLocaleString('es-CL')}</strong></td></tr>`});
+pages+=`</tbody></table></div>`;
+// All plazos best bank
+if(bDB&&DEPOSITS_DATA[bDB]){pages+=`<div class="chart-wrapper" style="margin-top:1rem"><h4>${bDB} — Todos los plazos</h4><table class="comp-table"><thead><tr><th>Plazo</th><th>Tasa</th><th>Anual</th><th>Ganancia</th><th>Total</th></tr></thead><tbody>`;
+DEPOSITS_DATA[bDB].filter(d=>amount>=d.minMonto).forEach(d=>{const g=Math.round(amount*d.tasa/100),t=amount+g;
+pages+=`<tr class="${d.plazo===pIdeal?'highlight-row':''}"><td><strong>${d.plazo}d</strong></td><td>${d.tasa.toFixed(2)}%</td><td>${d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${g.toLocaleString('es-CL')}</td><td><strong>$${t.toLocaleString('es-CL')}</strong></td></tr>`});
+pages+=`</tbody></table></div>`}
+pages+=`</div></div>`;
 
-let h='';
+// PAGE: Simulator
+const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length:5;
+pages+=`<div class="report-page" id="pg-sim"><div class="section-block"><div class="section-title"><span class="s-icon">🔮</span><h2>Simulador interactivo</h2></div>
+<div class="info-box"><h4>Juega con los números</h4><p>Mueve los controles para ver cómo cambian tus resultados en tiempo real. Basado en rentabilidad promedio de tus fondos (${avgR.toFixed(1)}% anual).</p></div>
+<div class="chart-wrapper"><div class="sim-controls"><div class="sim-field"><label>Monto a invertir</label><div class="sim-val" id="simAmtVal">$${amount.toLocaleString('es-CL')}</div><input type="range" id="simAmt" min="100000" max="50000000" step="100000" value="${amount}" oninput="updSim()"></div><div class="sim-field"><label>Plazo (años)</label><div class="sim-val" id="simYrsVal">${yrs} ${yrs===1?'año':'años'}</div><input type="range" id="simYrs" min="1" max="10" step="1" value="${yrs}" oninput="updSim()"></div></div>
+<canvas id="simChart"></canvas></div>
+<div class="scenario-grid" id="simScenarios"></div></div></div>`;
 
-// Profile
-h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">🧠</span><h2>Entendiendo tu perfil</h2></div>
-<div class="info-box"><h4>¿Qué significa ser ${risk}?</h4><p>${getPE(risk)}</p></div>
-<div class="info-box"><h4>Tu horizonte: ${hL[horizon]}</h4><p>${getHE(horizon)}</p></div></div>`;
+// PAGE: Comparator
+const allEl=el.sort((a,b)=>b.rent12-a.rent12);
+pages+=`<div class="report-page" id="pg-compare"><div class="section-block"><div class="section-title"><span class="s-icon">⚡</span><h2>Comparador</h2></div>
+<div class="info-box"><h4>Compara 2 fondos lado a lado</h4><p>Selecciona dos fondos para ver cuál te conviene más según rentabilidad, comisión y riesgo.</p></div>
+<div class="comp-select"><select id="cmpA" onchange="updCmp()"><option value="">Fondo 1...</option>${allEl.map((f,i)=>`<option value="${i}">${f.name} (${f.provider})</option>`).join('')}</select><select id="cmpB" onchange="updCmp()"><option value="">Fondo 2...</option>${allEl.map((f,i)=>`<option value="${i}">${f.name} (${f.provider})</option>`).join('')}</select></div>
+<div id="cmpResult"></div></div></div>`;
 
-// Tips
-h+=`<div class="section-block anim-up anim-up-d1"><div class="section-title"><span class="s-icon">💡</span><h2>Consejos para ti</h2></div>${getTips(objective)}</div>`;
+// PAGE: Catalog
+pages+=`<div class="report-page" id="pg-catalog"><div class="section-block"><div class="section-title"><span class="s-icon">📋</span><h2>Catálogo completo</h2></div>`;
+pages+=`<div class="tab-bar">`;P.forEach((p,i)=>{pages+=`<button class="tab-btn ${i===0?'active':''}" data-group="cat" data-target="ct-${p}">${p}</button>`});pages+=`</div>`;
+P.forEach((p,i)=>{const pf=FUNDS_DATA.filter(f=>f.provider===p).sort((a,b)=>b.rent12-a.rent12);
+pages+=`<div class="tab-content ${i===0?'active':''}" data-group="cat" id="ct-${p}"><table class="comp-table"><thead><tr><th>Fondo</th><th>Tipo</th><th>30d</th><th>12m</th><th>Fee</th></tr></thead><tbody>`;
+pf.forEach(f=>{pages+=`<tr style="cursor:pointer" onclick="openFund(${JSON.stringify(f).replace(/"/g,'&quot;')})"><td><strong>${f.name}</strong></td><td>${CL[f.category]||''}</td><td style="color:${f.rent30>=0?'var(--accent)':'var(--red)'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</td><td style="color:${f.rent12>=0?'var(--accent)':'var(--red)'}"><strong>${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</strong></td><td>${f.fee.toFixed(2)}%</td></tr>`});
+pages+=`</tbody></table></div>`});
+pages+=`</div></div>`;
 
-// Funds with projections
-h+=`<div class="section-block anim-up anim-up-d2"><div class="section-title"><span class="s-icon">📊</span><h2>Fondos recomendados</h2><span class="s-badge">${matched.length} ${bank!=='todos'?'de '+bank:'bancos'}</span></div>
-<div class="info-box"><h4>¿Por qué estos fondos?</h4><p>Seleccionamos el mejor fondo de ${bank!=='todos'?bank:'cada banco'} compatible con tu perfil ${risk}, horizonte ${horizon} y ordenados por rentabilidad a 12 meses.</p></div><div class="product-grid">`;
+// PAGE: Glossary
+pages+=`<div class="report-page" id="pg-glossary"><div class="section-block"><div class="section-title"><span class="s-icon">📚</span><h2>Glosario</h2></div><div class="glossary-grid">${bldGl()}</div></div></div>`;
 
-matched.forEach((f,i)=>{
-const badges=[];if(i===0)badges.push('<span class="rec-badge">★ Top recomendación</span>');
-if(bestRF&&f.name===bestRF.name)badges.push('<span class="cat-badge best-rf">Mejor Renta Fija</span>');
-if(bestBal&&f.name===bestBal.name)badges.push('<span class="cat-badge best-bal">Mejor Balanceado</span>');
-if(bestAcc&&f.name===bestAcc.name)badges.push('<span class="cat-badge best-acc">Mejor Accionario</span>');
-const proj=projectAmount(amount,f.rent12,yrs);const gain=proj-amount;
-h+=`<div class="product-card ${i===0?'recommended':''}">${badges.join('')}
-<div class="pc-name">${f.name}</div><div class="pc-type">${catL[f.category]} · ${f.provider} · ${f.currency}</div>
-<div class="pc-stats">
-<div class="pc-stat"><div class="stat-label">Rent. 30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div>
-<div class="pc-stat"><div class="stat-label">Rent. 12m</div><div class="stat-value ${f.rent12>=0?'positive':'negative'}">${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</div></div>
-<div class="pc-stat"><div class="stat-label">Comisión</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div>
-<div class="pc-stat"><div class="stat-label">Riesgo</div><div class="stat-value"><div class="risk-visual rl-${f.risk}">${'<div class="rv-bar"></div>'.repeat(5)}</div></div></div>
-</div>
-${f.desc?`<div class="pc-explanation"><strong>¿Qué hace este fondo?</strong> ${f.desc}</div>`:''}
-<div class="pc-projection">📈 Si inviertes <strong>$${amount.toLocaleString('es-CL')}</strong> por <strong>${yrs} ${yrs===1?'año':'años'}</strong> a esta rentabilidad → <span class="proj-val">$${proj.toLocaleString('es-CL')}</span> (ganancia estimada: +$${gain.toLocaleString('es-CL')})</div>
-</div>`});
-h+=`</div></div>`;
-
-// Bank comparison
-if(bank==='todos'){h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">🏆</span><h2>Comparativa de bancos</h2></div>`;
-h+=buildBankComp(eligible);h+=`</div>`}
-
-// Deposits
-h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">🏦</span><h2>Depósitos a plazo</h2></div>
-<div class="info-box"><h4>¿Qué es un depósito a plazo?</h4><p>Le prestas tu dinero al banco por un tiempo fijo. Garantizado por FOGADE hasta ~108 UF.</p></div>`;
-h+=buildDeps(amount,horizon,bank);h+=`</div>`;
-
-// Projection
-const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length/100:0.05;
-const pR=Math.min(avgR*0.3,0.02),oR=avgR*1.5;
-h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">🔮</span><h2>Proyección detallada</h2></div>
-<div class="info-box"><h4>Supuestos de esta proyección</h4><p>Usamos la rentabilidad promedio real (${(avgR*100).toFixed(2)}% anual) de tus ${matched.length} fondos recomendados. El escenario pesimista asume ${(pR*100).toFixed(1)}% anual, el optimista ${(oR*100).toFixed(1)}% anual. <strong>Son estimaciones, no promesas.</strong> El mercado puede comportarse distinto.</p></div>
-<div class="chart-wrapper"><h4>Tu inversión de $${amount.toLocaleString('es-CL')} en ${yrs} ${yrs===1?'año':'años'}</h4><p class="chart-sub">Basado en: ${matched.map(f=>f.name).join(', ')}</p><canvas id="projChart"></canvas></div>
-<div class="scenario-grid">${bldSc(amount,pR,avgR,oR,yrs)}</div></div>`;
-
-// Catalog
-h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">📋</span><h2>Catálogo completo</h2></div><p style="color:var(--text-secondary);margin-bottom:1rem;font-size:.9rem">Todos los fondos disponibles de cada banco.</p>`;
-h+=buildCatalog();h+=`</div>`;
-
-// Glossary
-h+=`<div class="section-block anim-up"><div class="section-title"><span class="s-icon">📚</span><h2>Glosario</h2></div><div class="glossary-grid">${bldGl()}</div></div>`;
-
-document.getElementById('reportContent').innerHTML=h;
-setTimeout(()=>bldPC(amount,pR,avgR,oR,yrs),300);
-document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',function(){const g=this.dataset.group;document.querySelectorAll(`.tab-btn[data-group="${g}"]`).forEach(t=>t.classList.remove('active'));document.querySelectorAll(`.tab-content[data-group="${g}"]`).forEach(t=>t.classList.remove('active'));this.classList.add('active');document.getElementById(this.dataset.target).classList.add('active')}));
+document.getElementById('rPages').innerHTML=pages;
+// Init tabs
+document.querySelectorAll('.tab-btn[data-group]').forEach(b=>b.addEventListener('click',function(){const g=this.dataset.group;document.querySelectorAll(`.tab-btn[data-group="${g}"]`).forEach(t=>t.classList.remove('active'));document.querySelectorAll(`.tab-content[data-group="${g}"]`).forEach(t=>t.classList.remove('active'));this.classList.add('active');document.getElementById(this.dataset.target).classList.add('active')}));
+// Init simulator
+setTimeout(()=>{updSim()},300);
 }
 
-function getPE(r){return{conservador:'Eres conservador: priorizas no perder tu capital. Depósitos a plazo y fondos de renta fija son ideales.',moderado:'Eres moderado: aceptas volatilidad a cambio de mayor rentabilidad. Fondos balanceados son tu zona.',agresivo:'Eres agresivo: toleras caídas fuertes buscando máximas ganancias a largo plazo. Fondos accionarios son tu terreno.'}[r]}
-function getHE(h){return{corto:'Con menos de 1 año, prioriza liquidez y seguridad.',medio:'Con 1-3 años, diversifica entre seguridad y crecimiento.',largo:'Con más de 3 años tienes el tiempo a tu favor. Mayor beneficio en renta variable.'}[h]}
+// Nav pages
+function showPage(id){document.querySelectorAll('.report-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.rnav-btn').forEach(b=>b.classList.remove('active'));[...document.querySelectorAll('.rnav-btn')].find(b=>b.textContent.includes(id==='pg-summary'?'Resumen':id==='pg-funds'?'Fondos':id==='pg-deposits'?'Depósitos':id==='pg-sim'?'Simulador':id==='pg-compare'?'Comparar':id==='pg-catalog'?'Catálogo':'Glosario'))?.classList.add('active');window.scrollTo({top:200,behavior:'smooth'})}
 
-function getTips(obj){const t={
-ahorrar:`<div class="info-box tip"><h4>💰 Fondo de emergencia primero</h4><p>Ten 3-6 meses de gastos en un lugar líquido (money market). Después invierte el excedente.</p></div><div class="info-box tip"><h4>📌 No dejes tu plata en la cuenta corriente</h4><p>Un fondo money market te da ~4-5% anual sin riesgo. Es plata gratis que estás dejando en la mesa.</p></div>`,
-meta:`<div class="info-box tip"><h4>🎯 Calcula cuánto ahorrar al mes</h4><p>Divide tu meta por los meses que faltan. Si lo inviertes, necesitas ahorrar menos porque el rendimiento hace parte del trabajo.</p></div><div class="info-box tip"><h4>⏰ Mientras más cerca tu meta, menos riesgo</h4><p>A menos de 6 meses, usa algo seguro (depósito o money market). No arriesgues justo antes.</p></div>`,
-crecer:`<div class="info-box tip"><h4>📈 El interés compuesto es tu mejor amigo</h4><p>$1.000.000 al 10% anual = $1.610.000 en 5 años sin poner un peso más. El tiempo hace el trabajo.</p></div><div class="info-box tip"><h4>🔄 Diversifica entre bancos</h4><p>No pongas todo en un solo fondo. Reparte entre 2-3 opciones.</p></div>`,
-jubilacion:`<div class="info-box tip"><h4>🏖️ Empieza lo antes posible</h4><p>Alguien que invierte $100.000/mes desde los 25 tendrá mucho más que alguien con $200.000/mes desde los 40.</p></div><div class="info-box tip"><h4>📊 Considera el APV</h4><p>El Ahorro Previsional Voluntario tiene beneficios tributarios. El Estado te bonifica hasta 15% de lo que aportes.</p></div>`};return t[obj]||''}
+// Fund detail modal
+function openFund(f){const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;const p=proj(U.amount,f.rent12,yrs),g=p-U.amount;
+const riskLabels=['','Muy bajo','Bajo','Moderado','Alto','Muy alto'];
+document.getElementById('modalBody').innerHTML=`<div class="modal-close" onclick="closeModal()">✕</div>
+<h3>${f.name}</h3><div class="m-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div>
+<div class="pc-stats"><div class="pc-stat"><div class="stat-label">Rent. 30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Rent. 12m</div><div class="stat-value ${f.rent12>=0?'positive':'negative'}">${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Comisión</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Riesgo</div><div class="stat-value neutral">${riskLabels[f.risk]}</div></div></div>
+${f.desc?`<div class="m-section"><h4>¿En qué invierte?</h4><p>${f.desc}</p></div>`:''}
+<div class="m-section"><h4>Simulación personalizada</h4><p>Si inviertes <strong>$${U.amount.toLocaleString('es-CL')}</strong> por <strong>${yrs} ${yrs===1?'año':'años'}</strong>:</p>
+<div class="exec-grid" style="margin-top:.8rem"><div class="exec-item"><div class="ei-label">Inversión</div><div class="ei-value">$${U.amount.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Proyección</div><div class="ei-value positive">$${p.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Ganancia</div><div class="ei-value positive">+$${g.toLocaleString('es-CL')}</div></div></div></div>
+<div class="m-section"><h4>Rentabilidad neta (descontando comisión)</h4><p>La comisión anual de ${f.fee}% se descuenta automáticamente del valor cuota. La rentabilidad que ves (${f.rent12.toFixed(2)}%) ya tiene descontada la comisión, así que es lo que realmente recibes.</p></div>`;
+document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
 
-function buildBankComp(eligible){const banks=provs.map(p=>{const bf=eligible.filter(f=>f.provider===p);if(!bf.length)return null;return{name:p,count:bf.length,avgRent:bf.reduce((s,f)=>s+f.rent12,0)/bf.length,avgFee:bf.reduce((s,f)=>s+f.fee,0)/bf.length,best:bf.sort((a,b)=>b.rent12-a.rent12)[0]}}).filter(Boolean);
-const bR=Math.max(...banks.map(b=>b.avgRent)),bF=Math.min(...banks.map(b=>b.avgFee));
-let t=`<div class="chart-wrapper"><table class="comp-table"><thead><tr><th>Banco</th><th>Fondos</th><th>Rent. prom 12m</th><th>Comisión prom</th><th>Mejor fondo</th></tr></thead><tbody>`;
-banks.forEach(b=>{t+=`<tr><td><strong>${b.name}</strong></td><td>${b.count}</td><td class="${b.avgRent===bR?'best':''}">${b.avgRent.toFixed(2)}%${b.avgRent===bR?' ★':''}</td><td class="${b.avgFee===bF?'best':''}">${b.avgFee.toFixed(2)}%${b.avgFee===bF?' ★':''}</td><td>${b.best.name} (${b.best.rent12.toFixed(1)}%)</td></tr>`});
-return t+`</tbody></table></div>`}
+// Simulator
+let simChart=null;
+function updSim(){const a=parseInt(document.getElementById('simAmt').value),y=parseInt(document.getElementById('simYrs').value);
+document.getElementById('simAmtVal').textContent='$'+a.toLocaleString('es-CL');
+document.getElementById('simYrsVal').textContent=y+(y===1?' año':' años');
+const el=getEl(),matched=getBPB(el);
+const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length/100:.05;
+const pR=Math.min(avgR*.3,.02),oR=avgR*1.5;
+// Chart
+const ctx=document.getElementById('simChart');if(!ctx)return;const cc=getCC();
+if(simChart)simChart.destroy();
+const mo=y*12,lb=[],pD=[],mD=[],oD=[];
+for(let i=0;i<=mo;i++){if(i%(y<=1?1:3)===0||i===mo){lb.push(i===0?'Hoy':`M${i}`);pD.push(Math.round(a*Math.pow(1+pR/12,i)));mD.push(Math.round(a*Math.pow(1+avgR/12,i)));oD.push(Math.round(a*Math.pow(1+oR/12,i)))}}
+simChart=new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:'Optimista',data:oD,borderColor:'#00c98b',backgroundColor:'rgba(0,201,139,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Moderado',data:mD,borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Pesimista',data:pD,borderColor:'#ff5c7c',backgroundColor:'rgba(255,92,124,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:cc.legend,font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:cc.text,font:{family:'DM Sans',size:10}},grid:{color:cc.grid}},y:{ticks:{color:cc.text,font:{family:'DM Sans',size:10},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:cc.grid}}}}});
+// Scenarios
+const pV=Math.round(a*Math.pow(1+pR,y)),mV=Math.round(a*Math.pow(1+avgR,y)),oV=Math.round(a*Math.pow(1+oR,y));
+document.getElementById('simScenarios').innerHTML=`<div class="scenario-card sc-pessimistic"><div class="sc-label">Pesimista</div><div class="sc-value">$${pV.toLocaleString('es-CL')}</div><div class="sc-detail">${(pR*100).toFixed(1)}%/año</div></div><div class="scenario-card sc-moderate"><div class="sc-label">Moderado</div><div class="sc-value">$${mV.toLocaleString('es-CL')}</div><div class="sc-detail">${(avgR*100).toFixed(1)}%/año</div></div><div class="scenario-card sc-optimistic"><div class="sc-label">Optimista</div><div class="sc-value">$${oV.toLocaleString('es-CL')}</div><div class="sc-detail">${(oR*100).toFixed(1)}%/año</div></div>`}
 
-function buildDeps(amount,horizon,bank){
-if(!DEPOSITS_DATA||!Object.keys(DEPOSITS_DATA).length)return'';
-const plazo=horizon==='corto'?90:horizon==='medio'?180:360;
-let bG=0,bB='';const banks=bank!=='todos'?[bank]:Object.keys(DEPOSITS_DATA);
-banks.forEach(bk=>{if(!DEPOSITS_DATA[bk])return;const d=DEPOSITS_DATA[bk].find(d=>d.plazo===plazo&&amount>=d.minMonto);if(d){const g=Math.round(amount*d.tasa/100);if(g>bG){bG=g;bB=bk}}});
-let t=`<div class="chart-wrapper"><h4>Comparativa a ${plazo} días con $${amount.toLocaleString('es-CL')}</h4><p class="chart-sub">El mejor banco para depósito está resaltado</p><table class="comp-table"><thead><tr><th>Banco</th><th>Tasa anual</th><th>Ganancia</th><th>Recibirías</th></tr></thead><tbody>`;
-banks.forEach(bk=>{if(!DEPOSITS_DATA[bk])return;const d=DEPOSITS_DATA[bk].find(d=>d.plazo===plazo&&amount>=d.minMonto);if(!d)return;const g=Math.round(amount*d.tasa/100),tot=amount+g;
-t+=`<tr class="${bk===bB?'highlight-row':''}"><td><strong>${bk}</strong>${bk===bB?' ★':''}</td><td>${d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${g.toLocaleString('es-CL')}</td><td><strong>$${tot.toLocaleString('es-CL')}</strong></td></tr>`});
-t+=`</tbody></table></div>`;
-// Detail for best bank
-if(bB&&DEPOSITS_DATA[bB]){t+=`<div class="chart-wrapper" style="margin-top:1rem"><h4>Todos los plazos de ${bB}</h4><table class="comp-table"><thead><tr><th>Plazo</th><th>Tasa</th><th>Tasa anual</th><th>Ganancia</th><th>Recibirías</th></tr></thead><tbody>`;
-DEPOSITS_DATA[bB].filter(d=>amount>=d.minMonto).forEach(d=>{const g=Math.round(amount*d.tasa/100),tot=amount+g;
-t+=`<tr class="${d.plazo===plazo?'highlight-row':''}"><td><strong>${d.plazo}d</strong></td><td>${d.tasa.toFixed(2)}%</td><td>${d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${g.toLocaleString('es-CL')}</td><td><strong>$${tot.toLocaleString('es-CL')}</strong></td></tr>`});
-t+=`</tbody></table></div>`}return t}
-
-function buildCatalog(){let h=`<div class="tab-bar">`;provs.forEach((p,i)=>{h+=`<button class="tab-btn ${i===0?'active':''}" data-group="cat" data-target="cat-${p}">${p}</button>`});h+=`</div>`;
-provs.forEach((p,i)=>{const pf=FUNDS_DATA.filter(f=>f.provider===p).sort((a,b)=>b.rent12-a.rent12);
-h+=`<div class="tab-content ${i===0?'active':''}" data-group="cat" id="cat-${p}"><table class="comp-table"><thead><tr><th>Fondo</th><th>Tipo</th><th>R.30d</th><th>R.12m</th><th>Comisión</th><th>Riesgo</th></tr></thead><tbody>`;
-pf.forEach(f=>{h+=`<tr><td><strong>${f.name}</strong></td><td>${catL[f.category]||''}</td><td style="color:${f.rent30>=0?'var(--accent)':'var(--red)'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</td><td style="color:${f.rent12>=0?'var(--accent)':'var(--red)'}"><strong>${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</strong></td><td>${f.fee.toFixed(2)}%</td><td><div class="risk-visual rl-${f.risk}">${'<div class="rv-bar"></div>'.repeat(5)}</div></td></tr>`});
-h+=`</tbody></table></div>`});return h}
-
-function bldSc(a,p,m,o,y){const pV=Math.round(a*Math.pow(1+p,y)),mV=Math.round(a*Math.pow(1+m,y)),oV=Math.round(a*Math.pow(1+o,y));return`<div class="scenario-card sc-pessimistic"><div class="sc-label">Pesimista</div><div class="sc-value">$${pV.toLocaleString('es-CL')}</div><div class="sc-detail">${p>=0?'+':''}${(p*100).toFixed(1)}%/año × ${y}${y===1?' año':' años'}</div></div><div class="scenario-card sc-moderate"><div class="sc-label">Moderado</div><div class="sc-value">$${mV.toLocaleString('es-CL')}</div><div class="sc-detail">+${(m*100).toFixed(1)}%/año × ${y}${y===1?' año':' años'}</div></div><div class="scenario-card sc-optimistic"><div class="sc-label">Optimista</div><div class="sc-value">$${oV.toLocaleString('es-CL')}</div><div class="sc-detail">+${(o*100).toFixed(1)}%/año × ${y}${y===1?' año':' años'}</div></div>`}
+// Comparator
+function updCmp(){const iA=document.getElementById('cmpA').value,iB=document.getElementById('cmpB').value;
+if(iA===''||iB==='')return document.getElementById('cmpResult').innerHTML='<p style="color:var(--text-muted);text-align:center;padding:2rem">Selecciona 2 fondos para comparar</p>';
+const el=getEl().sort((a,b)=>b.rent12-a.rent12);const fA=el[iA],fB=el[iB];if(!fA||!fB)return;
+const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;
+const pA=proj(U.amount,fA.rent12,yrs),pB=proj(U.amount,fB.rent12,yrs);
+const winner=pA>=pB?fA:fB;const diff=Math.abs(pA-pB);
+function row(l,a,b,hi){return`<div class="comp-row"><span class="cr-label">${l}</span><span class="cr-val ${hi==='a'?'positive':''}">${a}</span><span class="cr-val ${hi==='b'?'positive':''}">${b}</span></div>`}
+document.getElementById('cmpResult').innerHTML=`<div class="comp-vs"><div class="comp-fund"><h4>${fA.name}</h4><p style="font-size:.75rem;color:var(--text-muted)">${fA.provider}</p>
+${row('Categoría',CL[fA.category],'')}${row('Rent. 12m',fA.rent12.toFixed(2)+'%','',fA.rent12>fB.rent12?'a':'')}${row('Rent. 30d',fA.rent30.toFixed(2)+'%','')}${row('Comisión',fA.fee.toFixed(2)+'%','',fA.fee<fB.fee?'a':'')}${row('Proyección '+yrs+'a','$'+pA.toLocaleString('es-CL'),'',pA>pB?'a':'')}</div>
+<div class="comp-vs-divider">VS</div>
+<div class="comp-fund"><h4>${fB.name}</h4><p style="font-size:.75rem;color:var(--text-muted)">${fB.provider}</p>
+${row('Categoría',CL[fB.category],'')}${row('Rent. 12m','',fB.rent12.toFixed(2)+'%',fB.rent12>fA.rent12?'b':'')}${row('Rent. 30d','',fB.rent30.toFixed(2)+'%')}${row('Comisión','',fB.fee.toFixed(2)+'%',fB.fee<fA.fee?'b':'')}${row('Proyección '+yrs+'a','','$'+pB.toLocaleString('es-CL'),pB>pA?'b':'')}</div></div>
+<div class="comp-winner">🏆 <strong>${winner.name}</strong> (${winner.provider}) gana por <strong>$${diff.toLocaleString('es-CL')}</strong> más en ${yrs} ${yrs===1?'año':'años'}</div>`}
 
 function getCC(){const s=getComputedStyle(document.documentElement);return{grid:s.getPropertyValue('--chart-grid').trim()||'#1c2636',text:s.getPropertyValue('--chart-text').trim()||'#556178',legend:s.getPropertyValue('--chart-legend').trim()||'#8b97ad'}}
-function bldPC(a,pR,mR,oR,yrs){const ctx=document.getElementById('projChart');if(!ctx)return;const cc=getCC();const mo=yrs*12,lb=[],pD=[],mD=[],oD=[];
-for(let i=0;i<=mo;i++){if(i%(yrs<=1?1:3)===0||i===mo){lb.push(i===0?'Hoy':`M${i}`);pD.push(Math.round(a*Math.pow(1+pR/12,i)));mD.push(Math.round(a*Math.pow(1+mR/12,i)));oD.push(Math.round(a*Math.pow(1+oR/12,i)))}}
-new Chart(ctx,{type:'line',data:{labels:lb,datasets:[{label:'Optimista',data:oD,borderColor:'#00c98b',backgroundColor:'rgba(0,201,139,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Moderado',data:mD,borderColor:'#ffb347',backgroundColor:'rgba(255,179,71,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2},{label:'Pesimista',data:pD,borderColor:'#ff5c7c',backgroundColor:'rgba(255,92,124,.05)',fill:true,tension:.4,pointRadius:0,borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:cc.legend,font:{family:'DM Sans'}}},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toLocaleString('es-CL')}}},scales:{x:{ticks:{color:cc.text,font:{family:'DM Sans',size:11}},grid:{color:cc.grid}},y:{ticks:{color:cc.text,font:{family:'DM Sans',size:11},callback:v=>'$'+v.toLocaleString('es-CL')},grid:{color:cc.grid}}}}})}
-
-function bldGl(){const t=[{t:'Fondo Mutuo',d:'Una "vaquita" de inversión colectiva administrada por profesionales.'},{t:'Depósito a Plazo',d:'Prestas plata al banco por un plazo fijo, te paga intereses. Protegido por FOGADE.'},{t:'Renta Fija',d:'Inversiones con ganancia predecible: bonos, depósitos. Riesgo bajo.'},{t:'Renta Variable',d:'Acciones. Pueden subir o bajar mucho, pero históricamente rentan más.'},{t:'Rentabilidad',d:'Lo que ganas o pierdes, en %. Rentabilidad pasada no garantiza la futura.'},{t:'Comisión (TAC)',d:'Costo anual que cobra la administradora. Menos = mejor para ti.'},{t:'Diversificación',d:'No poner todos los huevos en la misma canasta.'},{t:'Liquidez',d:'Qué tan rápido conviertes inversión en plata.'},{t:'UF',d:'Unidad de Fomento. Se ajusta por inflación diariamente.'},{t:'FOGADE',d:'Garantiza depósitos hasta ~108 UF por persona por banco.'},{t:'APV',d:'Ahorro Previsional Voluntario. Tiene beneficios tributarios para jubilación.'}];
-return t.map(i=>`<details class="glossary-item"><summary>${i.t}</summary><div class="gloss-body">${i.d}</div></details>`).join('')}
+function getPE(r){return{conservador:'Priorizas no perder capital. Depósitos y renta fija son ideales.',moderado:'Aceptas volatilidad por mayor rentabilidad. Fondos balanceados.',agresivo:'Toleras caídas fuertes buscando máximas ganancias. Fondos accionarios.'}[r]}
+function getHE(h){return{corto:'Menos de 1 año: liquidez y seguridad.',medio:'1-3 años: diversifica entre seguridad y crecimiento.',largo:'Más de 3 años: el tiempo a tu favor, renta variable.'}[h]}
+function getTips(o){const t={ahorrar:'<div class="info-box tip"><h4>💰 Fondo de emergencia primero</h4><p>Ten 3-6 meses de gastos en un money market. Después invierte el excedente.</p></div><div class="info-box tip"><h4>📌 No dejes plata en la cuenta corriente</h4><p>Un money market da ~4-5% anual sin riesgo.</p></div>',meta:'<div class="info-box tip"><h4>🎯 Calcula cuánto ahorrar al mes</h4><p>Divide tu meta por los meses. Si inviertes, necesitas menos.</p></div><div class="info-box tip"><h4>⏰ Cerca de la meta = menos riesgo</h4><p>A menos de 6 meses, usa depósito o money market.</p></div>',crecer:'<div class="info-box tip"><h4>📈 Interés compuesto</h4><p>$1M al 10% = $1.6M en 5 años sin poner un peso más.</p></div><div class="info-box tip"><h4>🔄 Diversifica</h4><p>Reparte entre 2-3 opciones de distintos bancos.</p></div>',jubilacion:'<div class="info-box tip"><h4>🏖️ Empieza ya</h4><p>$100K/mes desde los 25 > $200K/mes desde los 40.</p></div><div class="info-box tip"><h4>📊 APV</h4><p>El Estado te bonifica hasta 15% de lo que aportes.</p></div>'};return t[o]||''}
+function bldGl(){const t=[{t:'Fondo Mutuo',d:'Inversión colectiva administrada por profesionales.'},{t:'Depósito a Plazo',d:'Prestas plata al banco por plazo fijo. Protegido por FOGADE.'},{t:'Renta Fija',d:'Bonos, depósitos. Ganancia predecible, riesgo bajo.'},{t:'Renta Variable',d:'Acciones. Alto potencial pero volátil.'},{t:'Rentabilidad',d:'Lo que ganas o pierdes, en %. No garantiza futuro.'},{t:'Comisión (TAC)',d:'Costo anual de administración. Menos = mejor.'},{t:'Diversificación',d:'No poner todo en la misma canasta.'},{t:'Liquidez',d:'Qué tan rápido sacas tu plata.'},{t:'FOGADE',d:'Garantiza depósitos hasta ~108 UF por banco.'},{t:'APV',d:'Ahorro Previsional Voluntario. Beneficios tributarios.'}];return t.map(i=>`<details class="glossary-item"><summary>${i.t}</summary><div class="gloss-body">${i.d}</div></details>`).join('')}
 
 // PDF
-async function downloadPDF(){const b=event.target;b.textContent='⏳ Generando...';b.disabled=true;
-try{const{jsPDF}=window.jspdf,p=new jsPDF('p','mm','a4');const W=210,M=20,CW=W-2*M,ac=[0,169,118],dk=[26,31,46],md=[85,97,120],lt=[143,155,173];const{amount,horizon,risk,objective,bank}=userData;const yrs=horizon==='corto'?1:horizon==='medio'?3:5;
-p.setFillColor(...ac);p.rect(0,0,W,28,'F');p.setFont('helvetica','bold');p.setFontSize(24);p.setTextColor(255,255,255);p.text('inverso',M,18);p.setFontSize(9);p.text('Informe Personalizado',M+55,18);
-let y=38;p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(...md);p.text(document.getElementById('reportSubtitle').textContent,M,y);y+=10;
-// Profile
-p.setFillColor(244,246,249);p.roundedRect(M,y,CW,18,3,3,'F');
-const cols=[['MONTO',`$${amount.toLocaleString('es-CL')}`],['HORIZONTE',horizon],['PERFIL',risk],['OBJETIVO',objective]];
-if(bank!=='todos')cols.push(['BANCO',bank]);
-cols.forEach((c,i)=>{const x=M+4+i*(CW/cols.length);p.setFont('helvetica','normal');p.setFontSize(6);p.setTextColor(...md);p.text(c[0],x,y+7);p.setFont('helvetica','bold');p.setFontSize(8);p.setTextColor(...dk);p.text(c[1],x,y+13)});y+=26;
-// Summary
-const eligible=getEligible();const matched=getBestPerBank(eligible);const best=matched[0];
-if(best){const proj=projectAmount(amount,best.rent12,yrs),gain=proj-amount;
-p.setFillColor(240,255,248);p.roundedRect(M,y,CW,20,3,3,'F');p.setDrawColor(...ac);p.roundedRect(M,y,CW,20,3,3,'S');
-p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text('RESUMEN: '+best.name+' ('+best.provider+')',M+4,y+8);
-p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...md);
-p.text(`Rent. 12m: ${best.rent12.toFixed(2)}% | Proyeccion ${yrs}a: $${proj.toLocaleString('es-CL')} (+$${gain.toLocaleString('es-CL')})`,M+4,y+15);y+=28}
-// Funds
-p.setFont('helvetica','bold');p.setFontSize(12);p.setTextColor(...dk);p.text('Fondos Recomendados',M,y);y+=7;
-matched.forEach(f=>{if(y>255){p.addPage();y=20}const proj=projectAmount(amount,f.rent12,yrs);
-p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text(`${f.name} (${f.provider})`,M,y);
-p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...md);
-p.text(`12m: ${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}% | Comision: ${f.fee}% | Proy. ${yrs}a: $${proj.toLocaleString('es-CL')}`,M,y+4);y+=11});
-// Deposits
-y+=4;if(y>240){p.addPage();y=20}
-p.setFont('helvetica','bold');p.setFontSize(12);p.setTextColor(...dk);p.text('Depositos a Plazo',M,y);y+=7;
-const plazo=horizon==='corto'?90:horizon==='medio'?180:360;
-const dBanks=bank!=='todos'?[bank]:Object.keys(DEPOSITS_DATA);
-dBanks.forEach(bk=>{if(!DEPOSITS_DATA[bk])return;const d=DEPOSITS_DATA[bk].find(d=>d.plazo===plazo&&amount>=d.minMonto);if(!d)return;const g=Math.round(amount*d.tasa/100);
-p.setFont('helvetica','normal');p.setFontSize(8.5);p.setTextColor(...md);
-p.text(`${bk}: ${plazo}d — ${d.tasaAnual}% anual — +$${g.toLocaleString('es-CL')}`,M,y);y+=6});
-// Footer
-y+=8;if(y>275){p.addPage();y=20}p.setFontSize(7);p.setTextColor(...lt);
-p.text(`Inverso v0.6 — Datos al ${DATA_DATE}. No constituye asesoria financiera.`,M,y);
-p.save(`Inverso_${userData.name}_${new Date().toISOString().slice(0,10)}.pdf`)}catch(e){console.error(e);alert('Error PDF')}b.textContent='📄 Descargar PDF';b.disabled=false}
+async function dlPDF(){const b=event.target;b.textContent='⏳';b.disabled=true;
+try{const{jsPDF}=window.jspdf,p=new jsPDF('p','mm','a4');const W=210,M=20,CW=W-2*M,ac=[0,169,118],dk=[26,31,46],md=[85,97,120],lt=[143,155,173];
+const{amount,horizon,risk,objective,bank}=U;const yrs=horizon==='corto'?1:horizon==='medio'?3:5;
+p.setFillColor(...ac);p.rect(0,0,W,26,'F');p.setFont('helvetica','bold');p.setFontSize(22);p.setTextColor(255,255,255);p.text('inverso',M,17);p.setFontSize(9);p.text('Informe Personalizado',M+50,17);
+let y=36;p.setFont('helvetica','normal');p.setFontSize(9);p.setTextColor(...md);p.text(document.getElementById('rSub').textContent,M,y);y+=8;
+p.setFillColor(244,246,249);p.roundedRect(M,y,CW,16,3,3,'F');
+const cols=[['MONTO','$'+amount.toLocaleString('es-CL')],['HORIZONTE',horizon],['PERFIL',risk],['OBJETIVO',objective]];if(bank!=='todos')cols.push(['BANCO',bank]);
+cols.forEach((c,i)=>{const x=M+4+i*(CW/cols.length);p.setFont('helvetica','normal');p.setFontSize(6);p.setTextColor(...md);p.text(c[0],x,y+6);p.setFont('helvetica','bold');p.setFontSize(8);p.setTextColor(...dk);p.text(c[1],x,y+11)});y+=22;
+const el=getEl(),matched=getBPB(el),best=matched[0];
+if(best){const pr=proj(amount,best.rent12,yrs);p.setFillColor(240,255,248);p.roundedRect(M,y,CW,16,3,3,'F');p.setDrawColor(...ac);p.roundedRect(M,y,CW,16,3,3,'S');p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text('TOP: '+best.name+' ('+best.provider+')',M+4,y+7);p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...md);p.text('Rent: '+best.rent12.toFixed(2)+'% | Proy '+yrs+'a: $'+pr.toLocaleString('es-CL'),M+4,y+13);y+=22}
+p.setFont('helvetica','bold');p.setFontSize(11);p.setTextColor(...dk);p.text('Fondos Recomendados',M,y);y+=6;
+matched.forEach(f=>{if(y>258){p.addPage();y=20}const pr=proj(amount,f.rent12,yrs);p.setFont('helvetica','bold');p.setFontSize(8.5);p.setTextColor(...dk);p.text(f.name+' ('+f.provider+')',M,y);p.setFont('helvetica','normal');p.setFontSize(7.5);p.setTextColor(...md);p.text('12m: '+(f.rent12>=0?'+':'')+f.rent12.toFixed(2)+'% | Fee: '+f.fee+'% | Proy: $'+pr.toLocaleString('es-CL'),M,y+4);y+=10});
+y+=3;if(y>245){p.addPage();y=20}p.setFont('helvetica','bold');p.setFontSize(11);p.setTextColor(...dk);p.text('Depositos a Plazo',M,y);y+=6;
+const pI=horizon==='corto'?90:horizon==='medio'?180:360;const dB=bank!=='todos'?[bank]:Object.keys(DEPOSITS_DATA);
+dB.forEach(bk=>{if(!DEPOSITS_DATA[bk])return;const d=DEPOSITS_DATA[bk].find(d=>d.plazo===pI&&amount>=d.minMonto);if(!d)return;const g=Math.round(amount*d.tasa/100);p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...md);p.text(bk+': '+pI+'d — '+d.tasaAnual+'% — +$'+g.toLocaleString('es-CL'),M,y);y+=5});
+y+=6;p.setFontSize(7);p.setTextColor(...lt);p.text('Inverso v0.7 · Datos al '+DATA_DATE+' · No constituye asesoria financiera.',M,y);
+p.save('Inverso_'+U.name+'_'+new Date().toISOString().slice(0,10)+'.pdf')}catch(e){console.error(e);alert('Error PDF')}b.textContent='📄 PDF';b.disabled=false}
 
-function toggleTheme(){const html=document.documentElement,btn=document.getElementById('themeBtn');
-if(html.getAttribute('data-theme')==='light'){html.removeAttribute('data-theme');btn.textContent='☀️ Claro'}else{html.setAttribute('data-theme','light');btn.textContent='🌙 Oscuro'}
-if(document.getElementById('report').classList.contains('active')){const pc=document.getElementById('projChart');if(pc){const c=Chart.getChart(pc);if(c)c.destroy()}
-const eligible=getEligible();const matched=getBestPerBank(eligible);
-const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length/100:0.05;
-const yrs=userData.horizon==='corto'?1:userData.horizon==='medio'?3:5;
-setTimeout(()=>bldPC(userData.amount,Math.min(avgR*0.3,0.02),avgR,avgR*1.5,yrs),100)}}
-
-function startOver(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');showStep(0);Object.keys(userData).forEach(k=>userData[k]=typeof userData[k]==='number'?0:'');userData.bank='todos';document.getElementById('userName').value='';document.getElementById('userAge').value='';document.getElementById('userAmount').value='';document.getElementById('userHorizon').value='';document.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));document.getElementById('execSummaryContainer').innerHTML='';window.scrollTo({top:0})}
+function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.getAttribute('data-theme')==='light'){h.removeAttribute('data-theme');b.textContent='☀️'}else{h.setAttribute('data-theme','light');b.textContent='🌙'}if(document.getElementById('report').classList.contains('active')&&simChart){updSim()}}
+function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');showStep(0);Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.bank='todos';document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card').forEach(c=>c.classList.remove('selected'));window.scrollTo({top:0})}
 </script>
 </body>
 </html>
