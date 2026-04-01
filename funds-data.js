@@ -83,13 +83,13 @@ const DEPOSITS_DATA = {
 
 const BANK_INFO = {
   "BCI":{"url":"https://www.bci.cl/inversiones","digital":true,"minInvest":"$1.000","desc":"Banco grande con amplia oferta de fondos y plataforma digital."},
-  "Banchile":{"url":"https://ww2.banchileinversiones.cl/web/personas/p-fondos-mutuos","digital":true,"minInvest":"$1.000","desc":"Administradora del Banco de Chile. Mayor patrimonio administrado del país."},
+  "Banchile":{"url":"https://sitiospublicos.bancochile.cl/banchileinversiones/fondos-mutuos","digital":true,"minInvest":"$1.000","desc":"Administradora del Banco de Chile. Mayor patrimonio administrado del país."},
   "BancoEstado":{"url":"https://www.bancoestado.cl/fondosmutuos","digital":true,"minInvest":"$5.000","desc":"El banco estatal. Montos mínimos bajos y cobertura nacional."},
   "Scotiabank":{"url":"https://www.scotiabankchile.cl/Inversiones/fondos-mutuos","digital":true,"minInvest":"$10.000","desc":"Banco internacional con presencia en Chile."},
   "Santander":{"url":"https://www.santander.cl/personas/inversiones/fondos-mutuos","digital":true,"minInvest":"$5.000","desc":"Banco global con amplia gama de fondos."},
   "Itaú":{"url":"https://www.itau.cl/inversiones","digital":true,"minInvest":"$10.000","desc":"Banco brasileño con operaciones en Chile. Buena oferta digital."},
   "Fintual":{"url":"https://fintual.cl","digital":true,"minInvest":"$1","desc":"100% digital, sin mínimos. Comisión única de 1.19%. La opción fintech."},
-  "Security":{"url":"https://www.security.cl/inversiones","digital":true,"minInvest":"$10.000","desc":"Grupo financiero chileno con fondos para distintos perfiles."},
+  "Security":{"url":"https://www.inversionessecurity.cl/","digital":true,"minInvest":"$10.000","desc":"Grupo financiero chileno con fondos para distintos perfiles."},
   "BICE":{"url":"https://banco.bice.cl/inversiones/fondos-mutuos","digital":true,"minInvest":"$1","desc":"Grupo BICE. Sin monto mínimo en series digitales. 100% online."},
   "LarrainVial":{"url":"https://www.larrainvial.com","digital":true,"minInvest":"$100.000","desc":"La corredora más grande de Chile. Fondos premium."}
 };
