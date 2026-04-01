@@ -278,22 +278,287 @@ function bldGl(){const t=[{t:'Fondo Mutuo',d:'Inversión colectiva administrada 
 return t.map(i=>`<details class="glossary-item"><summary>${i.t}</summary><div class="gloss-body">${i.d}</div></details>`).join('')}
 
 // PDF (simplified for space)
-async function dlPDF(){const b=event.target;b.textContent='⏳';b.disabled=true;
-try{const{jsPDF}=window.jspdf,p=new jsPDF('p','mm','a4');const W=210,M=20,CW=W-2*M,ac=[0,169,118],dk=[26,31,46],md=[85,97,120],lt=[143,155,173];
-const{amount,horizon,risk,banks}=U;const yrs=horizon==='corto'?1:horizon==='medio'?3:5;
-p.setFillColor(...ac);p.rect(0,0,W,24,'F');p.setFont('helvetica','bold');p.setFontSize(20);p.setTextColor(255,255,255);p.text('inverso',M,16);p.setFontSize(8);p.text('Informe Personalizado',M+48,16);
-let y=34;p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...md);p.text(document.getElementById('rSub').textContent,M,y);y+=8;
-p.setFillColor(244,246,249);p.roundedRect(M,y,CW,14,2,2,'F');
-[['MONTO','$'+amount.toLocaleString('es-CL')],['HORIZONTE',horizon],['PERFIL',risk],['BANCOS',banks.includes('todos')?'Todos':banks.join(', ')]].forEach((c,i)=>{const x=M+3+i*(CW/4);p.setFontSize(5.5);p.setTextColor(...md);p.text(c[0],x,y+5);p.setFont('helvetica','bold');p.setFontSize(7.5);p.setTextColor(...dk);p.text(c[1].substring(0,20),x,y+10)});y+=20;
+async function dlPDF(){const b=event.target;b.textContent='⏳ Generando PDF...';b.disabled=true;
+try{const{jsPDF}=window.jspdf,p=new jsPDF('p','mm','a4');
+const W=210,H=297,M=18,CW=W-2*M;
+const ac=[0,169,118],dk=[26,31,46],md=[85,97,120],lt=[150,158,170],wh=[255,255,255],bg=[244,246,249];
+const{name,age,amount,horizon,risk,objective,banks}=U;
+const yrs=horizon==='corto'?1:horizon==='medio'?3:5;
+const hL={corto:'Corto plazo (menos de 1 año)',medio:'Mediano plazo (1-3 años)',largo:'Largo plazo (más de 3 años)'};
+const rL={conservador:'Conservador',moderado:'Moderado',agresivo:'Agresivo'};
+const oL={ahorrar:'Ahorro / Fondo de emergencia',meta:'Meta específica',crecer:'Crecimiento de capital',jubilacion:'Complementar jubilación'};
+const bankLabel=banks.includes('todos')?'Todos los bancos':banks.join(', ');
 const el=getEl(),matched=getBPB(el),best=matched[0];
-if(best){const pr=proj(amount,best.rent12,yrs);p.setFillColor(240,255,248);p.roundedRect(M,y,CW,14,2,2,'F');p.setDrawColor(...ac);p.roundedRect(M,y,CW,14,2,2,'S');p.setFont('helvetica','bold');p.setFontSize(8);p.setTextColor(...dk);p.text('TOP: '+best.name+' ('+best.provider+')',M+3,y+6);p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);p.text('Rent: '+best.rent12.toFixed(2)+'% | Proy '+yrs+'a: $'+pr.toLocaleString('es-CL'),M+3,y+11);y+=20}
-p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(...dk);p.text('Fondos Recomendados',M,y);y+=6;
-matched.forEach(f=>{if(y>258){p.addPage();y=20}const pr=proj(amount,f.rent12,yrs);p.setFont('helvetica','bold');p.setFontSize(8);p.setTextColor(...dk);p.text(f.name+' ('+f.provider+')',M,y);p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);p.text('12m: '+f.rent12.toFixed(2)+'% | Fee: '+f.fee+'% | Proy: $'+pr.toLocaleString('es-CL'),M,y+4);y+=9});
-y+=3;p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(...dk);p.text('Depositos a Plazo',M,y);y+=6;
-const pI=horizon==='corto'?90:horizon==='medio'?180:360;const dB=banks.includes('todos')?Object.keys(DEPOSITS_DATA):banks.filter(b=>DEPOSITS_DATA[b]);
-dB.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pI&&amount>=d.minMonto);if(!d)return;const g=Math.round(amount*d.tasa/100);p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);p.text(bk+': '+pI+'d — '+d.tasaAnual+'% — +$'+g.toLocaleString('es-CL'),M,y);y+=5});
-y+=6;p.setFontSize(6);p.setTextColor(...lt);p.text('Inverso v0.8 · '+DATA_DATE+' · No constituye asesoria financiera.',M,y);
-p.save('Inverso_'+U.name+'_'+new Date().toISOString().slice(0,10)+'.pdf')}catch(e){console.error(e);alert('Error PDF')}b.textContent='📄 PDF';b.disabled=false}
+const pIdeal=horizon==='corto'?90:horizon==='medio'?180:360;
+let bDep=null,bDB='';const dBanks=banks.includes('todos')?Object.keys(DEPOSITS_DATA):banks.filter(b=>DEPOSITS_DATA[b]);
+dBanks.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(d&&(!bDep||d.tasaAnual>bDep.tasaAnual)){bDep=d;bDB=bk}});
+const dGain=bDep?Math.round(amount*bDep.tasa/100):0;
+const projBest=best?proj(amount,best.rent12,yrs):amount;
+const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length/100:.05;
+
+function line(y,c){p.setDrawColor(...(c||[220,224,230]));p.setLineWidth(.3);p.line(M,y,W-M,y)}
+function pageNum(){const n=p.getNumberOfPages();for(let i=1;i<=n;i++){p.setPage(i);p.setFontSize(7);p.setTextColor(...lt);p.text('inverso · Informe personalizado para '+name,M,H-8);p.text('Pagina '+i+' de '+n,W-M-20,H-8)}}
+function checkY(y,need){if(y+need>H-20){p.addPage();return 25}return y}
+function heading(y,icon,title){p.setFont('helvetica','bold');p.setFontSize(14);p.setTextColor(...dk);p.text(icon+' '+title,M,y);line(y+2);return y+10}
+function subhead(y,title){p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(...ac);p.text(title,M,y);return y+6}
+function body(y,text,maxW){p.setFont('helvetica','normal');p.setFontSize(8.5);p.setTextColor(...md);const lines=p.splitTextToSize(text,maxW||CW);p.text(lines,M,y);return y+lines.length*4+3}
+function smallText(y,text){p.setFont('helvetica','normal');p.setFontSize(7.5);p.setTextColor(...lt);const lines=p.splitTextToSize(text,CW);p.text(lines,M,y);return y+lines.length*3.5+2}
+
+// ==========================================
+// PAGE 1: COVER
+// ==========================================
+p.setFillColor(...ac);p.rect(0,0,W,80,'F');
+p.setFont('helvetica','bold');p.setFontSize(36);p.setTextColor(...wh);p.text('inverso',M,40);
+p.setFontSize(14);p.text('Informe de Inversion Personalizado',M,52);
+p.setFont('helvetica','normal');p.setFontSize(10);p.setTextColor(200,255,230);
+p.text('Preparado exclusivamente para '+name+', '+age+' años',M,66);
+p.text(new Date().toLocaleDateString('es-CL',{day:'numeric',month:'long',year:'numeric'}),M,73);
+
+let y=100;
+p.setFillColor(...bg);p.roundedRect(M,y,CW,50,4,4,'F');
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text('DATOS DEL PERFIL',M+8,y+10);
+line(y+13,[200,205,215]);
+const profileData=[['Monto a invertir','$'+amount.toLocaleString('es-CL')],['Horizonte',hL[horizon]],['Perfil de riesgo',rL[risk]],['Objetivo',oL[objective]],['Bancos seleccionados',bankLabel]];
+profileData.forEach((d,i)=>{const py=y+20+i*7;p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...md);p.text(d[0],M+8,py);p.setFont('helvetica','bold');p.setTextColor(...dk);p.text(d[1],M+65,py)});
+
+y=170;
+p.setFillColor(240,255,248);p.roundedRect(M,y,CW,35,4,4,'F');p.setDrawColor(...ac);p.setLineWidth(.5);p.roundedRect(M,y,CW,35,4,4,'S');
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...ac);p.text('RESUMEN EJECUTIVO',M+8,y+10);
+p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(...dk);
+p.text('Mejor fondo: '+(best?best.name+' ('+best.provider+')':'—'),M+8,y+18);
+p.text('Proyeccion a '+yrs+(yrs===1?' año':' años')+': $'+projBest.toLocaleString('es-CL')+' (+$'+(projBest-amount).toLocaleString('es-CL')+')',M+8,y+25);
+p.text('Mejor DAP: '+bDB+' '+pIdeal+'d — '+((bDep?bDep.tasaAnual:0))+'% — +$'+dGain.toLocaleString('es-CL'),M+8,y+32);
+
+y=220;p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...lt);
+p.text('Datos al '+DATA_DATE+' · Datos de referencia — verificar con cada banco',M,y);
+p.text('Este informe no constituye asesoria financiera profesional.',M,y+5);
+
+// ==========================================
+// PAGE 2: PROFILE & TIPS
+// ==========================================
+p.addPage();y=25;
+y=heading(y,'','Tu Perfil de Inversionista');
+
+y=subhead(y,'Que significa ser '+risk+'?');
+const profTexts={conservador:'Eres un inversionista conservador. Esto significa que priorizas no perder tu capital sobre obtener grandes ganancias. Los productos ideales para ti son depositos a plazo y fondos mutuos de renta fija. Tipicamente obtendras rentabilidades modestas pero estables, cercanas a la inflacion o levemente superiores.',moderado:'Eres un inversionista moderado. Aceptas cierta volatilidad (subidas y bajadas temporales) a cambio de una mayor rentabilidad potencial. Los fondos balanceados que mezclan renta fija y renta variable son tu zona ideal. Tu inversion puede bajar en meses puntuales, pero historicamente tiende a recuperarse en plazos de 1 a 3 años.',agresivo:'Eres un inversionista agresivo. Estas dispuesto a ver caidas importantes en el corto plazo (incluso -20% o mas) con tal de obtener las mayores ganancias posibles a largo plazo. Los fondos accionarios son tu terreno. Requieren paciencia: los mercados pueden caer fuerte, pero historicamente son los que mas rentan en horizontes de 5+ años.'};
+y=body(y,profTexts[risk]);
+
+y=subhead(y,'Tu horizonte: '+hL[horizon]);
+const horzTexts={corto:'Con un horizonte menor a 1 año, lo mas importante es la liquidez y la seguridad. No es momento para tomar riesgos con acciones porque no tienes tiempo de recuperarte si el mercado cae. Los depositos a plazo y fondos de renta fija de corto plazo son tu mejor opcion.',medio:'Con 1 a 3 años de horizonte, tienes algo de margen para tolerar fluctuaciones. Puedes considerar fondos balanceados que mezclan renta fija con algo de renta variable. La clave es diversificar entre seguridad y crecimiento.',largo:'Con mas de 3 años de horizonte, tienes la ventaja mas poderosa en inversiones: el tiempo. Puedes tolerar caidas temporales porque tienes años para recuperarte. Historicamente, a mayor plazo, mayor beneficio de invertir en renta variable.'};
+y=body(y,horzTexts[horizon]);
+
+y+=3;y=subhead(y,'Consejos personalizados');
+if(objective==='ahorrar')y=body(y,'Ten 3-6 meses de gastos en un money market antes de invertir el resto. Un money market renta ~4-5% anual sin riesgo. No dejes tu plata en la cuenta corriente.');
+if(objective==='meta')y=body(y,'Calcula cuanto necesitas ahorrar al mes para tu meta. Si inviertes ese ahorro, necesitas menos porque el rendimiento hace parte del trabajo. Si te faltan menos de 6 meses, usa algo seguro.');
+if(objective==='crecer')y=body(y,'Diversifica entre tipos de inversion y entre 2-3 instituciones. No pongas todo en un solo fondo. Recuerda que FOGADE solo cubre depositos, no fondos mutuos.');
+if(objective==='jubilacion')y=body(y,'Considera el APV: con Regimen B el Estado bonifica 15% de lo que aportes (con tope). Con Regimen A, reduces tu base de impuestos. Ambos son excelentes para jubilacion.');
+if(risk==='conservador'&&horizon==='largo')y=body(y,'IMPORTANTE: Con horizonte largo, ser 100% conservador te hace perder rentabilidad potencial. Considera poner al menos un 20-30% en un fondo balanceado.');
+if(risk==='agresivo'&&horizon==='corto')y=body(y,'PRECAUCION: Con menos de 1 año no tienes tiempo de recuperarte si el mercado cae fuerte. Considera bajar el riesgo o alargar tu horizonte.');
+if(age>=55)y=body(y,'A los '+age+' años, la prioridad es proteger tu capital. Manten al menos 70% en renta fija o depositos a plazo.');
+if(age<25)y=body(y,'A los '+age+' años tienes decadas por delante. Incluso montos pequeños crecen enormemente con interes compuesto.');
+
+// ==========================================
+// PAGE 3: RECOMMENDED FUNDS
+// ==========================================
+p.addPage();y=25;
+y=heading(y,'','Fondos Mutuos Recomendados');
+y=smallText(y,'Seleccionamos el mejor fondo de cada banco compatible con tu perfil '+risk+' y horizonte '+horizon+'. Ordenados por rentabilidad a 12 meses.');
+y+=2;
+
+matched.forEach((f,i)=>{
+y=checkY(y,35);
+const isTop=i===0;
+if(isTop){p.setFillColor(240,255,248);p.roundedRect(M,y-2,CW,32,3,3,'F');p.setDrawColor(...ac);p.setLineWidth(.4);p.roundedRect(M,y-2,CW,32,3,3,'S');
+p.setFont('helvetica','bold');p.setFontSize(6);p.setTextColor(...ac);p.text('★ TOP RECOMENDACION',M+3,y+3);y+=6}else{p.setFillColor(...bg);p.roundedRect(M,y-2,CW,28,3,3,'F');y+=2}
+p.setFont('helvetica','bold');p.setFontSize(10);p.setTextColor(...dk);p.text(f.name,M+3,y);
+p.setFont('helvetica','normal');p.setFontSize(7.5);p.setTextColor(...md);p.text(CL[f.category]+' · '+f.provider+' · '+f.currency,M+3,y+4.5);
+// Stats
+const sx=M+CW-85;
+p.setFont('helvetica','bold');p.setFontSize(8);
+p.setTextColor(f.rent12>=0?0:224,f.rent12>=0?169:68,f.rent12>=0?118:96);
+p.text('Rent. 12m: '+(f.rent12>=0?'+':'')+f.rent12.toFixed(2)+'%',sx,y);
+p.setTextColor(f.rent30>=0?0:224,f.rent30>=0?169:68,f.rent30>=0?118:96);
+p.text('Rent. 30d: '+(f.rent30>=0?'+':'')+f.rent30.toFixed(2)+'%',sx,y+4.5);
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);
+p.text('Comision: '+f.fee.toFixed(2)+'% anual | Riesgo: '+f.risk+'/5',M+3,y+10);
+// Projection
+const pr=proj(amount,f.rent12,yrs),gain=pr-amount;
+p.setFont('helvetica','bold');p.setFontSize(8);p.setTextColor(...ac);
+p.text('Proyeccion '+yrs+'a: $'+pr.toLocaleString('es-CL')+' (ganancia: +$'+gain.toLocaleString('es-CL')+')',M+3,y+15);
+if(f.desc){p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...lt);const dl=p.splitTextToSize(f.desc,CW-6);p.text(dl,M+3,y+20);y+=20+dl.length*3+5}else{y+=22}
+y+=isTop?5:3});
+
+// ==========================================
+// PAGE 4: DEPOSITS
+// ==========================================
+p.addPage();y=25;
+y=heading(y,'','Depositos a Plazo');
+y=smallText(y,'Comparativa entre bancos al plazo mas adecuado para tu horizonte ('+pIdeal+' dias). El deposito a plazo es la inversion mas segura en Chile, garantizada por FOGADE hasta ~108 UF (~$4M) por persona por banco.');
+y+=3;
+
+// Table header
+p.setFillColor(...ac);p.roundedRect(M,y,CW,8,2,2,'F');
+p.setFont('helvetica','bold');p.setFontSize(7);p.setTextColor(...wh);
+['Banco','Plazo','Tasa Anual','Ganancia','Total a Recibir'].forEach((h,i)=>{p.text(h,M+3+i*(CW/5),y+5.5)});y+=11;
+
+dBanks.forEach((bk,i)=>{
+const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(!d)return;
+const g=Math.round(amount*d.tasa/100),t=amount+g;const isBest=bk===bDB;
+if(isBest){p.setFillColor(240,255,248);p.rect(M,y-3,CW,8,'F')}
+p.setFont('helvetica',isBest?'bold':'normal');p.setFontSize(8);p.setTextColor(...dk);
+p.text(bk+(isBest?' ★':''),M+3,y+2);
+p.text(d.plazo+'d',M+3+CW/5,y+2);
+p.text(d.tasaAnual.toFixed(2)+'%',M+3+2*CW/5,y+2);
+p.setTextColor(...ac);p.text('+$'+g.toLocaleString('es-CL'),M+3+3*CW/5,y+2);
+p.setTextColor(...dk);p.text('$'+t.toLocaleString('es-CL'),M+3+4*CW/5,y+2);
+y+=8;line(y-2,[235,238,244])});
+
+y+=8;
+if(bDB&&bDep){y=subhead(y,'Detalle: '+bDB+' (mejor tasa a '+pIdeal+' dias)');
+y=smallText(y,'Monto invertido: $'+amount.toLocaleString('es-CL'));y+=2;
+DEPOSITS_DATA[bDB].filter(d=>amount>=d.minMonto).forEach(d=>{
+const g=Math.round(amount*d.tasa/100),t=amount+g;
+p.setFont('helvetica','normal');p.setFontSize(8);p.setTextColor(...md);
+p.text(d.plazo+' dias  —  Tasa: '+d.tasa.toFixed(2)+'% ('+d.tasaAnual.toFixed(2)+'% anual)  —  Ganancia: +$'+g.toLocaleString('es-CL')+'  —  Total: $'+t.toLocaleString('es-CL'),M,y);y+=6})}
+
+// ==========================================
+// PAGE 5: PROJECTIONS
+// ==========================================
+p.addPage();y=25;
+y=heading(y,'','Proyeccion y Escenarios');
+
+const pR=risk==='agresivo'?-0.08:risk==='moderado'?-0.03:0.01;
+const oR=avgR*1.5;
+const pV=Math.round(amount*Math.pow(1+pR,yrs));
+const mV=Math.round(amount*Math.pow(1+avgR,yrs));
+const oV=Math.round(amount*Math.pow(1+oR,yrs));
+
+y=subhead(y,'Tres escenarios para tu inversion');
+y=smallText(y,'Basados en la rentabilidad promedio real ('+((avgR*100).toFixed(2))+'% anual) de tus '+matched.length+' fondos recomendados.');y+=2;
+
+// Scenario boxes
+const boxW=(CW-8)/3;
+[{label:'PESIMISTA',val:pV,rate:pR,color:[224,68,96]},{label:'MODERADO',val:mV,rate:avgR,color:[224,148,34]},{label:'OPTIMISTA',val:oV,rate:oR,color:ac}].forEach((s,i)=>{
+const bx=M+i*(boxW+4);
+p.setFillColor(...bg);p.roundedRect(bx,y,boxW,28,3,3,'F');
+p.setFont('helvetica','bold');p.setFontSize(7);p.setTextColor(...s.color);p.text(s.label,bx+boxW/2,y+7,{align:'center'});
+p.setFont('helvetica','bold');p.setFontSize(13);p.text('$'+s.val.toLocaleString('es-CL'),bx+boxW/2,y+16,{align:'center'});
+const gain=s.val-amount;const sign=gain>=0?'+':'';
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);
+p.text(sign+'$'+gain.toLocaleString('es-CL')+' ('+((s.rate*100).toFixed(1))+'%/año)',bx+boxW/2,y+22,{align:'center'})});
+y+=38;
+
+y=subhead(y,'Supuestos y metodologia');
+y=body(y,'Escenario pesimista: Asume una rentabilidad anual de '+(pR*100).toFixed(1)+'%. '+(pR<0?'Esto implica una perdida real de tu capital, lo cual es posible especialmente en fondos de renta variable en periodos cortos.':'Crecimiento minimo, apenas por encima de cero.'));
+y=body(y,'Escenario moderado: Usa la rentabilidad promedio real de los fondos recomendados ('+(avgR*100).toFixed(2)+'% anual). Representa el escenario mas probable basado en datos historicos.');
+y=body(y,'Escenario optimista: Asume una rentabilidad de '+(oR*100).toFixed(1)+'% anual (1.5x el promedio). Posible en años buenos de mercado, pero no garantizado.');
+y+=3;
+y=subhead(y,'Formula utilizada');
+y=body(y,'Valor Final = Monto Inicial × (1 + Tasa Anual) ^ Años');
+y=body(y,'Ejemplo con tu monto: $'+amount.toLocaleString('es-CL')+' × (1 + '+(avgR*100).toFixed(2)+'%)^'+yrs+' = $'+mV.toLocaleString('es-CL'));
+y+=3;
+y=body(y,'IMPORTANTE: Estas proyecciones son estimaciones basadas en rentabilidades historicas. El mercado puede comportarse de forma distinta. La rentabilidad pasada no garantiza rentabilidad futura. Los fondos mutuos NO tienen garantia estatal (a diferencia de los depositos a plazo).');
+
+// ==========================================
+// PAGE 6: FUND vs DEPOSIT COMPARISON
+// ==========================================
+if(best&&bDep){
+p.addPage();y=25;
+y=heading(y,'','Fondo Mutuo vs Deposito a Plazo');
+y=smallText(y,'Comparacion directa entre tu mejor fondo recomendado y el mejor deposito a plazo disponible.');y+=5;
+
+// Side by side boxes
+const halfW=(CW-6)/2;
+// Fund box
+p.setFillColor(240,255,248);p.roundedRect(M,y,halfW,55,3,3,'F');p.setDrawColor(...ac);p.roundedRect(M,y,halfW,55,3,3,'S');
+p.setFont('helvetica','bold');p.setFontSize(7);p.setTextColor(...ac);p.text('FONDO MUTUO',M+4,y+8);
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text(best.name,M+4,y+15);
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);p.text(best.provider,M+4,y+20);
+p.text('Rentabilidad 12m: '+(best.rent12>=0?'+':'')+best.rent12.toFixed(2)+'%',M+4,y+28);
+p.text('Comision: '+best.fee.toFixed(2)+'%',M+4,y+33);
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...ac);
+p.text('$'+projBest.toLocaleString('es-CL'),M+4,y+42);
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);
+p.text('en '+yrs+(yrs===1?' año':' años'),M+4,y+47);
+
+// DAP box
+const dx=M+halfW+6;
+p.setFillColor(...bg);p.roundedRect(dx,y,halfW,55,3,3,'F');p.setDrawColor(180,185,195);p.roundedRect(dx,y,halfW,55,3,3,'S');
+p.setFont('helvetica','bold');p.setFontSize(7);p.setTextColor(...md);p.text('DEPOSITO A PLAZO',dx+4,y+8);
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text(bDB+' — '+pIdeal+' dias',dx+4,y+15);
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);
+p.text('Tasa anual: '+bDep.tasaAnual+'%',dx+4,y+28);
+p.text('Garantia FOGADE: Si',dx+4,y+33);
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);
+const dapTotal=amount+dGain;p.text('$'+dapTotal.toLocaleString('es-CL'),dx+4,y+42);
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);
+p.text('en '+pIdeal+' dias',dx+4,y+47);
+
+y+=65;
+// Winner
+const diff=(projBest-amount)-dGain;
+p.setFillColor(240,255,248);p.roundedRect(M,y,CW,15,3,3,'F');
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...ac);
+p.text('Diferencia a favor del fondo: +$'+diff.toLocaleString('es-CL')+' en '+yrs+(yrs===1?' año':' años'),M+CW/2,y+9,{align:'center'});
+y+=22;
+y=body(y,'El fondo mutuo tiene mayor potencial de rentabilidad pero tambien mayor riesgo. El deposito a plazo es seguro y predecible pero renta menos. '+(risk==='conservador'?'Para tu perfil conservador, el deposito a plazo puede ser la mejor opcion por su seguridad.':risk==='moderado'?'Para tu perfil moderado, una combinacion de ambos es ideal: deposito para lo urgente, fondo para el resto.':'Para tu perfil agresivo, el fondo mutuo es probablemente mejor opcion dado tu horizonte largo.'));
+}
+
+// ==========================================
+// PAGE 7: NEXT STEPS
+// ==========================================
+p.addPage();y=25;
+y=heading(y,'','Proximos Pasos');
+y=body(y,'Para invertir en cualquiera de estos productos, necesitas ser cliente del banco o institucion correspondiente. A continuacion te dejamos la informacion de cada uno:');
+y+=3;
+
+const relevantBanks=banks.includes('todos')?Object.keys(BANK_INFO):banks;
+relevantBanks.forEach(bk=>{
+y=checkY(y,18);
+const info=BANK_INFO[bk];if(!info)return;
+p.setFillColor(...bg);p.roundedRect(M,y,CW,15,2,2,'F');
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text(bk,M+4,y+6);
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);p.text(info.desc,M+4,y+11);
+p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...ac);p.text(info.url,M+CW-p.getTextWidth(info.url)-4,y+6);
+p.setTextColor(...lt);p.text('Min: '+info.minInvest,M+CW-30,y+11);
+y+=18});
+
+// ==========================================
+// LAST PAGE: DISCLAIMER & METHODOLOGY
+// ==========================================
+p.addPage();y=25;
+y=heading(y,'','Metodologia y Disclaimer');
+
+y=subhead(y,'Fuentes de datos');
+y=body(y,'Los datos de fondos mutuos y depositos a plazo son de referencia, basados en informacion publica disponible en los sitios web de cada administradora y en datos publicados por la Comision para el Mercado Financiero (CMF) de Chile. Fecha de referencia: '+DATA_DATE+'.');
+y=body(y,'IMPORTANTE: Antes de invertir, verifica las cifras directamente con cada banco o administradora, ya que pueden haber cambiado desde la fecha de referencia.');
+
+y=subhead(y,'Metodologia de seleccion');
+y=body(y,'1. Se filtran los fondos segun el perfil de riesgo del usuario (conservador: riesgo 1-2, moderado: 1-3, agresivo: todos).');
+y=body(y,'2. Se filtran por horizonte de inversion (corto: fondos de deuda, medio: deuda y balanceados, largo: todos).');
+y=body(y,'3. Se filtran por banco de preferencia (si fue seleccionado).');
+y=body(y,'4. Se selecciona el mejor fondo de cada banco, ordenado por rentabilidad a 12 meses.');
+
+y=subhead(y,'Clasificacion de riesgo');
+y=body(y,'Riesgo 1 (Muy bajo): Fondos money market y liquidez. Riesgo 2 (Bajo): Renta fija mediano plazo. Riesgo 3 (Moderado): Fondos balanceados. Riesgo 4 (Alto): Acciones nacionales. Riesgo 5 (Muy alto): Acciones internacionales.');
+
+y=subhead(y,'Formulas de proyeccion');
+y=body(y,'Valor Final = Capital Inicial × (1 + Tasa)^Años. La tasa del escenario moderado corresponde a la rentabilidad promedio de los fondos recomendados. El pesimista usa '+(pR<0?'una tasa negativa que refleja perdida potencial':'una tasa minima')+'. El optimista usa 1.5x la tasa promedio.');
+
+y=subhead(y,'Disclaimer legal');
+y=body(y,'Este informe es generado automaticamente con fines informativos y educativos. NO constituye asesoria financiera profesional. Las rentabilidades pasadas no garantizan rentabilidades futuras. Los fondos mutuos no cuentan con garantia estatal; los depositos a plazo si estan cubiertos por FOGADE hasta aproximadamente 108 UF por persona por banco. Antes de tomar cualquier decision de inversion, consulte con un asesor financiero profesional.');
+
+y+=8;
+p.setFillColor(...ac);p.roundedRect(M,y,CW,12,3,3,'F');
+p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...wh);
+p.text('inverso — Tu informe de inversion personalizado',M+CW/2,y+7.5,{align:'center'});
+
+// Add page numbers
+pageNum();
+
+p.save('Inverso_'+name+'_'+new Date().toISOString().slice(0,10)+'.pdf');
+}catch(e){console.error(e);alert('Error generando PDF: '+e.message)}
+b.textContent='📄 PDF';b.disabled=false}
 
 function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.getAttribute('data-theme')==='light'){h.removeAttribute('data-theme');b.textContent='☀️'}else{h.setAttribute('data-theme','light');b.textContent='🌙'}if(document.getElementById('report').classList.contains('active')&&simChart)updSim()}
 function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');showStep(0);Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
