@@ -124,7 +124,7 @@ function prevStep(n){showStep(n)}
 function genReport(){document.getElementById('ov').style.display='flex';setTimeout(()=>{buildReport();document.getElementById('questionnaire').classList.remove('active');document.getElementById('report').classList.add('active');document.getElementById('ov').classList.add('hide');setTimeout(()=>{document.getElementById('ov').style.display='none';document.getElementById('ov').classList.remove('hide')},500);window.scrollTo({top:0})},1e3)}
 
 function getEl(){const{horizon:h,risk:r,banks:bk}=U;return FUNDS_DATA.filter(f=>{if(r==='conservador'&&f.risk>2)return!1;if(r==='moderado'&&f.risk>3)return!1;if(!f.horizon.includes(h))return!1;if(!bk.includes('todos')&&!bk.includes(f.provider))return!1;return!0})}
-function getBPB(el){const bp={};el.forEach(f=>{if(!bp[f.provider]||f.rent12>bp[f.provider].rent12)bp[f.provider]=f});return Object.values(bp).sort((a,b)=>b.rent12-a.rent12)}
+function getBPB(el){const bp={};el.forEach(f=>{if(!bp[f.provider]||f.rent360>bp[f.provider].rent360)bp[f.provider]=f});return Object.values(bp).sort((a,b)=>b.rent360-a.rent360)}
 function proj(a,r,y){return Math.round(a*Math.pow(1+r/100,y))}
 function showPage(id){document.querySelectorAll('.report-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.rnav-btn').forEach((b,i)=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:180,behavior:'smooth'})}
 
@@ -137,15 +137,15 @@ document.getElementById('pBar').innerHTML=[['Monto','$'+amount.toLocaleString('e
 
 const el=getEl(),matched=getBPB(el),best=matched[0];
 // Top 3 overall
-const top3=el.sort((a,b)=>b.rent12-a.rent12).slice(0,3);
-const bestRF=el.filter(f=>f.category==='deuda').sort((a,b)=>b.rent12-a.rent12)[0];
-const bestBal=el.filter(f=>f.category==='balanceado').sort((a,b)=>b.rent12-a.rent12)[0];
-const bestAcc=el.filter(f=>f.category==='accionario').sort((a,b)=>b.rent12-a.rent12)[0];
+const top3=el.sort((a,b)=>b.rent360-a.rent360).slice(0,3);
+const bestRF=el.filter(f=>f.category==='deuda').sort((a,b)=>b.rent360-a.rent360)[0];
+const bestBal=el.filter(f=>f.category==='balanceado').sort((a,b)=>b.rent360-a.rent360)[0];
+const bestAcc=el.filter(f=>f.category==='accionario').sort((a,b)=>b.rent360-a.rent360)[0];
 const pIdeal=horizon==='corto'?90:horizon==='medio'?180:360;
 let bDep=null,bDB='';const dBanks=banks.includes('todos')?Object.keys(DEPOSITS_DATA):banks.filter(b=>DEPOSITS_DATA[b]);
 dBanks.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(d&&(!bDep||d.tasaAnual>bDep.tasaAnual)){bDep=d;bDB=bk}});
 const dGain=bDep?Math.round(amount*bDep.tasa/100):0;
-const projBest=best?proj(amount,best.rent12,yrs):amount;
+const projBest=best?proj(amount,best.rent360,yrs):amount;
 
 // Nav
 const tabs=[{id:'pg-sum',l:'📋 Resumen'},{id:'pg-funds',l:'📊 Fondos'},{id:'pg-dep',l:'🏦 Depósitos'},{id:'pg-sim',l:'🔮 Simulador'},{id:'pg-cmp',l:'⚡ Comparar'},{id:'pg-cat',l:'📋 Catálogo'},{id:'pg-gl',l:'📚 Glosario'}];
@@ -160,9 +160,9 @@ pg+=`<div class="report-page active" id="pg-sum">
 <div class="exec-item"><div class="ei-icon">💰</div><div class="ei-label">Proyección ${yrs}a</div><div class="ei-value positive">$${projBest.toLocaleString('es-CL')}</div><div class="ei-detail">+$${(projBest-amount).toLocaleString('es-CL')}</div></div>
 <div class="exec-item"><div class="ei-icon">🏦</div><div class="ei-label">Mejor DAP</div><div class="ei-value">${bDB||'—'} ${pIdeal}d</div><div class="ei-detail">${bDep?bDep.tasaAnual+'% · +$'+dGain.toLocaleString('es-CL'):''}</div></div>
 <div class="exec-item"><div class="ei-icon">⚡</div><div class="ei-label">Fondo vs DAP</div><div class="ei-value positive">+$${((projBest-amount)-dGain).toLocaleString('es-CL')}</div><div class="ei-detail">a favor del fondo</div></div>
-</div><div class="exec-reason">${best?`<strong>${best.name}</strong> (${best.provider}) porque ofrece ${best.rent12.toFixed(2)}% anual, compatible con perfil ${risk}.`:''}</div></div>
+</div><div class="exec-reason">${best?`<strong>${best.name}</strong> (${best.provider}) porque ofrece ${best.rent360.toFixed(2)}% anual, compatible con perfil ${risk}.`:''}</div></div>
 
-<div class="section-block"><div class="section-title"><span class="s-icon">🏆</span><h2>Top 3 fondos del mercado</h2></div><div class="product-grid">${top3.map((f,i)=>`<div class="product-card" onclick="openFund(${esc(f)})"><span class="cat-badge top3">#${i+1} Top</span><div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value positive">+${f.rent12.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Proy. ${yrs}a</div><div class="stat-value positive">$${proj(amount,f.rent12,yrs).toLocaleString('es-CL')}</div></div></div></div>`).join('')}</div></div>
+<div class="section-block"><div class="section-title"><span class="s-icon">🏆</span><h2>Top 3 fondos del mercado</h2></div><div class="product-grid">${top3.map((f,i)=>`<div class="product-card" onclick="openFund(${esc(f)})"><span class="cat-badge top3">#${i+1} Top</span><div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value positive">+${f.rent360.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Proy. ${yrs}a</div><div class="stat-value positive">$${proj(amount,f.rent360,yrs).toLocaleString('es-CL')}</div></div></div></div>`).join('')}</div></div>
 
 <div class="section-block"><div class="section-title"><span class="s-icon">🧠</span><h2>Tu perfil</h2></div>
 <div class="info-box"><h4>Perfil ${risk}</h4><p>${getPE(risk,age,horizon)}</p></div></div>
@@ -173,8 +173,8 @@ pg+=`<div class="report-page active" id="pg-sum">
 pg+=`<div class="report-page" id="pg-funds"><div class="section-block"><div class="section-title"><span class="s-icon">📊</span><h2>Fondos recomendados</h2><span class="s-badge">${matched.length} opciones</span></div>
 <div class="info-box"><h4>¿Cómo elegimos?</h4><p>El mejor fondo de cada ${banks.includes('todos')?'banco':'banco seleccionado'} para perfil ${risk}, horizonte ${horizon}. Click en uno para detalle.</p></div><div class="product-grid">`;
 matched.forEach((f,i)=>{const badges=[];if(i===0)badges.push('<span class="rec-badge">★ Top</span>');if(bestRF&&f.name===bestRF.name)badges.push('<span class="cat-badge best-rf">Mejor RF</span>');if(bestBal&&f.name===bestBal.name)badges.push('<span class="cat-badge best-bal">Mejor Bal</span>');if(bestAcc&&f.name===bestAcc.name)badges.push('<span class="cat-badge best-acc">Mejor Acc</span>');
-const p=proj(amount,f.rent12,yrs),g=p-amount;
-pg+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${esc(f)})">${badges.join('')}<div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent12>=0?'positive':'negative'}">${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Riesgo</div><div class="stat-value"><div class="risk-visual rl-${f.risk}">${'<div class="rv-bar"></div>'.repeat(5)}</div></div></div></div><div class="pc-projection">📈 $${amount.toLocaleString('es-CL')} × ${yrs}a → <span class="proj-val">$${p.toLocaleString('es-CL')}</span> (+$${g.toLocaleString('es-CL')})</div><div class="pc-click">Click para detalle →</div></div>`});
+const p=proj(amount,f.rent360,yrs),g=p-amount;
+pg+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${esc(f)})">${badges.join('')}<div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div><div class="pc-projection">📈 $${amount.toLocaleString('es-CL')} × ${yrs}a → <span class="proj-val">$${p.toLocaleString('es-CL')}</span> (+$${g.toLocaleString('es-CL')})</div><div class="pc-click">Click para detalle →</div></div>`});
 pg+=`</div></div></div>`;
 
 // === DEPOSITS ===
@@ -185,20 +185,20 @@ pg+=`<tr class="${bk===bDB?'highlight-row':''}"><td><strong>${bk}</strong>${bk==
 pg+=`</tbody></table></div></div></div>`;
 
 // === SIMULATOR ===
-const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length:5;
+const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent360,0)/matched.length:5;
 pg+=`<div class="report-page" id="pg-sim"><div class="section-block"><div class="section-title"><span class="s-icon">🔮</span><h2>Simulador</h2></div><div class="info-box"><h4>Mueve los controles</h4><p>Rentabilidad promedio de tus fondos: ${avgR.toFixed(1)}% anual.</p></div>
 <div class="chart-wrapper"><div class="sim-controls"><div class="sim-field"><label>Monto</label><div class="sim-val" id="sAV">$${amount.toLocaleString('es-CL')}</div><input type="range" id="sA" min="100000" max="50000000" step="100000" value="${amount}" oninput="updSim()"></div><div class="sim-field"><label>Años</label><div class="sim-val" id="sYV">${yrs}</div><input type="range" id="sY" min="1" max="10" value="${yrs}" oninput="updSim()"></div></div><canvas id="sC"></canvas></div><div class="scenario-grid" id="sSc"></div></div></div>`;
 
 // === COMPARATOR ===
-const allEl=el.sort((a,b)=>b.rent12-a.rent12);
+const allEl=el.sort((a,b)=>b.rent360-a.rent360);
 pg+=`<div class="report-page" id="pg-cmp"><div class="section-block"><div class="section-title"><span class="s-icon">⚡</span><h2>Comparador</h2></div><div class="comp-select"><select id="cA" onchange="updCmp()"><option value="">Fondo 1...</option>${allEl.map((f,i)=>`<option value="${i}">${f.name} (${f.provider})</option>`).join('')}</select><select id="cB" onchange="updCmp()"><option value="">Fondo 2...</option>${allEl.map((f,i)=>`<option value="${i}">${f.name} (${f.provider})</option>`).join('')}</select></div><div id="cR"><p style="color:var(--text-muted);text-align:center;padding:2rem">Selecciona 2 fondos</p></div></div></div>`;
 
 // === CATALOG ===
 pg+=`<div class="report-page" id="pg-cat"><div class="section-block"><div class="section-title"><span class="s-icon">📋</span><h2>Catálogo completo</h2></div><div class="tab-bar">`;
 AP.forEach((p,i)=>{pg+=`<button class="tab-btn ${i===0?'active':''}" data-group="cat" data-target="ct-${p}">${p}</button>`});
-pg+=`</div>`;AP.forEach((p,i)=>{const pf=FUNDS_DATA.filter(f=>f.provider===p).sort((a,b)=>b.rent12-a.rent12);
-pg+=`<div class="tab-content ${i===0?'active':''}" data-group="cat" id="ct-${p}"><table class="comp-table"><thead><tr><th>Fondo</th><th>Tipo</th><th>12m</th><th>Fee</th></tr></thead><tbody>`;
-pf.forEach(f=>{pg+=`<tr style="cursor:pointer" onclick="openFund(${esc(f)})"><td><strong>${f.name}</strong></td><td>${CL[f.category]||''}</td><td style="color:${f.rent12>=0?'var(--accent)':'var(--red)'}"><strong>${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</strong></td><td>${f.fee.toFixed(2)}%</td></tr>`});
+pg+=`</div>`;AP.forEach((p,i)=>{const pf=FUNDS_DATA.filter(f=>f.provider===p).sort((a,b)=>b.rent360-a.rent360);
+pg+=`<div class="tab-content ${i===0?'active':''}" data-group="cat" id="ct-${p}"><table class="comp-table"><thead><tr><th>Fondo</th><th>Tipo</th><th>30d</th><th>90d</th><th>180d</th><th>12m</th></tr></thead><tbody>`;
+pf.forEach(f=>{pg+=`<tr style="cursor:pointer" onclick="openFund(${esc(f)})"><td><strong>${f.name}</strong></td><td>${CL[f.category]||''}</td><td style="color:${f.rent30>=0?'var(--accent)':'var(--red)'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</td><td style="color:${f.rent90>=0?'var(--accent)':'var(--red)'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</td><td style="color:${f.rent180>=0?'var(--accent)':'var(--red)'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</td><td style="color:${f.rent360>=0?'var(--accent)':'var(--red)'}"><strong>${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</strong></td></tr>`});
 pg+=`</tbody></table></div>`});pg+=`</div></div>`;
 
 // === NEXT STEPS ===
@@ -221,11 +221,11 @@ setTimeout(()=>updSim(),300);
 
 function esc(f){return JSON.stringify(f).replace(/"/g,'&quot;')}
 
-function openFund(f){const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;const p=proj(U.amount,f.rent12,yrs),g=p-U.amount;
+function openFund(f){const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;const p=proj(U.amount,f.rent360,yrs),g=p-U.amount;
 const riskL=['','Muy bajo','Bajo','Moderado','Alto','Muy alto'];const info=BANK_INFO[f.provider];
 document.getElementById('modalBody').innerHTML=`<div class="modal-close" onclick="closeModal()">✕</div>
 <h3>${f.name}</h3><div class="m-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div>
-<div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent12>=0?'positive':'negative'}">${f.rent12>=0?'+':''}${f.rent12.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Riesgo</div><div class="stat-value neutral">${riskL[f.risk]}</div></div></div>
+<div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div>
 ${f.desc?`<div class="m-section"><h4>¿En qué invierte?</h4><p>${f.desc}</p></div>`:''}
 <div class="m-section"><h4>Tu simulación</h4><p>$${U.amount.toLocaleString('es-CL')} × ${yrs} ${yrs===1?'año':'años'}:</p>
 <div class="exec-grid" style="margin-top:.6rem"><div class="exec-item"><div class="ei-label">Inversión</div><div class="ei-value">$${U.amount.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Proyección</div><div class="ei-value positive">$${p.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Ganancia</div><div class="ei-value positive">+$${g.toLocaleString('es-CL')}</div></div></div></div>
@@ -237,7 +237,7 @@ function closeModal(){document.getElementById('modal').classList.remove('show')}
 let simChart=null;
 function updSim(){const a=parseInt(document.getElementById('sA').value),y=parseInt(document.getElementById('sY').value);
 document.getElementById('sAV').textContent='$'+a.toLocaleString('es-CL');document.getElementById('sYV').textContent=y+(y===1?' año':' años');
-const el=getEl(),matched=getBPB(el);const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length/100:.05;
+const el=getEl(),matched=getBPB(el);const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent360,0)/matched.length/100:.05;
 const fundNames=matched.slice(0,3).map(f=>f.name).join(', ');
 const pR=U.risk==='agresivo'?-0.08:U.risk==='moderado'?-0.03:0.01;
 const oR=avgR*1.5;const ctx=document.getElementById('sC');if(!ctx)return;const cc=getCC();
@@ -249,10 +249,10 @@ document.getElementById('sSc').innerHTML=`<div class="scenario-card sc-pessimist
 
 function updCmp(){const iA=document.getElementById('cA').value,iB=document.getElementById('cB').value;
 if(iA===''||iB==='')return document.getElementById('cR').innerHTML='<p style="color:var(--text-muted);text-align:center;padding:2rem">Selecciona 2 fondos</p>';
-const el=getEl().sort((a,b)=>b.rent12-a.rent12);const fA=el[iA],fB=el[iB];if(!fA||!fB)return;const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;
-const pA=proj(U.amount,fA.rent12,yrs),pB=proj(U.amount,fB.rent12,yrs);const winner=pA>=pB?fA:fB;const diff=Math.abs(pA-pB);
+const el=getEl().sort((a,b)=>b.rent360-a.rent360);const fA=el[iA],fB=el[iB];if(!fA||!fB)return;const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;
+const pA=proj(U.amount,fA.rent360,yrs),pB=proj(U.amount,fB.rent360,yrs);const winner=pA>=pB?fA:fB;const diff=Math.abs(pA-pB);
 function rw(l,a,b,hi){return`<div class="comp-row"><span class="cr-label">${l}</span><span class="cr-val ${hi==='a'?'positive':''}">${a}</span><span class="cr-val ${hi==='b'?'positive':''}">${b}</span></div>`}
-document.getElementById('cR').innerHTML=`<div class="comp-vs"><div class="comp-fund"><h4>${fA.name}</h4><p style="font-size:.7rem;color:var(--text-muted)">${fA.provider}</p>${rw('12m',fA.rent12.toFixed(2)+'%','',fA.rent12>fB.rent12?'a':'')}${rw('Fee',fA.fee.toFixed(2)+'%','',fA.fee<fB.fee?'a':'')}${rw('Proy.','$'+pA.toLocaleString('es-CL'),'',pA>pB?'a':'')}</div><div class="comp-vs-divider">VS</div><div class="comp-fund"><h4>${fB.name}</h4><p style="font-size:.7rem;color:var(--text-muted)">${fB.provider}</p>${rw('12m','',fB.rent12.toFixed(2)+'%',fB.rent12>fA.rent12?'b':'')}${rw('Fee','',fB.fee.toFixed(2)+'%',fB.fee<fA.fee?'b':'')}${rw('Proy.','','$'+pB.toLocaleString('es-CL'),pB>pA?'b':'')}</div></div><div class="comp-winner">🏆 <strong>${winner.name}</strong> gana por $${diff.toLocaleString('es-CL')}</div>`}
+document.getElementById('cR').innerHTML=`<div class="comp-vs"><div class="comp-fund"><h4>${fA.name}</h4><p style="font-size:.7rem;color:var(--text-muted)">${fA.provider}</p>${rw('12m',fA.rent360.toFixed(2)+'%','',fA.rent360>fB.rent360?'a':'')}${rw('Fee',fA.fee.toFixed(2)+'%','',fA.fee<fB.fee?'a':'')}${rw('Proy.','$'+pA.toLocaleString('es-CL'),'',pA>pB?'a':'')}</div><div class="comp-vs-divider">VS</div><div class="comp-fund"><h4>${fB.name}</h4><p style="font-size:.7rem;color:var(--text-muted)">${fB.provider}</p>${rw('12m','',fB.rent360.toFixed(2)+'%',fB.rent360>fA.rent360?'b':'')}${rw('Fee','',fB.fee.toFixed(2)+'%',fB.fee<fA.fee?'b':'')}${rw('Proy.','','$'+pB.toLocaleString('es-CL'),pB>pA?'b':'')}</div></div><div class="comp-winner">🏆 <strong>${winner.name}</strong> gana por $${diff.toLocaleString('es-CL')}</div>`}
 
 function getCC(){const s=getComputedStyle(document.documentElement);return{grid:s.getPropertyValue('--chart-grid').trim()||'#1c2636',text:s.getPropertyValue('--chart-text').trim()||'#556178',legend:s.getPropertyValue('--chart-legend').trim()||'#8b97ad'}}
 
@@ -293,8 +293,8 @@ const pIdeal=horizon==='corto'?90:horizon==='medio'?180:360;
 let bDep=null,bDB='';const dBanks=banks.includes('todos')?Object.keys(DEPOSITS_DATA):banks.filter(b=>DEPOSITS_DATA[b]);
 dBanks.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(d&&(!bDep||d.tasaAnual>bDep.tasaAnual)){bDep=d;bDB=bk}});
 const dGain=bDep?Math.round(amount*bDep.tasa/100):0;
-const projBest=best?proj(amount,best.rent12,yrs):amount;
-const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent12,0)/matched.length/100:.05;
+const projBest=best?proj(amount,best.rent360,yrs):amount;
+const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent360,0)/matched.length/100:.05;
 
 function line(y,c){p.setDrawColor(...(c||[220,224,230]));p.setLineWidth(.3);p.line(M,y,W-M,y)}
 function pageNum(){const n=p.getNumberOfPages();for(let i=1;i<=n;i++){p.setPage(i);p.setFontSize(7);p.setTextColor(...lt);p.text('inverso · Informe personalizado para '+name,M,H-8);p.text('Pagina '+i+' de '+n,W-M-20,H-8)}}
@@ -375,14 +375,11 @@ p.setFont('helvetica','normal');p.setFontSize(7.5);p.setTextColor(...md);p.text(
 // Stats
 const sx=M+CW-85;
 p.setFont('helvetica','bold');p.setFontSize(8);
-p.setTextColor(f.rent12>=0?0:224,f.rent12>=0?169:68,f.rent12>=0?118:96);
-p.text('Rent. 12m: '+(f.rent12>=0?'+':'')+f.rent12.toFixed(2)+'%',sx,y);
-p.setTextColor(f.rent30>=0?0:224,f.rent30>=0?169:68,f.rent30>=0?118:96);
-p.text('Rent. 30d: '+(f.rent30>=0?'+':'')+f.rent30.toFixed(2)+'%',sx,y+4.5);
-p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);
-p.text('Comision: '+f.fee.toFixed(2)+'% anual | Riesgo: '+f.risk+'/5',M+3,y+10);
+p.setTextColor(f.rent360>=0?0:224,f.rent360>=0?169:68,f.rent360>=0?118:96);
+p.text('12m: '+(f.rent360>=0?'+':'')+f.rent360.toFixed(2)+'%',sx,y);
+p.text('180d: '+(f.rent180>=0?'+':'')+f.rent180.toFixed(2)+'% | 90d: '+(f.rent90>=0?'+':'')+f.rent90.toFixed(2)+'% | 30d: '+(f.rent30>=0?'+':'')+f.rent30.toFixed(2)+'%',M+3,y+10);
 // Projection
-const pr=proj(amount,f.rent12,yrs),gain=pr-amount;
+const pr=proj(amount,f.rent360,yrs),gain=pr-amount;
 p.setFont('helvetica','bold');p.setFontSize(8);p.setTextColor(...ac);
 p.text('Proyeccion '+yrs+'a: $'+pr.toLocaleString('es-CL')+' (ganancia: +$'+gain.toLocaleString('es-CL')+')',M+3,y+15);
 if(f.desc){p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...lt);const dl=p.splitTextToSize(f.desc,CW-6);p.text(dl,M+3,y+20);y+=20+dl.length*3+5}else{y+=22}
@@ -474,7 +471,7 @@ p.setFillColor(240,255,248);p.roundedRect(M,y,halfW,55,3,3,'F');p.setDrawColor(.
 p.setFont('helvetica','bold');p.setFontSize(7);p.setTextColor(...ac);p.text('FONDO MUTUO',M+4,y+8);
 p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...dk);p.text(best.name,M+4,y+15);
 p.setFont('helvetica','normal');p.setFontSize(7);p.setTextColor(...md);p.text(best.provider,M+4,y+20);
-p.text('Rentabilidad 12m: '+(best.rent12>=0?'+':'')+best.rent12.toFixed(2)+'%',M+4,y+28);
+p.text('Rentabilidad 12m: '+(best.rent360>=0?'+':'')+best.rent360.toFixed(2)+'%',M+4,y+28);
 p.text('Comision: '+best.fee.toFixed(2)+'%',M+4,y+33);
 p.setFont('helvetica','bold');p.setFontSize(9);p.setTextColor(...ac);
 p.text('$'+projBest.toLocaleString('es-CL'),M+4,y+42);
