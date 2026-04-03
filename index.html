@@ -223,13 +223,18 @@ function esc(f){return JSON.stringify(f).replace(/"/g,'&quot;')}
 
 function openFund(f){const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;const p=proj(U.amount,f.rent360,yrs),g=p-U.amount;
 const riskL=['','Muy bajo','Bajo','Moderado','Alto','Muy alto'];const info=BANK_INFO[f.provider];
+let seriesHtml='';
+if(f.series&&f.series.length>1){
+seriesHtml=`<div class="m-section"><h4>Series disponibles</h4><p style="font-size:.75rem;color:var(--text-muted);margin-bottom:.5rem">Cada serie tiene distinta comisión. Menor TAC = más rentabilidad para ti.</p><table class="comp-table"><thead><tr><th>Serie</th><th>TAC</th><th>30d</th><th>90d</th><th>180d</th><th>12m</th></tr></thead><tbody>`;
+f.series.forEach(s=>{
+seriesHtml+=`<tr class="${s.serie===f.defaultSerie?'highlight-row':''}"><td><strong>${s.serie}</strong></td><td>${s.tac>0?s.tac.toFixed(2)+'%':'—'}</td><td style="color:${s.rent30>=0?'var(--accent)':'var(--red)'}">${s.rent30>=0?'+':''}${s.rent30.toFixed(2)}%</td><td style="color:${s.rent90>=0?'var(--accent)':'var(--red)'}">${s.rent90>=0?'+':''}${s.rent90.toFixed(2)}%</td><td style="color:${s.rent180>=0?'var(--accent)':'var(--red)'}">${s.rent180>=0?'+':''}${s.rent180.toFixed(2)}%</td><td style="color:${s.rent360>=0?'var(--accent)':'var(--red)'}"><strong>${s.rent360>=0?'+':''}${s.rent360.toFixed(2)}%</strong></td></tr>`});
+seriesHtml+=`</tbody></table></div>`}
 document.getElementById('modalBody').innerHTML=`<div class="modal-close" onclick="closeModal()">✕</div>
-<h3>${f.name}</h3><div class="m-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div>
+<h3>${f.name}</h3><div class="m-type">${CL[f.category]} · ${f.provider} · ${f.currency} · Riesgo: ${riskL[f.risk]}</div>
 <div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div>
-${f.desc?`<div class="m-section"><h4>¿En qué invierte?</h4><p>${f.desc}</p></div>`:''}
-<div class="m-section"><h4>Tu simulación</h4><p>$${U.amount.toLocaleString('es-CL')} × ${yrs} ${yrs===1?'año':'años'}:</p>
+<div class="m-section"><h4>Tu simulación (Serie ${f.defaultSerie||'—'})</h4><p>$${U.amount.toLocaleString('es-CL')} × ${yrs} ${yrs===1?'año':'años'}:</p>
 <div class="exec-grid" style="margin-top:.6rem"><div class="exec-item"><div class="ei-label">Inversión</div><div class="ei-value">$${U.amount.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Proyección</div><div class="ei-value positive">$${p.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Ganancia</div><div class="ei-value positive">+$${g.toLocaleString('es-CL')}</div></div></div></div>
-<div class="m-section"><h4>Comisión</h4><p>La comisión de ${f.fee}% anual ya está descontada de la rentabilidad mostrada.</p></div>
+${seriesHtml}
 ${info?`<div class="m-section"><h4>¿Dónde invertir?</h4><p>${info.desc} Mínimo: ${info.minInvest}.</p><a href="${info.url}" target="_blank" class="btn btn-primary" style="margin-top:.5rem;display:inline-block;font-size:.8rem">Ir a ${f.provider} →</a></div>`:''}`; 
 document.getElementById('modal').classList.add('show')}
 function closeModal(){document.getElementById('modal').classList.remove('show')}
