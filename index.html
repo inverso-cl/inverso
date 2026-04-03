@@ -224,10 +224,11 @@ function esc(f){return JSON.stringify(f).replace(/"/g,'&quot;')}
 function openFund(f){const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;const p=proj(U.amount,f.rent360,yrs),g=p-U.amount;
 const riskL=['','Muy bajo','Bajo','Moderado','Alto','Muy alto'];const info=BANK_INFO[f.provider];
 let seriesHtml='';
-if(f.series&&f.series.length>1){
+const series=typeof SERIES_DATA!=='undefined'&&f.runFm?SERIES_DATA[f.runFm]:null;
+if(series&&series.length>1){
 seriesHtml=`<div class="m-section"><h4>Series disponibles</h4><p style="font-size:.75rem;color:var(--text-muted);margin-bottom:.5rem">Cada serie tiene distinta comisión. Menor TAC = más rentabilidad para ti.</p><table class="comp-table"><thead><tr><th>Serie</th><th>TAC</th><th>30d</th><th>90d</th><th>180d</th><th>12m</th></tr></thead><tbody>`;
-f.series.forEach(s=>{
-seriesHtml+=`<tr class="${s.serie===f.defaultSerie?'highlight-row':''}"><td><strong>${s.serie}</strong></td><td>${s.tac>0?s.tac.toFixed(2)+'%':'—'}</td><td style="color:${s.rent30>=0?'var(--accent)':'var(--red)'}">${s.rent30>=0?'+':''}${s.rent30.toFixed(2)}%</td><td style="color:${s.rent90>=0?'var(--accent)':'var(--red)'}">${s.rent90>=0?'+':''}${s.rent90.toFixed(2)}%</td><td style="color:${s.rent180>=0?'var(--accent)':'var(--red)'}">${s.rent180>=0?'+':''}${s.rent180.toFixed(2)}%</td><td style="color:${s.rent360>=0?'var(--accent)':'var(--red)'}"><strong>${s.rent360>=0?'+':''}${s.rent360.toFixed(2)}%</strong></td></tr>`});
+series.forEach(s=>{
+seriesHtml+=`<tr class="${s.s===(f.defaultSerie||'')? 'highlight-row':''}"><td><strong>${s.s}</strong></td><td>${s.tac>0?s.tac.toFixed(2)+'%':'—'}</td><td style="color:${s.r30>=0?'var(--accent)':'var(--red)'}">${s.r30>=0?'+':''}${s.r30.toFixed(2)}%</td><td style="color:${s.r90>=0?'var(--accent)':'var(--red)'}">${s.r90>=0?'+':''}${s.r90.toFixed(2)}%</td><td style="color:${s.r180>=0?'var(--accent)':'var(--red)'}">${s.r180>=0?'+':''}${s.r180.toFixed(2)}%</td><td style="color:${s.r360>=0?'var(--accent)':'var(--red)'}"><strong>${s.r360>=0?'+':''}${s.r360.toFixed(2)}%</strong></td></tr>`});
 seriesHtml+=`</tbody></table></div>`}
 document.getElementById('modalBody').innerHTML=`<div class="modal-close" onclick="closeModal()">✕</div>
 <h3>${f.name}</h3><div class="m-type">${CL[f.category]} · ${f.provider} · ${f.currency} · Riesgo: ${riskL[f.risk]}</div>
