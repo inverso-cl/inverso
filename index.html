@@ -157,11 +157,53 @@ pg+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${esc
 pg+=`</div></div></div>`;
 
 // === DEPOSITS ===
-pg+=`<div class="report-page" id="pg-dep"><div class="section-block"><div class="section-title"><span class="s-icon">🏦</span><h2>Depósitos a plazo</h2></div><div class="info-box"><h4>Garantizado por FOGADE</h4><p>Hasta ~108 UF por persona por banco.</p></div>`;
-pg+=`<div class="chart-wrapper"><h4>Comparativa a ${pIdeal}d · $${amount.toLocaleString('es-CL')}</h4><table class="comp-table"><thead><tr><th>Banco</th><th>Tasa</th><th>Ganancia</th><th>Total</th></tr></thead><tbody>`;
-dBanks.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(!d)return;const g=Math.round(amount*d.tasa/100),t=amount+g;
-pg+=`<tr class="${bk===bDB?'highlight-row':''}"><td><strong>${bk}</strong>${bk===bDB?' ★':''}</td><td>${d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${g.toLocaleString('es-CL')}</td><td><strong>$${t.toLocaleString('es-CL')}</strong></td></tr>`});
-pg+=`</tbody></table></div></div></div>`;
+pg+=`<div class="report-page" id="pg-dep"><div class="section-block"><div class="section-title"><span class="s-icon">🏦</span><h2>Depósitos a plazo</h2></div>
+<div class="info-box"><h4>¿Qué es un depósito a plazo?</h4><p>Le prestas tu dinero al banco por un período fijo y a cambio te paga intereses. Es la inversión más segura en Chile. Al vencimiento recibes tu capital + los intereses.</p></div>
+<div class="info-box"><h4>Garantizado por FOGADE</h4><p>Tus depósitos están protegidos por la Garantía Estatal hasta ~200 UF (~$8 millones) por persona por banco. Incluso si el banco quiebra, el Estado te devuelve tu dinero.</p></div>`;
+
+// Best plazo table (sorted by rate, best first)
+pg+=`<div class="chart-wrapper"><h4>🏆 Ranking: Mejor tasa a ${pIdeal} días con $${amount.toLocaleString('es-CL')}</h4><p class="chart-sub">Ordenado por mayor ganancia. Datos verificados FinClaro, marzo 2026.</p><table class="comp-table"><thead><tr><th>#</th><th>Banco</th><th>Tasa mensual</th><th>Tasa anual</th><th>Ganancia</th><th>Total</th></tr></thead><tbody>`;
+const depEntries=[];
+dBanks.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pIdeal&&amount>=d.minMonto);if(!d)return;const g=Math.round(amount*d.tasa/100);depEntries.push({bk,d,g,t:amount+g})});
+depEntries.sort((a,b)=>b.g-a.g);
+depEntries.forEach((e,i)=>{
+pg+=`<tr class="${i===0?'highlight-row':''}"><td>${i+1}</td><td><strong>${e.bk}</strong>${i===0?' ★':''}</td><td>${(e.d.tasa/(e.d.plazo/30)).toFixed(2)}%</td><td>${e.d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${e.g.toLocaleString('es-CL')}</td><td><strong>$${e.t.toLocaleString('es-CL')}</strong></td></tr>`});
+pg+=`</tbody></table></div>`;
+
+// All plazos comparison table
+pg+=`<div class="chart-wrapper" style="margin-top:1rem"><h4>📊 Comparativa por plazo — $${amount.toLocaleString('es-CL')}</h4><p class="chart-sub">Cuánto ganarías en cada banco según el plazo elegido</p><table class="comp-table"><thead><tr><th>Banco</th><th>30 días</th><th>90 días</th><th>180 días</th><th>360 días</th></tr></thead><tbody>`;
+// Find best per plazo for highlighting
+const bestByPlazo={};
+[30,90,180,360].forEach(pl=>{let best=0;dBanks.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pl&&amount>=d.minMonto);if(d){const g=Math.round(amount*d.tasa/100);if(g>best)best=g}});bestByPlazo[pl]=best});
+dBanks.forEach(bk=>{if(!DEPOSITS_DATA[bk])return;
+pg+=`<tr><td><strong>${bk}</strong></td>`;
+[30,90,180,360].forEach(pl=>{const d=DEPOSITS_DATA[bk].find(d=>d.plazo===pl&&amount>=d.minMonto);
+if(d){const g=Math.round(amount*d.tasa/100);const isBest=g===bestByPlazo[pl];
+pg+=`<td style="${isBest?'color:var(--accent);font-weight:700':''}">${isBest?'★ ':''}+$${g.toLocaleString('es-CL')}<br><span style="font-size:.6rem;color:var(--text-muted)">${d.tasaAnual.toFixed(2)}%</span></td>`}
+else{pg+=`<td style="color:var(--text-muted)">—</td>`}});
+pg+=`</tr>`});
+pg+=`</tbody></table></div>`;
+
+// Best bank detail
+if(depEntries.length>0){const bestBk=depEntries[0].bk;
+pg+=`<div class="chart-wrapper" style="margin-top:1rem"><h4>🥇 Detalle: ${bestBk} — Tu mejor opción a ${pIdeal} días</h4><p class="chart-sub">Todos los plazos disponibles en ${bestBk}</p><table class="comp-table"><thead><tr><th>Plazo</th><th>Tasa período</th><th>Tasa anual</th><th>Ganancia</th><th>Total</th></tr></thead><tbody>`;
+DEPOSITS_DATA[bestBk].filter(d=>amount>=d.minMonto).forEach(d=>{const g=Math.round(amount*d.tasa/100),t=amount+g;
+pg+=`<tr class="${d.plazo===pIdeal?'highlight-row':''}"><td><strong>${d.plazo} días</strong></td><td>${d.tasa.toFixed(2)}%</td><td>${d.tasaAnual.toFixed(2)}%</td><td style="color:var(--accent);font-weight:600">+$${g.toLocaleString('es-CL')}</td><td><strong>$${t.toLocaleString('es-CL')}</strong></td></tr>`});
+pg+=`</tbody></table></div>`}
+
+// DAP vs Fondo comparison
+if(depEntries.length>0&&best){const bestDep=depEntries[0];const fundProj=proj(amount,best.rent360,yrs);const fundGain=fundProj-amount;
+pg+=`<div class="chart-wrapper" style="margin-top:1rem"><h4>⚡ DAP vs Fondo Mutuo</h4><p class="chart-sub">¿Qué conviene más para tu perfil?</p><table class="comp-table"><thead><tr><th></th><th>Depósito (${bestDep.bk})</th><th>Fondo (${best.name})</th></tr></thead><tbody>
+<tr><td>Tipo</td><td>Renta fija garantizada</td><td>${CL[best.category]}</td></tr>
+<tr><td>Ganancia ${pIdeal}d</td><td style="color:var(--accent)">+$${bestDep.g.toLocaleString('es-CL')}</td><td>Variable</td></tr>
+<tr><td>Ganancia ${yrs} ${yrs===1?'año':'años'} (est.)</td><td style="color:var(--accent)">+$${Math.round(amount*bestDep.d.tasaAnual/100*yrs).toLocaleString('es-CL')}</td><td style="color:var(--accent)">+$${fundGain.toLocaleString('es-CL')}</td></tr>
+<tr><td>Riesgo</td><td style="color:var(--accent)">Sin riesgo (FOGADE)</td><td style="color:var(--amber)">${['','Muy bajo','Bajo','Moderado','Alto','Muy alto'][best.risk]}</td></tr>
+<tr><td>Liquidez</td><td>Al vencimiento</td><td>1-3 días hábiles</td></tr>
+<tr><td>Ideal para</td><td>Conservadores, corto plazo</td><td>${risk==='agresivo'?'Largo plazo, tolerancia a caídas':risk==='moderado'?'Mediano plazo, algo de riesgo':'Complementar el DAP'}</td></tr>
+</tbody></table></div>`}
+
+pg+=`<div class="info-box tip" style="margin-top:1rem"><h4>💡 Consejo</h4><p>${risk==='conservador'?'Para tu perfil conservador, el DAP es probablemente tu mejor opción. Es seguro, predecible y está garantizado por FOGADE. Considera complementar con un fondo money market para tener liquidez inmediata.':risk==='moderado'?'Para tu perfil moderado, una buena estrategia es combinar: parte en DAP (seguridad) y parte en fondo balanceado (crecimiento). Así proteges una base mientras el resto crece.':'Para tu perfil agresivo, el DAP puede servir como "colchón de seguridad" para una parte de tu capital, mientras el grueso lo inviertes en fondos accionarios que tienen mayor potencial a largo plazo.'}</p></div>`;
+pg+=`</div></div>`;
 
 // === SIMULATOR ===
 const avgR=matched.length>0?matched.reduce((s,f)=>s+f.rent360,0)/matched.length:5;
