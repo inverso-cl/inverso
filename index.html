@@ -49,48 +49,69 @@
 
 /* Landing Page */
 .landing{display:none}.landing.active{display:block}
-.hero-section{text-align:center;padding:4rem 1.5rem 2.5rem;position:relative}
+
+/* Landing Nav */
+.landing-nav{display:flex;align-items:center;justify-content:space-between;padding:.8rem 2rem;background:var(--header-bg);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.ln-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:800;letter-spacing:-1px;color:var(--text);text-decoration:none}.ln-logo .dot{display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;margin-left:1px;transform:translateY(-2px)}
+.ln-links{display:flex;align-items:center;gap:1.5rem}.ln-links a{font-size:.85rem;color:var(--text-secondary);text-decoration:none;transition:color .2s}.ln-links a:hover{color:var(--accent)}
+.ln-cta{padding:.55rem 1.3rem;background:var(--accent);color:#06090f;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:all .25s}.ln-cta:hover{box-shadow:0 4px 20px rgba(0,232,162,.3);transform:translateY(-1px)}
+.ln-menu{display:none;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer}
+@media(max-width:640px){.ln-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg-card);border-bottom:1px solid var(--border);flex-direction:column;padding:1rem;gap:.8rem}.ln-links.show{display:flex}.ln-menu{display:block}}
+
+/* Sections */
+.land-section{padding:4rem 0}.land-section.alt{background:var(--bg-elevated)}.land-section h2{font-family:'Fraunces',serif;font-size:clamp(1.5rem,3vw,2rem);text-align:center;margin-bottom:.4rem}
+.section-sub{text-align:center;color:var(--text-secondary);font-size:.95rem;margin-bottom:2rem}
+.hero-section{text-align:center;padding:5rem 1.5rem 3rem;position:relative}
 .hero-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,232,162,.07) 0%,transparent 70%);pointer-events:none}
 .hero-section h1{font-size:clamp(2.2rem,5.5vw,3.4rem);margin-bottom:1rem;position:relative}.hero-section h1 em{font-style:normal;color:var(--accent)}
 .hero-section .hero-sub{color:var(--text-secondary);font-size:1.1rem;max-width:540px;margin:0 auto 1.5rem;position:relative;line-height:1.7}
 .hero-cta{display:inline-block;padding:1rem 2.5rem;background:var(--accent);color:#06090f;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:all .25s;position:relative}.hero-cta:hover{box-shadow:0 4px 24px rgba(0,232,162,.3);transform:translateY(-2px)}
 .hero-note{font-size:.82rem;color:var(--text-muted);margin-top:1rem;position:relative}
-.value-section{max-width:900px;margin:1rem auto 0;padding:0 1.5rem}
-.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
-.value-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;transition:border-color .25s}
-.value-card:hover{border-color:var(--accent)}
-.value-card .vc-icon{font-size:1.8rem;margin-bottom:.6rem}
-.value-card .vc-title{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;margin-bottom:.3rem}
-.value-card .vc-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.6}
-.how-section{max-width:900px;margin:2rem auto;padding:0 1.5rem}
-.how-section h2{font-family:'Fraunces',serif;font-size:1.5rem;text-align:center;margin-bottom:1.5rem}
-.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-.how-step{text-align:center;padding:1rem}
-.how-step .hs-num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#06090f;font-weight:700;font-size:1rem;margin-bottom:.6rem}
-.how-step .hs-title{font-weight:700;font-size:.95rem;margin-bottom:.2rem}
-.how-step .hs-desc{font-size:.8rem;color:var(--text-secondary);line-height:1.6}
-.diff-section{max-width:900px;margin:2rem auto;padding:0 1.5rem}
-.diff-section h2{font-family:'Fraunces',serif;font-size:1.5rem;text-align:center;margin-bottom:.5rem}
-.diff-section .diff-sub{text-align:center;color:var(--text-secondary);font-size:.9rem;margin-bottom:1.5rem}
-.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.diff-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem}
+
+/* How steps */
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:900px;margin:0 auto}
+.how-step{text-align:center;padding:1.5rem 1rem}
+.how-step .hs-num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#06090f;font-weight:700;font-size:1.1rem;margin-bottom:.8rem}
+.how-step .hs-title{font-weight:700;font-size:1rem;margin-bottom:.3rem}
+.how-step .hs-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.65}
+
+/* Features grid */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:900px;margin:0 auto}
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:all .25s}
+.feature-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.feature-card .fc-icon{font-size:1.6rem;margin-bottom:.5rem}
+.feature-card .fc-title{font-weight:700;font-size:.95rem;margin-bottom:.3rem}
+.feature-card .fc-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.65}
+
+/* Diff grid */
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:900px;margin:0 auto}
+.diff-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1.5rem;transition:border-color .25s}
+.diff-card:hover{border-color:var(--border-light)}
 .diff-card .dc-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.4rem}
-.diff-card .dc-title{font-weight:700;font-size:.95rem;margin-bottom:.3rem}
-.diff-card .dc-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.6}
+.diff-card .dc-title{font-weight:700;font-size:1rem;margin-bottom:.3rem}
+.diff-card .dc-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.65}
 .diff-card.highlight{border-color:var(--accent);background:var(--accent-soft)}
 .diff-card.highlight .dc-label{color:var(--accent)}
-.landing-cta{text-align:center;padding:2.5rem 1.5rem;margin:1rem 0}
-.landing-cta h2{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:.5rem}
-.landing-cta p{color:var(--text-secondary);font-size:.9rem;margin-bottom:1.2rem}
-.landing-footer{text-align:center;padding:1.5rem;border-top:1px solid var(--border);margin-top:1rem}
+
+/* Institutions grid */
+.inst-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;max-width:700px;margin:0 auto}
+.inst-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.9rem .5rem;text-align:center;font-weight:700;font-size:.9rem;transition:all .2s}
+.inst-card:hover{border-color:var(--accent);color:var(--accent)}
+
+/* CTA section */
+.cta-section{padding:4rem 0}.cta-section h2{margin-bottom:.3rem}
+
+/* Landing footer */
+.landing-footer{text-align:center;padding:2rem 1.5rem;border-top:1px solid var(--border)}
 .landing-footer .credit{font-size:.85rem;color:var(--text-secondary);margin-bottom:.3rem}
 .landing-footer .credit a{color:var(--accent);font-weight:600}
 .landing-footer p{font-size:.72rem;color:var(--text-muted);margin-top:.2rem}
-@media(max-width:640px){.value-grid,.how-steps{grid-template-columns:1fr}.diff-grid{grid-template-columns:1fr}.hero-section{padding:3rem 1.2rem 2rem}}
+
+@media(max-width:640px){.how-steps,.features-grid{grid-template-columns:1fr}.diff-grid{grid-template-columns:1fr}.inst-grid{grid-template-columns:repeat(2,1fr)}.hero-section{padding:3.5rem 1.2rem 2rem}.land-section{padding:2.5rem 0}}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="logo-mark">inverso<span class="dot"></span></div><div class="header-right"><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button><span class="badge-beta">Beta</span></div></header>
+<header class="site-header" style="display:none"><div class="logo-mark">inverso<span class="dot"></span></div><div class="header-right"><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button><span class="badge-beta">Beta</span></div></header>
 <div class="loading-overlay" id="ov" style="display:none"><div class="loading-spinner"></div><p class="loading-text">Generando tu informe...</p></div>
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalBody"></div></div>
 
@@ -98,47 +119,100 @@
 
 <!-- LANDING PAGE -->
 <div class="landing active" id="landing">
-<section class="hero-section">
+
+<!-- NAV -->
+<nav class="landing-nav" id="landingNav">
+<a href="#hero" class="ln-logo">inverso<span class="dot"></span></a>
+<div class="ln-links">
+<a href="#como" onclick="smoothScroll(event,'como')">Cómo funciona</a>
+<a href="#incluye" onclick="smoothScroll(event,'incluye')">Qué incluye</a>
+<a href="#instituciones" onclick="smoothScroll(event,'instituciones')">Instituciones</a>
+<button class="ln-cta" onclick="startQuiz()">Probar gratis</button>
+</div>
+<button class="ln-menu" onclick="toggleNav()">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section" id="hero">
 <h1 class="anim-up">Tu informe de inversión<br><em>personalizado</em></h1>
-<p class="hero-sub anim-up anim-up-d1">Analizamos 313 fondos mutuos y depósitos a plazo de 10 instituciones chilenas para encontrar la mejor opción <strong>para ti</strong>. No para cualquier persona — para tu edad, tu monto, tu perfil y tu objetivo.</p>
-<button class="hero-cta anim-up anim-up-d2" onclick="startQuiz()">Crear mi informe gratis →</button>
-<p class="hero-note anim-up anim-up-d3">100% gratis · Sin registro · 2 minutos · Datos reales CMF</p>
+<p class="hero-sub anim-up anim-up-d1">Responde 5 preguntas y recibe un informe personalizado con la mejor inversión para tu perfil, edad y objetivo.</p>
+<button class="hero-cta anim-up anim-up-d2" onclick="startQuiz()">Crear mi informe →</button>
+<p class="hero-note anim-up anim-up-d3">100% gratis · Sin registro · 2 minutos</p>
 <div class="data-status anim-up anim-up-d3" style="margin-top:.8rem"><span class="dg"></span> <span id="dst"></span></div>
 </section>
 
-<div class="value-section">
-<div class="value-grid">
-<div class="value-card anim-up"><div class="vc-icon">📊</div><div class="vc-title">Informe a tu medida</div><div class="vc-desc">No es un ranking genérico. Filtramos los fondos según tu perfil de riesgo, horizonte y objetivo personal.</div></div>
-<div class="value-card anim-up anim-up-d1"><div class="vc-icon">🏦</div><div class="vc-title">10 instituciones</div><div class="vc-desc">BCI, Banchile, BancoEstado, Scotiabank, Santander, Itaú, Fintual, Security, BICE y LarrainVial.</div></div>
-<div class="value-card anim-up anim-up-d2"><div class="vc-icon">📄</div><div class="vc-title">PDF profesional</div><div class="vc-desc">Descarga tu informe completo con recomendación, proyecciones, escenarios y comparación con depósitos.</div></div>
-</div>
-</div>
-
-<div class="how-section">
-<h2 class="anim-up">¿Cómo funciona?</h2>
+<!-- CÓMO FUNCIONA -->
+<section class="land-section" id="como">
+<div class="container">
+<h2>¿Cómo funciona?</h2>
+<p class="section-sub">Simple, rápido y sin letra chica.</p>
 <div class="how-steps">
-<div class="how-step anim-up"><div class="hs-num">1</div><div class="hs-title">Responde 5 preguntas</div><div class="hs-desc">Tu nombre, edad, cuánto quieres invertir, por cuánto tiempo y qué buscas.</div></div>
-<div class="how-step anim-up anim-up-d1"><div class="hs-num">2</div><div class="hs-title">Analizamos 313 fondos</div><div class="hs-desc">Cruzamos tus datos con rentabilidades reales de la CMF y tasas verificadas de depósitos.</div></div>
-<div class="how-step anim-up anim-up-d2"><div class="hs-num">3</div><div class="hs-title">Recibes tu informe</div><div class="hs-desc">Recomendación personalizada, simulador, comparador y un PDF descargable nivel profesional.</div></div>
+<div class="how-step anim-up"><div class="hs-num">1</div><div class="hs-title">Completa tu perfil</div><div class="hs-desc">Tu nombre, edad, cuánto quieres invertir, por cuánto tiempo y qué buscas. No almacenamos nada.</div></div>
+<div class="how-step anim-up anim-up-d1"><div class="hs-num">2</div><div class="hs-title">Buscamos tu mejor opción</div><div class="hs-desc">Cruzamos tu perfil con datos reales de 313 fondos mutuos y depósitos a plazo de la CMF.</div></div>
+<div class="how-step anim-up anim-up-d2"><div class="hs-num">3</div><div class="hs-title">Recibe tu informe personalizado</div><div class="hs-desc">Recomendación principal, alternativas, simulador, comparador y un PDF descargable nivel profesional.</div></div>
 </div>
 </div>
+</section>
 
-<div class="diff-section">
-<h2 class="anim-up">¿En qué se diferencia?</h2>
-<p class="diff-sub anim-up anim-up-d1">No somos un banco ni una corredora. No vendemos nada.</p>
+<!-- QUÉ INCLUYE -->
+<section class="land-section alt" id="incluye">
+<div class="container">
+<h2>Qué incluye tu informe</h2>
+<p class="section-sub">No es un ranking genérico. Es un informe hecho para ti.</p>
+<div class="features-grid">
+<div class="feature-card"><div class="fc-icon">🎯</div><div class="fc-title">Recomendación principal</div><div class="fc-desc">El mejor fondo para tu perfil específico, con proyección de ganancia y fundamento claro de por qué te conviene.</div></div>
+<div class="feature-card"><div class="fc-icon">🏆</div><div class="fc-title">Top 3 fondos</div><div class="fc-desc">Las 3 mejores alternativas entre los bancos que elegiste, con rentabilidades reales a 30, 90, 180 y 360 días.</div></div>
+<div class="feature-card"><div class="fc-icon">🔮</div><div class="fc-title">Simulador interactivo</div><div class="fc-desc">Mueve el monto y los años para ver cómo crece tu inversión en 3 escenarios: pesimista, moderado y optimista.</div></div>
+<div class="feature-card"><div class="fc-icon">⚡</div><div class="fc-title">Comparador fondos vs DAP</div><div class="fc-desc">¿Fondo mutuo o depósito a plazo? Te mostramos lado a lado cuánto ganas con cada uno y cuál te conviene.</div></div>
+<div class="feature-card"><div class="fc-icon">🏦</div><div class="fc-title">Depósitos a plazo</div><div class="fc-desc">Ranking de tasas verificadas de 8 bancos a distintos plazos, con ganancia calculada para tu monto exacto.</div></div>
+<div class="feature-card"><div class="fc-icon">📄</div><div class="fc-title">PDF profesional</div><div class="fc-desc">Descarga un informe de 6 páginas con tu recomendación, escenarios, comparaciones y metodología.</div></div>
+</div>
+</div>
+</section>
+
+<!-- EN QUÉ SE DIFERENCIA -->
+<section class="land-section" id="diferencia">
+<div class="container">
+<h2>¿En qué se diferencia?</h2>
+<p class="section-sub">No somos un banco ni una corredora. No vendemos nada.</p>
 <div class="diff-grid">
-<div class="diff-card anim-up"><div class="dc-label">Otros sitios</div><div class="dc-title">Rankings genéricos</div><div class="dc-desc">Te muestran los fondos más rentables del mercado, sin importar si son adecuados para ti.</div></div>
-<div class="diff-card highlight anim-up anim-up-d1"><div class="dc-label">Inverso</div><div class="dc-title">Informe personalizado</div><div class="dc-desc">Filtra por tu perfil, edad, horizonte y objetivo. Te dice exactamente qué fondo te conviene y por qué.</div></div>
-<div class="diff-card anim-up"><div class="dc-label">Otros sitios</div><div class="dc-title">Solo fondos o solo depósitos</div><div class="dc-desc">Tienes que comparar por tu cuenta entre fondos mutuos y depósitos a plazo.</div></div>
-<div class="diff-card highlight anim-up anim-up-d1"><div class="dc-label">Inverso</div><div class="dc-title">Todo junto + comparación</div><div class="dc-desc">Compara fondos vs depósitos lado a lado, con proyecciones y escenarios para tu monto.</div></div>
+<div class="diff-card"><div class="dc-label">Otros sitios</div><div class="dc-title">Rankings genéricos</div><div class="dc-desc">Te muestran los fondos más rentables del mercado, sin importar si son adecuados para ti.</div></div>
+<div class="diff-card highlight"><div class="dc-label">Inverso</div><div class="dc-title">Informe personalizado</div><div class="dc-desc">Filtra por tu perfil, edad, horizonte y objetivo. Te dice exactamente qué fondo te conviene y por qué.</div></div>
+<div class="diff-card"><div class="dc-label">Otros sitios</div><div class="dc-title">Solo fondos o solo depósitos</div><div class="dc-desc">Tienes que comparar por tu cuenta entre fondos mutuos y depósitos a plazo.</div></div>
+<div class="diff-card highlight"><div class="dc-label">Inverso</div><div class="dc-title">Todo junto + comparación</div><div class="dc-desc">Compara fondos vs depósitos lado a lado, con proyecciones y escenarios para tu monto.</div></div>
 </div>
 </div>
+</section>
 
-<div class="landing-cta">
-<h2>¿Listo para saber dónde invertir?</h2>
-<p>5 preguntas. 2 minutos. Tu informe personalizado.</p>
-<button class="hero-cta" onclick="startQuiz()">Comenzar ahora →</button>
+<!-- INSTITUCIONES -->
+<section class="land-section alt" id="instituciones">
+<div class="container">
+<h2>Instituciones que analizamos</h2>
+<p class="section-sub">Datos reales de 10 bancos y administradoras de fondos.</p>
+<div class="inst-grid">
+<div class="inst-card">BCI</div>
+<div class="inst-card">Banchile</div>
+<div class="inst-card">BancoEstado</div>
+<div class="inst-card">Scotiabank</div>
+<div class="inst-card">Santander</div>
+<div class="inst-card">Itaú</div>
+<div class="inst-card">Fintual</div>
+<div class="inst-card">Security</div>
+<div class="inst-card">BICE</div>
+<div class="inst-card">LarrainVial</div>
 </div>
+<p style="text-align:center;font-size:.8rem;color:var(--text-muted);margin-top:1rem">Fuente: CMF (Comisión para el Mercado Financiero) · Tasas DAP verificadas por FinClaro.cl</p>
+</div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="land-section cta-section">
+<div class="container" style="text-align:center">
+<h2>¿Listo para saber dónde invertir?</h2>
+<p class="section-sub">5 preguntas. 2 minutos. Tu informe personalizado.</p>
+<button class="hero-cta" onclick="startQuiz()">Crear mi informe →</button>
+</div>
+</section>
 
 <footer class="landing-footer"><div class="credit">Creado por <a href="#">Mario Aguilera</a></div><p>Datos oficiales CMF · No constituye asesoría financiera · Hecho en Chile 🇨🇱</p></footer>
 </div>
@@ -696,8 +770,10 @@ p.save('Inverso_'+name+'_'+new Date().toISOString().slice(0,10)+'.pdf');
 b.textContent='PDF';b.disabled=false}
 
 function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.getAttribute('data-theme')==='light'){h.removeAttribute('data-theme');b.textContent='☀️'}else{h.setAttribute('data-theme','light');b.textContent='🌙'}if(document.getElementById('report').classList.contains('active')&&simChart)updSim()}
-function startQuiz(){document.getElementById('landing').style.display='none';document.getElementById('quizSection').style.display='block';showStep(0);window.scrollTo({top:0,behavior:'smooth'})}
-function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');document.getElementById('landing').style.display='block';document.getElementById('quizSection').style.display='none';Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
+function startQuiz(){document.getElementById('landing').style.display='none';document.getElementById('quizSection').style.display='block';document.querySelector('.site-header').style.display='flex';showStep(0);window.scrollTo({top:0,behavior:'smooth'})}
+function smoothScroll(e,id){e.preventDefault();document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});const links=document.querySelector('.ln-links');if(links)links.classList.remove('show')}
+function toggleNav(){document.querySelector('.ln-links').classList.toggle('show')}
+function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');document.getElementById('landing').style.display='block';document.getElementById('quizSection').style.display='none';document.querySelector('.site-header').style.display='none';Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
 </script>
 </body>
 </html>
