@@ -111,7 +111,7 @@
 </style>
 </head>
 <body>
-<header class="site-header" style="display:none"><div class="logo-mark">inverso<span class="dot"></span></div><div class="header-right"><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button><span class="badge-beta">Beta</span></div></header>
+<header class="site-header" style="display:none"><div class="logo-mark" onclick="restart()" style="cursor:pointer">inverso<span class="dot"></span></div><div class="header-right"><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button><span class="badge-beta">Beta</span></div></header>
 <div class="loading-overlay" id="ov" style="display:none"><div class="loading-spinner"></div><p class="loading-text">Generando tu informe...</p></div>
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalBody"></div></div>
 
