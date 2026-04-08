@@ -46,6 +46,47 @@
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.anim-up{animation:fadeUp .5s ease-out both}.anim-up-d1{animation-delay:.1s}.anim-up-d2{animation-delay:.15s}.anim-up-d3{animation-delay:.2s}
 @media(max-width:640px){.site-header{padding:.8rem 1rem}.form-card{padding:1.8rem 1.3rem}.profile-bar{padding:1.2rem;gap:1rem 1.5rem}.product-card{padding:1.2rem}.pc-stats{grid-template-columns:repeat(2,1fr)}.scenario-grid{grid-template-columns:1fr}.btn-row{flex-direction:column}.btn{width:100%;text-align:center}.sim-controls{grid-template-columns:1fr}.comp-select{grid-template-columns:1fr}.comp-vs{grid-template-columns:1fr}.comp-vs-divider{padding:0}.report-nav{gap:.3rem}.rnav-btn{padding:.35rem .6rem;font-size:.7rem}.exec-grid{grid-template-columns:1fr 1fr}.bank-grid{grid-template-columns:repeat(2,1fr)}}
 .loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}.loading-overlay.hide{opacity:0;pointer-events:none}.loading-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}.loading-text{color:var(--text-secondary);margin-top:.8rem;font-size:.85rem}@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Landing Page */
+.landing{display:none}.landing.active{display:block}
+.hero-section{text-align:center;padding:4rem 1.5rem 2.5rem;position:relative}
+.hero-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,232,162,.07) 0%,transparent 70%);pointer-events:none}
+.hero-section h1{font-size:clamp(2.2rem,5.5vw,3.4rem);margin-bottom:1rem;position:relative}.hero-section h1 em{font-style:normal;color:var(--accent)}
+.hero-section .hero-sub{color:var(--text-secondary);font-size:1.1rem;max-width:540px;margin:0 auto 1.5rem;position:relative;line-height:1.7}
+.hero-cta{display:inline-block;padding:1rem 2.5rem;background:var(--accent);color:#06090f;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:all .25s;position:relative}.hero-cta:hover{box-shadow:0 4px 24px rgba(0,232,162,.3);transform:translateY(-2px)}
+.hero-note{font-size:.82rem;color:var(--text-muted);margin-top:1rem;position:relative}
+.value-section{max-width:900px;margin:1rem auto 0;padding:0 1.5rem}
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.value-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;transition:border-color .25s}
+.value-card:hover{border-color:var(--accent)}
+.value-card .vc-icon{font-size:1.8rem;margin-bottom:.6rem}
+.value-card .vc-title{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.value-card .vc-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.6}
+.how-section{max-width:900px;margin:2rem auto;padding:0 1.5rem}
+.how-section h2{font-family:'Fraunces',serif;font-size:1.5rem;text-align:center;margin-bottom:1.5rem}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.how-step{text-align:center;padding:1rem}
+.how-step .hs-num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#06090f;font-weight:700;font-size:1rem;margin-bottom:.6rem}
+.how-step .hs-title{font-weight:700;font-size:.95rem;margin-bottom:.2rem}
+.how-step .hs-desc{font-size:.8rem;color:var(--text-secondary);line-height:1.6}
+.diff-section{max-width:900px;margin:2rem auto;padding:0 1.5rem}
+.diff-section h2{font-family:'Fraunces',serif;font-size:1.5rem;text-align:center;margin-bottom:.5rem}
+.diff-section .diff-sub{text-align:center;color:var(--text-secondary);font-size:.9rem;margin-bottom:1.5rem}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.diff-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem}
+.diff-card .dc-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:.4rem}
+.diff-card .dc-title{font-weight:700;font-size:.95rem;margin-bottom:.3rem}
+.diff-card .dc-desc{font-size:.82rem;color:var(--text-secondary);line-height:1.6}
+.diff-card.highlight{border-color:var(--accent);background:var(--accent-soft)}
+.diff-card.highlight .dc-label{color:var(--accent)}
+.landing-cta{text-align:center;padding:2.5rem 1.5rem;margin:1rem 0}
+.landing-cta h2{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:.5rem}
+.landing-cta p{color:var(--text-secondary);font-size:.9rem;margin-bottom:1.2rem}
+.landing-footer{text-align:center;padding:1.5rem;border-top:1px solid var(--border);margin-top:1rem}
+.landing-footer .credit{font-size:.85rem;color:var(--text-secondary);margin-bottom:.3rem}
+.landing-footer .credit a{color:var(--accent);font-weight:600}
+.landing-footer p{font-size:.72rem;color:var(--text-muted);margin-top:.2rem}
+@media(max-width:640px){.value-grid,.how-steps{grid-template-columns:1fr}.diff-grid{grid-template-columns:1fr}.hero-section{padding:3rem 1.2rem 2rem}}
 </style>
 </head>
 <body>
@@ -54,7 +95,57 @@
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()"><div class="modal" id="modalBody"></div></div>
 
 <div class="screen active" id="questionnaire">
-<section class="landing-hero"><h1 class="anim-up">Descubre dónde invertir<br><em>tu dinero</em></h1><p class="anim-up anim-up-d1">Informe personalizado con fondos mutuos y depósitos a plazo de 10 instituciones chilenas.</p><p class="sub anim-up anim-up-d2">100% gratis · Sin registro · Datos reales CMF</p><div class="data-status anim-up anim-up-d3"><span class="dg"></span> <span id="dst"></span></div></section>
+
+<!-- LANDING PAGE -->
+<div class="landing active" id="landing">
+<section class="hero-section">
+<h1 class="anim-up">Tu informe de inversión<br><em>personalizado</em></h1>
+<p class="hero-sub anim-up anim-up-d1">Analizamos 313 fondos mutuos y depósitos a plazo de 10 instituciones chilenas para encontrar la mejor opción <strong>para ti</strong>. No para cualquier persona — para tu edad, tu monto, tu perfil y tu objetivo.</p>
+<button class="hero-cta anim-up anim-up-d2" onclick="startQuiz()">Crear mi informe gratis →</button>
+<p class="hero-note anim-up anim-up-d3">100% gratis · Sin registro · 2 minutos · Datos reales CMF</p>
+<div class="data-status anim-up anim-up-d3" style="margin-top:.8rem"><span class="dg"></span> <span id="dst"></span></div>
+</section>
+
+<div class="value-section">
+<div class="value-grid">
+<div class="value-card anim-up"><div class="vc-icon">📊</div><div class="vc-title">Informe a tu medida</div><div class="vc-desc">No es un ranking genérico. Filtramos los fondos según tu perfil de riesgo, horizonte y objetivo personal.</div></div>
+<div class="value-card anim-up anim-up-d1"><div class="vc-icon">🏦</div><div class="vc-title">10 instituciones</div><div class="vc-desc">BCI, Banchile, BancoEstado, Scotiabank, Santander, Itaú, Fintual, Security, BICE y LarrainVial.</div></div>
+<div class="value-card anim-up anim-up-d2"><div class="vc-icon">📄</div><div class="vc-title">PDF profesional</div><div class="vc-desc">Descarga tu informe completo con recomendación, proyecciones, escenarios y comparación con depósitos.</div></div>
+</div>
+</div>
+
+<div class="how-section">
+<h2 class="anim-up">¿Cómo funciona?</h2>
+<div class="how-steps">
+<div class="how-step anim-up"><div class="hs-num">1</div><div class="hs-title">Responde 5 preguntas</div><div class="hs-desc">Tu nombre, edad, cuánto quieres invertir, por cuánto tiempo y qué buscas.</div></div>
+<div class="how-step anim-up anim-up-d1"><div class="hs-num">2</div><div class="hs-title">Analizamos 313 fondos</div><div class="hs-desc">Cruzamos tus datos con rentabilidades reales de la CMF y tasas verificadas de depósitos.</div></div>
+<div class="how-step anim-up anim-up-d2"><div class="hs-num">3</div><div class="hs-title">Recibes tu informe</div><div class="hs-desc">Recomendación personalizada, simulador, comparador y un PDF descargable nivel profesional.</div></div>
+</div>
+</div>
+
+<div class="diff-section">
+<h2 class="anim-up">¿En qué se diferencia?</h2>
+<p class="diff-sub anim-up anim-up-d1">No somos un banco ni una corredora. No vendemos nada.</p>
+<div class="diff-grid">
+<div class="diff-card anim-up"><div class="dc-label">Otros sitios</div><div class="dc-title">Rankings genéricos</div><div class="dc-desc">Te muestran los fondos más rentables del mercado, sin importar si son adecuados para ti.</div></div>
+<div class="diff-card highlight anim-up anim-up-d1"><div class="dc-label">Inverso</div><div class="dc-title">Informe personalizado</div><div class="dc-desc">Filtra por tu perfil, edad, horizonte y objetivo. Te dice exactamente qué fondo te conviene y por qué.</div></div>
+<div class="diff-card anim-up"><div class="dc-label">Otros sitios</div><div class="dc-title">Solo fondos o solo depósitos</div><div class="dc-desc">Tienes que comparar por tu cuenta entre fondos mutuos y depósitos a plazo.</div></div>
+<div class="diff-card highlight anim-up anim-up-d1"><div class="dc-label">Inverso</div><div class="dc-title">Todo junto + comparación</div><div class="dc-desc">Compara fondos vs depósitos lado a lado, con proyecciones y escenarios para tu monto.</div></div>
+</div>
+</div>
+
+<div class="landing-cta">
+<h2>¿Listo para saber dónde invertir?</h2>
+<p>5 preguntas. 2 minutos. Tu informe personalizado.</p>
+<button class="hero-cta" onclick="startQuiz()">Comenzar ahora →</button>
+</div>
+
+<footer class="landing-footer"><div class="credit">Creado por <a href="#">Mario Aguilera</a></div><p>Datos oficiales CMF · No constituye asesoría financiera · Hecho en Chile 🇨🇱</p></footer>
+</div>
+
+<!-- QUESTIONNAIRE (hidden initially) -->
+<div id="quizSection" style="display:none">
+<section class="landing-hero"><h1 class="anim-up">Crear tu informe</h1><p class="anim-up anim-up-d1">5 preguntas rápidas para personalizar tu recomendación.</p></section>
 <div class="steps-indicator"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
 
 <div class="form-card anim-up anim-up-d2" id="step0"><h3>Cuéntanos de ti</h3><p class="step-desc">No almacenamos datos.</p><div class="field"><label>Nombre</label><input type="text" id="uName" placeholder="Ej: Mario" autocomplete="off"></div><div class="field"><label>Edad</label><input type="number" id="uAge" placeholder="Ej: 28" min="18" max="99"></div><div class="btn-row"><button class="btn btn-primary" onclick="nextStep(1)">Continuar →</button></div></div>
@@ -62,6 +153,7 @@
 <div class="form-card" id="step2" style="display:none"><h3>¿Qué bancos te interesan?</h3><p class="step-desc">Selecciona uno o más.</p><div class="bank-grid" id="bankGrid"><div class="bank-chip selected" onclick="toggleBank(this,'todos')">🌐 Todos</div><div class="bank-chip" onclick="toggleBank(this,'BCI')">BCI</div><div class="bank-chip" onclick="toggleBank(this,'Banchile')">Banchile</div><div class="bank-chip" onclick="toggleBank(this,'BancoEstado')">BancoEstado</div><div class="bank-chip" onclick="toggleBank(this,'Scotiabank')">Scotiabank</div><div class="bank-chip" onclick="toggleBank(this,'Santander')">Santander</div><div class="bank-chip" onclick="toggleBank(this,'Itaú')">Itaú</div><div class="bank-chip" onclick="toggleBank(this,'Fintual')">Fintual<div class="bk-sub">100% digital</div></div><div class="bank-chip" onclick="toggleBank(this,'Security')">Security</div><div class="bank-chip" onclick="toggleBank(this,'BICE')">BICE</div><div class="bank-chip" onclick="toggleBank(this,'LarrainVial')">LarrainVial</div></div><div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(1)">←</button><button class="btn btn-primary" onclick="nextStep(3)">Continuar →</button></div></div>
 <div class="form-card" id="step3" style="display:none"><h3>¿Cómo te llevas con el riesgo?</h3><p class="step-desc">Selecciona y avanza.</p><div class="option-cards"><div class="option-card" onclick="autoAdv('risk','conservador',this,4)"><span class="icon">🛡️</span><div><div class="opt-title">Conservador</div><div class="opt-desc">No perder plata aunque gane poco.</div></div></div><div class="option-card" onclick="autoAdv('risk','moderado',this,4)"><span class="icon">⚖️</span><div><div class="opt-title">Moderado</div><div class="opt-desc">Algo de riesgo por más ganancia.</div></div></div><div class="option-card" onclick="autoAdv('risk','agresivo',this,4)"><span class="icon">🚀</span><div><div class="opt-title">Agresivo</div><div class="opt-desc">Máxima ganancia a largo plazo.</div></div></div></div><div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(2)">←</button></div></div>
 <div class="form-card" id="step4" style="display:none"><h3>¿Cuál es tu objetivo?</h3><p class="step-desc">Selecciona y generamos tu informe.</p><div class="option-cards"><div class="option-card" onclick="autoGen('objective','ahorrar',this)"><span class="icon">🏦</span><div><div class="opt-title">Ahorrar / Fondo de emergencia</div><div class="opt-desc">Quiero que mi plata rente más que en la cuenta corriente.</div></div></div><div class="option-card" onclick="autoGen('objective','meta',this)"><span class="icon">🎯</span><div><div class="opt-title">Meta específica</div><div class="opt-desc">Viaje, auto, pie de departamento u otra meta concreta.</div></div></div><div class="option-card" onclick="autoGen('objective','crecer',this)"><span class="icon">📈</span><div><div class="opt-title">Crecer capital</div><div class="opt-desc">Quiero invertir para que mi plata crezca en el tiempo.</div></div></div><div class="option-card" onclick="autoGen('objective','jubilacion',this)"><span class="icon">🏖️</span><div><div class="opt-title">Jubilación</div><div class="opt-desc">Pensar en el futuro y generar ingresos para el retiro.</div></div></div></div><div class="btn-row"><button class="btn btn-secondary" onclick="prevStep(3)">←</button></div></div>
+</div><!-- close quizSection -->
 </div>
 
 <div class="screen" id="report">
@@ -141,7 +233,7 @@ pg+=`<div class="report-page active" id="pg-sum">
 <div class="exec-item"><div class="ei-icon">⚡</div><div class="ei-label">Fondo vs DAP</div><div class="ei-value positive">+$${((projBest-amount)-dGain).toLocaleString('es-CL')}</div><div class="ei-detail">a favor del fondo</div></div>
 </div><div class="exec-reason">${best?`<strong>${best.name}</strong> (${best.provider}) porque ofrece ${best.rent360.toFixed(2)}% anual, compatible con perfil ${risk}.`:''}</div></div>
 
-<div class="section-block"><div class="section-title"><span class="s-icon">🏆</span><h2>Top 3 fondos del mercado</h2></div><div class="product-grid">${top3.map((f,i)=>`<div class="product-card" onclick="openFund(${esc(f)})"><span class="cat-badge top3">#${i+1} Top</span><div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value positive">+${f.rent360.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Proy. ${yrs}a</div><div class="stat-value positive">$${proj(amount,f.rent360,yrs).toLocaleString('es-CL')}</div></div></div></div>`).join('')}</div></div>
+<div class="section-block"><div class="section-title"><span class="s-icon">🏆</span><h2>Top 3 fondos del mercado</h2></div><div class="product-grid">${top3.map((f,i)=>`<div class="product-card" onclick="openFund(${esc(f)})"><span class="cat-badge top3">#${i+1} Top</span><div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider}</div><div style="font-size:.75rem;color:var(--text-secondary);margin:.3rem 0 .6rem;line-height:1.5">${getFundDesc(f)}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value positive">+${f.rent360.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Proy. ${yrs}a</div><div class="stat-value positive">$${proj(amount,f.rent360,yrs).toLocaleString('es-CL')}</div></div></div></div>`).join('')}</div></div>
 
 <div class="section-block"><div class="section-title"><span class="s-icon">🧠</span><h2>Tu perfil</h2></div>
 <div class="info-box"><h4>Perfil ${risk}</h4><p>${getPE(risk,age,horizon)}</p></div></div>
@@ -153,7 +245,7 @@ pg+=`<div class="report-page" id="pg-funds"><div class="section-block"><div clas
 <div class="info-box"><h4>¿Cómo elegimos?</h4><p>El mejor fondo de cada ${banks.includes('todos')?'banco':'banco seleccionado'} para perfil ${risk}, horizonte ${horizon}. Click en uno para detalle.</p></div><div class="product-grid">`;
 matched.forEach((f,i)=>{const badges=[];if(i===0)badges.push('<span class="rec-badge">★ Top</span>');if(bestRF&&f.name===bestRF.name)badges.push('<span class="cat-badge best-rf">Mejor RF</span>');if(bestBal&&f.name===bestBal.name)badges.push('<span class="cat-badge best-bal">Mejor Bal</span>');if(bestAcc&&f.name===bestAcc.name)badges.push('<span class="cat-badge best-acc">Mejor Acc</span>');
 const p=proj(amount,f.rent360,yrs),g=p-amount;
-pg+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${esc(f)})">${badges.join('')}<div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div><div class="pc-projection">📈 $${amount.toLocaleString('es-CL')} × ${yrs}a → <span class="proj-val">$${p.toLocaleString('es-CL')}</span> (+$${g.toLocaleString('es-CL')})</div><div class="pc-click">Click para detalle →</div></div>`});
+pg+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${esc(f)})">${badges.join('')}<div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div><div style="font-size:.78rem;color:var(--text-secondary);margin-bottom:.6rem;line-height:1.5">${getFundDesc(f)}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div><div class="pc-projection">📈 $${amount.toLocaleString('es-CL')} × ${yrs}a → <span class="proj-val">$${p.toLocaleString('es-CL')}</span> (+$${g.toLocaleString('es-CL')})</div><div class="pc-click">Click para detalle →</div></div>`});
 pg+=`</div></div></div>`;
 
 // === DEPOSITS ===
@@ -242,6 +334,45 @@ setTimeout(()=>updSim(),300);
 
 function esc(f){return JSON.stringify(f).replace(/"/g,'&quot;')}
 
+function getFundDesc(f){const n=f.name.toUpperCase();
+if(n.includes('MONEY')||n.includes('LIQUIDEZ')||n.includes('CASH')||n.includes('DISPONIBLE'))return'Fondo de liquidez inmediata. Riesgo mínimo, ideal para reserva de emergencia.';
+if(n.includes('DEPÓSITO')||n.includes('DEPOSITO')||n.includes('COMPETITIVO')||n.includes('STREEP'))return'Invierte en depósitos bancarios. Seguridad máxima con rentabilidad modesta.';
+if(n.includes('AHORRO'))return'Fondo de ahorro conservador. Busca preservar tu capital con algo de rentabilidad.';
+if(n.includes('SOBERAN'))return'Invierte en bonos del gobierno. Riesgo muy bajo, respaldado por el Estado.';
+if(n.includes('DEUDA')&&n.includes('BRASIL'))return'Invierte en deuda brasileña. Mayor riesgo que deuda chilena por tipo de cambio.';
+if(n.includes('DEUDA')&&n.includes('GLOBAL'))return'Invierte en bonos internacionales. Diversificación global en renta fija.';
+if(n.includes('RENTA FIJA')||n.includes('BOND')||n.includes('CREDIT'))return'Invierte en bonos y deuda. Rentabilidad predecible con riesgo bajo a moderado.';
+if(n.includes('TOESCA')&&n.includes('EQUIT'))return'Invierte en acciones de empresas chilenas. Alto potencial, mayor volatilidad.';
+if(n.includes('ACCION')&&n.includes('CHILE'))return'Invierte en acciones de empresas chilenas (IPSA). Riesgo alto, potencial de largo plazo.';
+if(n.includes('ACCION')&&n.includes('GLOBAL'))return'Invierte en acciones de empresas de todo el mundo. Máxima diversificación geográfica.';
+if(n.includes('EMERGING')||n.includes('EMERGENT'))return'Invierte en mercados emergentes (Asia, Latam, etc). Alto potencial y volatilidad.';
+if(n.includes('LATAM')||n.includes('LATINOAMERICANO')||n.includes('AMERICA LATINA'))return'Invierte en empresas latinoamericanas. Exposición regional con alto potencial.';
+if(n.includes('BRASIL'))return'Invierte en activos brasileños. Alta volatilidad ligada al real brasileño.';
+if(n.includes('ASIA'))return'Invierte en mercados asiáticos. Exposición a las economías de mayor crecimiento.';
+if(n.includes('EUROPA'))return'Invierte en empresas europeas. Diversificación en mercados desarrollados.';
+if(n.includes('USA')||n.includes('ESTADOS UNIDOS')||n.includes('U.S'))return'Invierte en empresas estadounidenses. Exposición al mercado más grande del mundo.';
+if(n.includes('S&P'))return'Replica el índice S&P 500 de EE.UU. Las 500 empresas más grandes del mundo.';
+if(n.includes('GLOBAL')&&f.category==='accionario')return'Invierte en acciones de empresas globales. Diversificación mundial.';
+if(n.includes('REAL ESTATE'))return'Invierte en bienes raíces globales. Exposición al sector inmobiliario sin comprar propiedades.';
+if(n.includes('DIVIDENDO'))return'Invierte en empresas que pagan dividendos. Busca ingresos regulares además de crecimiento.';
+if(n.includes('EQUILIBRIO'))return'Fondo balanceado: mezcla renta fija y variable. Balance entre seguridad y crecimiento.';
+if(n.includes('BALANC')||n.includes('MODERATE')||n.includes('MODERADO'))return'Fondo balanceado: combina bonos y acciones. Riesgo intermedio.';
+if(n.includes('PATRIMONIAL'))return'Fondo patrimonial: busca preservar y hacer crecer tu capital en el largo plazo.';
+if(n.includes('PORTAFOLIO')||n.includes('PORTFOLIO'))return'Portafolio diversificado gestionado por profesionales. Múltiples activos en uno.';
+if(n.includes('ESTRATEGIA'))return'Fondo con estrategia activa de inversión. El equipo gestor ajusta la composición según mercado.';
+if(n.includes('CONSERVADOR'))return'Fondo conservador: prioriza seguridad sobre rentabilidad. Ideal para corto plazo.';
+if(n.includes('FONDO ACTIVO'))return'Fondo con fecha objetivo. Se vuelve más conservador a medida que se acerca la fecha.';
+if(n.includes('CUENTA ACTIVA'))return'Cuenta de inversión activa. Gestión profesional diversificada.';
+if(n.includes('ESG')||n.includes('SOSTENIBLE'))return'Invierte con criterios ambientales, sociales y de gobernanza. Inversión responsable.';
+if(n.includes('ETF'))return'Replica un índice bursátil. Costos bajos y diversificación automática.';
+if(n.includes('DOLAR')||n.includes('DOLLAR')||n.includes('DÓLAR')){if(f.category==='accionario')return'Invierte en activos denominados en dólares. Protección cambiaria + crecimiento.';return'Invierte en instrumentos en dólares. Protección ante variaciones del tipo de cambio.';}
+if(n.includes('UF'))return'Invierte en instrumentos indexados a la UF. Protección contra la inflación.';
+if(n.includes('GLOBAL'))return'Invierte en mercados internacionales. Diversificación global.';
+if(n.includes('NACIONAL'))return'Invierte en activos chilenos. Exposición al mercado local.';
+if(f.category==='accionario')return'Invierte en acciones. Mayor potencial de rentabilidad a largo plazo, pero con más volatilidad.';
+if(f.category==='balanceado')return'Mezcla renta fija y variable. Equilibrio entre seguridad y crecimiento.';
+return'Invierte en instrumentos de renta fija. Rentabilidad estable con bajo riesgo.'}
+
 function openFund(f){const yrs=U.horizon==='corto'?1:U.horizon==='medio'?3:5;const p=proj(U.amount,f.rent360,yrs),g=p-U.amount;
 const riskL=['','Muy bajo','Bajo','Moderado','Alto','Muy alto'];const info=BANK_INFO[f.provider];
 let seriesHtml='';
@@ -253,6 +384,7 @@ seriesHtml+=`<tr class="${s.s===(f.defaultSerie||'')? 'highlight-row':''}"><td><
 seriesHtml+=`</tbody></table></div>`}
 document.getElementById('modalBody').innerHTML=`<div class="modal-close" onclick="closeModal()">✕</div>
 <h3>${f.name}</h3><div class="m-type">${CL[f.category]} · ${f.provider} · ${f.currency} · Riesgo: ${riskL[f.risk]}</div>
+<div style="font-size:.82rem;color:var(--text-secondary);margin-bottom:.8rem;padding:.6rem .8rem;background:var(--bg-card-alt);border-radius:6px;line-height:1.6">${getFundDesc(f)}</div>
 <div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div>
 <div class="m-section"><h4>Tu simulación (Serie ${f.defaultSerie||'—'})</h4><p>$${U.amount.toLocaleString('es-CL')} × ${yrs} ${yrs===1?'año':'años'}:</p>
 <div class="exec-grid" style="margin-top:.6rem"><div class="exec-item"><div class="ei-label">Inversión</div><div class="ei-value">$${U.amount.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Proyección</div><div class="ei-value positive">$${p.toLocaleString('es-CL')}</div></div><div class="exec-item"><div class="ei-label">Ganancia</div><div class="ei-value positive">+$${g.toLocaleString('es-CL')}</div></div></div></div>
@@ -564,7 +696,8 @@ p.save('Inverso_'+name+'_'+new Date().toISOString().slice(0,10)+'.pdf');
 b.textContent='PDF';b.disabled=false}
 
 function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.getAttribute('data-theme')==='light'){h.removeAttribute('data-theme');b.textContent='☀️'}else{h.setAttribute('data-theme','light');b.textContent='🌙'}if(document.getElementById('report').classList.contains('active')&&simChart)updSim()}
-function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');showStep(0);Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
+function startQuiz(){document.getElementById('landing').style.display='none';document.getElementById('quizSection').style.display='block';showStep(0);window.scrollTo({top:0,behavior:'smooth'})}
+function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');document.getElementById('landing').style.display='block';document.getElementById('quizSection').style.display='none';Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
 </script>
 </body>
 </html>
