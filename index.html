@@ -101,6 +101,29 @@
 /* CTA section */
 .cta-section{padding:4rem 0}.cta-section h2{margin-bottom:.3rem}
 
+/* Mockup */
+.mockup-container{max-width:500px;margin:2.5rem auto 0;perspective:1000px}
+.mockup-window{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);transform:rotateX(2deg)}
+.mockup-bar{display:flex;gap:5px;padding:8px 12px;background:var(--bg-elevated);border-bottom:1px solid var(--border)}.mockup-bar span{width:8px;height:8px;border-radius:50%;background:var(--border-light)}
+.mockup-content{padding:16px}
+.mk-header{height:8px;width:60%;background:var(--accent);border-radius:4px;margin-bottom:12px;opacity:.6}
+.mk-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.mk-label{height:6px;width:15%;background:var(--border);border-radius:3px}
+.mk-value{height:8px;width:20%;background:var(--border-light);border-radius:3px}
+.mk-card{border:1.5px solid var(--accent);border-radius:8px;padding:12px;margin-bottom:12px}
+.mk-tag{font-size:.5rem;font-weight:700;color:var(--accent);letter-spacing:1.5px;margin-bottom:6px}
+.mk-title{height:10px;width:55%;background:var(--border-light);border-radius:4px;margin-bottom:10px}
+.mk-numbers{display:flex;align-items:center;gap:6px}
+.mk-amount{font-family:'Fraunces',serif;font-size:.9rem;font-weight:700;color:var(--text)}
+.mk-arrow{color:var(--text-muted);font-size:.8rem}
+.mk-result{font-family:'Fraunces',serif;font-size:.9rem;font-weight:700;color:var(--accent)}
+.mk-bar{height:24px;border-radius:4px;flex:1}.mk-bar.g{background:rgba(0,201,139,.15)}.mk-bar.a{background:rgba(255,179,71,.15)}.mk-bar.r{background:rgba(255,92,124,.15)}
+.mk-line{height:6px;flex:1;background:var(--border);border-radius:3px}
+
+/* Sparkline */
+.sparkline{display:inline-block;vertical-align:middle;margin-left:4px}
+.sparkline svg{width:48px;height:16px}
+
 /* Landing footer */
 .landing-footer{text-align:center;padding:2rem 1.5rem;border-top:1px solid var(--border)}
 .landing-footer .credit{font-size:.85rem;color:var(--text-secondary);margin-bottom:.3rem}
@@ -139,6 +162,24 @@
 <button class="hero-cta anim-up anim-up-d2" onclick="startQuiz()">Crear mi informe →</button>
 <p class="hero-note anim-up anim-up-d3">100% gratis · Sin registro · 2 minutos</p>
 <div class="data-status anim-up anim-up-d3" style="margin-top:.8rem"><span class="dg"></span> <span id="dst"></span></div>
+
+<!-- Mockup preview -->
+<div class="mockup-container anim-up anim-up-d3">
+<div class="mockup-window">
+<div class="mockup-bar"><span></span><span></span><span></span></div>
+<div class="mockup-content">
+<div class="mk-header"></div>
+<div class="mk-row"><div class="mk-label"></div><div class="mk-value"></div><div class="mk-label"></div><div class="mk-value"></div></div>
+<div class="mk-card">
+<div class="mk-tag">RECOMENDACIÓN PRINCIPAL</div>
+<div class="mk-title"></div>
+<div class="mk-numbers"><span class="mk-amount">$5.000.000</span><span class="mk-arrow">→</span><span class="mk-result">$7.122.600</span></div>
+</div>
+<div class="mk-row"><div class="mk-bar g"></div><div class="mk-bar a"></div><div class="mk-bar r"></div></div>
+<div class="mk-row"><div class="mk-line"></div><div class="mk-line"></div></div>
+</div>
+</div>
+</div>
 </section>
 
 <!-- CÓMO FUNCIONA -->
@@ -272,6 +313,7 @@ function genReport(){document.getElementById('ov').style.display='flex';setTimeo
 function getEl(){const{horizon:h,risk:r,banks:bk}=U;return FUNDS_DATA.filter(f=>{if(r==='conservador'&&f.risk>2)return!1;if(r==='moderado'&&f.risk>3)return!1;if(!f.horizon.includes(h))return!1;if(!bk.includes('todos')&&!bk.includes(f.provider))return!1;return!0})}
 function getBPB(el){const bp={};el.forEach(f=>{if(!bp[f.provider]||f.rent360>bp[f.provider].rent360)bp[f.provider]=f});return Object.values(bp).sort((a,b)=>b.rent360-a.rent360)}
 function proj(a,r,y){return Math.round(a*Math.pow(1+r/100,y))}
+function spark(f){const vals=[0,f.rent30,f.rent90,f.rent180,f.rent360];const mn=Math.min(...vals),mx=Math.max(...vals),rng=mx-mn||1;const pts=vals.map((v,i)=>{const x=i*12;const y=14-(v-mn)/rng*12;return `${x},${y}`}).join(' ');const col=f.rent360>=0?'#00c98b':'#ff5c7c';return `<span class="sparkline"><svg viewBox="0 0 48 16"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`}
 function showPage(id){document.querySelectorAll('.report-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.rnav-btn').forEach((b,i)=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:180,behavior:'smooth'})}
 
 function buildReport(){
@@ -308,7 +350,7 @@ pg+=`<div class="report-page active" id="pg-sum">
 <div class="exec-item"><div class="ei-icon">⚡</div><div class="ei-label">Fondo vs DAP</div><div class="ei-value positive">+$${((projBest-amount)-dGain).toLocaleString('es-CL')}</div><div class="ei-detail">a favor del fondo</div></div>
 </div><div class="exec-reason">${best?`<strong>${best.name}</strong> (${best.provider}) porque ofrece ${best.rent360.toFixed(2)}% anual, compatible con perfil ${risk}.`:''}</div></div>
 
-<div class="section-block"><div class="section-title"><span class="s-icon">🏆</span><h2>Top 3 fondos del mercado</h2></div><div class="product-grid">${top3.map((f,i)=>`<div class="product-card" onclick="openFund(${esc(f)})"><span class="cat-badge top3">#${i+1} Top</span><div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider}</div><div style="font-size:.75rem;color:var(--text-secondary);margin:.3rem 0 .6rem;line-height:1.5">${getFundDesc(f)}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value positive">+${f.rent360.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Proy. ${yrs}a</div><div class="stat-value positive">$${proj(amount,f.rent360,yrs).toLocaleString('es-CL')}</div></div></div></div>`).join('')}</div></div>
+<div class="section-block"><div class="section-title"><span class="s-icon">🏆</span><h2>Top 3 fondos del mercado</h2></div><div class="product-grid">${top3.map((f,i)=>`<div class="product-card" onclick="openFund(${esc(f)})"><span class="cat-badge top3">#${i+1} Top</span><div class="pc-name">${f.name} ${spark(f)}</div><div class="pc-type">${CL[f.category]} · ${f.provider}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value positive">+${f.rent360.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Fee</div><div class="stat-value neutral">${f.fee.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">Proy. ${yrs}a</div><div class="stat-value positive">$${proj(amount,f.rent360,yrs).toLocaleString('es-CL')}</div></div></div></div>`).join('')}</div></div>
 
 <div class="section-block"><div class="section-title"><span class="s-icon">🧠</span><h2>Tu perfil</h2></div>
 <div class="info-box"><h4>Perfil ${risk}</h4><p>${getPE(risk,age,horizon)}</p></div></div>
@@ -320,7 +362,7 @@ pg+=`<div class="report-page" id="pg-funds"><div class="section-block"><div clas
 <div class="info-box"><h4>¿Cómo elegimos?</h4><p>El mejor fondo de cada ${banks.includes('todos')?'banco':'banco seleccionado'} para perfil ${risk}, horizonte ${horizon}. Click en uno para detalle.</p></div><div class="product-grid">`;
 matched.forEach((f,i)=>{const badges=[];if(i===0)badges.push('<span class="rec-badge">★ Top</span>');if(bestRF&&f.name===bestRF.name)badges.push('<span class="cat-badge best-rf">Mejor RF</span>');if(bestBal&&f.name===bestBal.name)badges.push('<span class="cat-badge best-bal">Mejor Bal</span>');if(bestAcc&&f.name===bestAcc.name)badges.push('<span class="cat-badge best-acc">Mejor Acc</span>');
 const p=proj(amount,f.rent360,yrs),g=p-amount;
-pg+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${esc(f)})">${badges.join('')}<div class="pc-name">${f.name}</div><div class="pc-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div><div style="font-size:.78rem;color:var(--text-secondary);margin-bottom:.6rem;line-height:1.5">${getFundDesc(f)}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div><div class="pc-projection">📈 $${amount.toLocaleString('es-CL')} × ${yrs}a → <span class="proj-val">$${p.toLocaleString('es-CL')}</span> (+$${g.toLocaleString('es-CL')})</div><div class="pc-click">Click para detalle →</div></div>`});
+pg+=`<div class="product-card ${i===0?'recommended':''}" onclick="openFund(${esc(f)})">${badges.join('')}<div class="pc-name">${f.name} ${spark(f)}</div><div class="pc-type">${CL[f.category]} · ${f.provider} · ${f.currency}</div><div class="pc-stats"><div class="pc-stat"><div class="stat-label">30d</div><div class="stat-value ${f.rent30>=0?'positive':'negative'}">${f.rent30>=0?'+':''}${f.rent30.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">90d</div><div class="stat-value ${f.rent90>=0?'positive':'negative'}">${f.rent90>=0?'+':''}${f.rent90.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">180d</div><div class="stat-value ${f.rent180>=0?'positive':'negative'}">${f.rent180>=0?'+':''}${f.rent180.toFixed(2)}%</div></div><div class="pc-stat"><div class="stat-label">12m</div><div class="stat-value ${f.rent360>=0?'positive':'negative'}">${f.rent360>=0?'+':''}${f.rent360.toFixed(2)}%</div></div></div><div class="pc-projection">📈 $${amount.toLocaleString('es-CL')} × ${yrs}a → <span class="proj-val">$${p.toLocaleString('es-CL')}</span> (+$${g.toLocaleString('es-CL')})</div><div class="pc-click">Click para detalle →</div></div>`});
 pg+=`</div></div></div>`;
 
 // === DEPOSITS ===
