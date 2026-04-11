@@ -101,24 +101,30 @@
 /* CTA section */
 .cta-section{padding:4rem 0}.cta-section h2{margin-bottom:.3rem}
 
-/* Mockup */
-.mockup-container{max-width:500px;margin:2.5rem auto 0;perspective:1000px}
-.mockup-window{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);transform:rotateX(2deg)}
-.mockup-bar{display:flex;gap:5px;padding:8px 12px;background:var(--bg-elevated);border-bottom:1px solid var(--border)}.mockup-bar span{width:8px;height:8px;border-radius:50%;background:var(--border-light)}
-.mockup-content{padding:16px}
-.mk-header{height:8px;width:60%;background:var(--accent);border-radius:4px;margin-bottom:12px;opacity:.6}
-.mk-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.mk-label{height:6px;width:15%;background:var(--border);border-radius:3px}
-.mk-value{height:8px;width:20%;background:var(--border-light);border-radius:3px}
-.mk-card{border:1.5px solid var(--accent);border-radius:8px;padding:12px;margin-bottom:12px}
-.mk-tag{font-size:.5rem;font-weight:700;color:var(--accent);letter-spacing:1.5px;margin-bottom:6px}
-.mk-title{height:10px;width:55%;background:var(--border-light);border-radius:4px;margin-bottom:10px}
-.mk-numbers{display:flex;align-items:center;gap:6px}
-.mk-amount{font-family:'Fraunces',serif;font-size:.9rem;font-weight:700;color:var(--text)}
-.mk-arrow{color:var(--text-muted);font-size:.8rem}
-.mk-result{font-family:'Fraunces',serif;font-size:.9rem;font-weight:700;color:var(--accent)}
-.mk-bar{height:24px;border-radius:4px;flex:1}.mk-bar.g{background:rgba(0,201,139,.15)}.mk-bar.a{background:rgba(255,179,71,.15)}.mk-bar.r{background:rgba(255,92,124,.15)}
-.mk-line{height:6px;flex:1;background:var(--border);border-radius:3px}
+/* Hero Counter */
+.hero-counter{max-width:420px;margin:2.5rem auto 0;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}
+.hc-label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:.6rem}
+.hc-numbers{display:flex;align-items:center;justify-content:center;gap:.8rem}
+.hc-from{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--text)}
+.hc-arrow{color:var(--text-muted);font-size:1rem}
+.hc-to{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--accent);transition:all .1s}
+.hc-period{font-size:.75rem;color:var(--text-muted);margin-top:.4rem}
+
+/* Hero Comparator */
+.hero-compare{max-width:420px;margin:1.2rem auto 0;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem}
+.hcmp-title{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:.8rem;text-align:center}
+.hcmp-bars{display:grid;gap:.5rem}
+.hcmp-row{display:flex;align-items:center;gap:.6rem}
+.hcmp-name{font-size:.75rem;font-weight:600;color:var(--text-secondary);width:80px;text-align:right}
+.hcmp-track{flex:1;height:26px;background:var(--bg-elevated);border-radius:var(--radius-sm);overflow:hidden}
+.hcmp-fill{height:100%;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:flex-end;padding-right:8px;width:0;background:var(--c);animation:barGrow 1.5s ease-out forwards;animation-delay:.5s}
+.hcmp-fill span{font-size:.7rem;font-weight:700;color:#fff}
+@keyframes barGrow{to{width:var(--w)}}
+.hcmp-note{font-size:.65rem;color:var(--text-muted);text-align:center;margin-top:.5rem}
+
+/* Scroll Animations */
+.scroll-reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}.scroll-reveal.visible{opacity:1;transform:translateY(0)}
+.scroll-reveal-d1{transition-delay:.1s}.scroll-reveal-d2{transition-delay:.2s}.scroll-reveal-d3{transition-delay:.3s}
 
 /* Sparkline */
 .sparkline{display:inline-block;vertical-align:middle;margin-left:4px}
@@ -163,34 +169,39 @@
 <p class="hero-note anim-up anim-up-d3">100% gratis · Sin registro · 2 minutos</p>
 <div class="data-status anim-up anim-up-d3" style="margin-top:.8rem"><span class="dg"></span> <span id="dst"></span></div>
 
-<!-- Mockup preview -->
-<div class="mockup-container anim-up anim-up-d3">
-<div class="mockup-window">
-<div class="mockup-bar"><span></span><span></span><span></span></div>
-<div class="mockup-content">
-<div class="mk-header"></div>
-<div class="mk-row"><div class="mk-label"></div><div class="mk-value"></div><div class="mk-label"></div><div class="mk-value"></div></div>
-<div class="mk-card">
-<div class="mk-tag">RECOMENDACIÓN PRINCIPAL</div>
-<div class="mk-title"></div>
-<div class="mk-numbers"><span class="mk-amount">$5.000.000</span><span class="mk-arrow">→</span><span class="mk-result">$7.122.600</span></div>
+<!-- Animated counter -->
+<div class="hero-counter anim-up anim-up-d3">
+<div class="hc-label">Tu inversión podría crecer así:</div>
+<div class="hc-numbers">
+<span class="hc-from">$5.000.000</span>
+<span class="hc-arrow">→</span>
+<span class="hc-to" id="heroCounter">$5.000.000</span>
 </div>
-<div class="mk-row"><div class="mk-bar g"></div><div class="mk-bar a"></div><div class="mk-bar r"></div></div>
-<div class="mk-row"><div class="mk-line"></div><div class="mk-line"></div></div>
+<div class="hc-period">en 3 años · perfil moderado</div>
 </div>
+
+<!-- Live comparator -->
+<div class="hero-compare anim-up anim-up-d3">
+<div class="hcmp-title">Comparación en vivo</div>
+<div class="hcmp-bars">
+<div class="hcmp-row"><div class="hcmp-name">Itaú</div><div class="hcmp-track"><div class="hcmp-fill" style="--w:92%;--c:var(--accent)"><span>4.56%</span></div></div></div>
+<div class="hcmp-row"><div class="hcmp-name">BancoEstado</div><div class="hcmp-track"><div class="hcmp-fill" style="--w:85%;--c:#4da6ff"><span>4.44%</span></div></div></div>
+<div class="hcmp-row"><div class="hcmp-name">Santander</div><div class="hcmp-track"><div class="hcmp-fill" style="--w:80%;--c:#ffb347"><span>4.32%</span></div></div></div>
+<div class="hcmp-row"><div class="hcmp-name">BCI</div><div class="hcmp-track"><div class="hcmp-fill" style="--w:75%;--c:#ff5c7c"><span>4.20%</span></div></div></div>
 </div>
+<div class="hcmp-note">Tasas reales DAP a 360 días · Datos FinClaro</div>
 </div>
 </section>
 
 <!-- CÓMO FUNCIONA -->
 <section class="land-section" id="como">
 <div class="container">
-<h2>¿Cómo funciona?</h2>
-<p class="section-sub">Simple, rápido y sin letra chica.</p>
+<h2 class="scroll-reveal">¿Cómo funciona?</h2>
+<p class="section-sub scroll-reveal scroll-reveal-d1">Simple, rápido y sin letra chica.</p>
 <div class="how-steps">
-<div class="how-step anim-up"><div class="hs-num">1</div><div class="hs-title">Completa tu perfil</div><div class="hs-desc">Tu nombre, edad, cuánto quieres invertir, por cuánto tiempo y qué buscas. No almacenamos nada.</div></div>
-<div class="how-step anim-up anim-up-d1"><div class="hs-num">2</div><div class="hs-title">Buscamos tu mejor opción</div><div class="hs-desc">Cruzamos tu perfil con datos reales de 313 fondos mutuos y depósitos a plazo de la CMF.</div></div>
-<div class="how-step anim-up anim-up-d2"><div class="hs-num">3</div><div class="hs-title">Recibe tu informe personalizado</div><div class="hs-desc">Recomendación principal, alternativas, simulador, comparador y un PDF descargable nivel profesional.</div></div>
+<div class="how-step scroll-reveal"><div class="hs-num">1</div><div class="hs-title">Completa tu perfil</div><div class="hs-desc">Tu nombre, edad, cuánto quieres invertir, por cuánto tiempo y qué buscas. No almacenamos nada.</div></div>
+<div class="how-step scroll-reveal scroll-reveal-d1"><div class="hs-num">2</div><div class="hs-title">Buscamos tu mejor opción</div><div class="hs-desc">Cruzamos tu perfil con datos reales de 313 fondos mutuos y depósitos a plazo de la CMF.</div></div>
+<div class="how-step scroll-reveal scroll-reveal-d2"><div class="hs-num">3</div><div class="hs-title">Recibe tu informe personalizado</div><div class="hs-desc">Recomendación principal, alternativas, simulador, comparador y un PDF descargable nivel profesional.</div></div>
 </div>
 </div>
 </section>
@@ -198,15 +209,15 @@
 <!-- QUÉ INCLUYE -->
 <section class="land-section alt" id="incluye">
 <div class="container">
-<h2>Qué incluye tu informe</h2>
-<p class="section-sub">No es un ranking genérico. Es un informe hecho para ti.</p>
+<h2 class="scroll-reveal">Qué incluye tu informe</h2>
+<p class="section-sub scroll-reveal scroll-reveal-d1">No es un ranking genérico. Es un informe hecho para ti.</p>
 <div class="features-grid">
-<div class="feature-card"><div class="fc-icon">🎯</div><div class="fc-title">Recomendación principal</div><div class="fc-desc">El mejor fondo para tu perfil específico, con proyección de ganancia y fundamento claro de por qué te conviene.</div></div>
-<div class="feature-card"><div class="fc-icon">🏆</div><div class="fc-title">Top 3 fondos</div><div class="fc-desc">Las 3 mejores alternativas entre los bancos que elegiste, con rentabilidades reales a 30, 90, 180 y 360 días.</div></div>
-<div class="feature-card"><div class="fc-icon">🔮</div><div class="fc-title">Simulador interactivo</div><div class="fc-desc">Mueve el monto y los años para ver cómo crece tu inversión en 3 escenarios: pesimista, moderado y optimista.</div></div>
-<div class="feature-card"><div class="fc-icon">⚡</div><div class="fc-title">Comparador fondos vs DAP</div><div class="fc-desc">¿Fondo mutuo o depósito a plazo? Te mostramos lado a lado cuánto ganas con cada uno y cuál te conviene.</div></div>
-<div class="feature-card"><div class="fc-icon">🏦</div><div class="fc-title">Depósitos a plazo</div><div class="fc-desc">Ranking de tasas verificadas de 8 bancos a distintos plazos, con ganancia calculada para tu monto exacto.</div></div>
-<div class="feature-card"><div class="fc-icon">📄</div><div class="fc-title">PDF profesional</div><div class="fc-desc">Descarga un informe de 6 páginas con tu recomendación, escenarios, comparaciones y metodología.</div></div>
+<div class="feature-card scroll-reveal"><div class="fc-icon">🎯</div><div class="fc-title">Recomendación principal</div><div class="fc-desc">El mejor fondo para tu perfil específico, con proyección de ganancia y fundamento claro de por qué te conviene.</div></div>
+<div class="feature-card scroll-reveal scroll-reveal-d1"><div class="fc-icon">🏆</div><div class="fc-title">Top 3 fondos</div><div class="fc-desc">Las 3 mejores alternativas entre los bancos que elegiste, con rentabilidades reales a 30, 90, 180 y 360 días.</div></div>
+<div class="feature-card scroll-reveal scroll-reveal-d2"><div class="fc-icon">🔮</div><div class="fc-title">Simulador interactivo</div><div class="fc-desc">Mueve el monto y los años para ver cómo crece tu inversión en 3 escenarios: pesimista, moderado y optimista.</div></div>
+<div class="feature-card scroll-reveal"><div class="fc-icon">⚡</div><div class="fc-title">Comparador fondos vs DAP</div><div class="fc-desc">¿Fondo mutuo o depósito a plazo? Te mostramos lado a lado cuánto ganas con cada uno y cuál te conviene.</div></div>
+<div class="feature-card scroll-reveal scroll-reveal-d1"><div class="fc-icon">🏦</div><div class="fc-title">Depósitos a plazo</div><div class="fc-desc">Ranking de tasas verificadas de 8 bancos a distintos plazos, con ganancia calculada para tu monto exacto.</div></div>
+<div class="feature-card scroll-reveal scroll-reveal-d2"><div class="fc-icon">📄</div><div class="fc-title">PDF profesional</div><div class="fc-desc">Descarga un informe de 6 páginas con tu recomendación, escenarios, comparaciones y metodología.</div></div>
 </div>
 </div>
 </section>
@@ -214,13 +225,13 @@
 <!-- EN QUÉ SE DIFERENCIA -->
 <section class="land-section" id="diferencia">
 <div class="container">
-<h2>¿En qué se diferencia?</h2>
-<p class="section-sub">No somos un banco ni una corredora. No vendemos nada.</p>
+<h2 class="scroll-reveal">¿En qué se diferencia?</h2>
+<p class="section-sub scroll-reveal">No somos un banco ni una corredora. No vendemos nada.</p>
 <div class="diff-grid">
-<div class="diff-card"><div class="dc-label">Otros sitios</div><div class="dc-title">Rankings genéricos</div><div class="dc-desc">Te muestran los fondos más rentables del mercado, sin importar si son adecuados para ti.</div></div>
-<div class="diff-card highlight"><div class="dc-label">Inverso</div><div class="dc-title">Informe personalizado</div><div class="dc-desc">Filtra por tu perfil, edad, horizonte y objetivo. Te dice exactamente qué fondo te conviene y por qué.</div></div>
-<div class="diff-card"><div class="dc-label">Otros sitios</div><div class="dc-title">Solo fondos o solo depósitos</div><div class="dc-desc">Tienes que comparar por tu cuenta entre fondos mutuos y depósitos a plazo.</div></div>
-<div class="diff-card highlight"><div class="dc-label">Inverso</div><div class="dc-title">Todo junto + comparación</div><div class="dc-desc">Compara fondos vs depósitos lado a lado, con proyecciones y escenarios para tu monto.</div></div>
+<div class="diff-card scroll-reveal"><div class="dc-label">Otros sitios</div><div class="dc-title">Rankings genéricos</div><div class="dc-desc">Te muestran los fondos más rentables del mercado, sin importar si son adecuados para ti.</div></div>
+<div class="diff-card highlight scroll-reveal scroll-reveal-d1"><div class="dc-label">Inverso</div><div class="dc-title">Informe personalizado</div><div class="dc-desc">Filtra por tu perfil, edad, horizonte y objetivo. Te dice exactamente qué fondo te conviene y por qué.</div></div>
+<div class="diff-card scroll-reveal scroll-reveal-d2"><div class="dc-label">Otros sitios</div><div class="dc-title">Solo fondos o solo depósitos</div><div class="dc-desc">Tienes que comparar por tu cuenta entre fondos mutuos y depósitos a plazo.</div></div>
+<div class="diff-card highlight scroll-reveal scroll-reveal-d3"><div class="dc-label">Inverso</div><div class="dc-title">Todo junto + comparación</div><div class="dc-desc">Compara fondos vs depósitos lado a lado, con proyecciones y escenarios para tu monto.</div></div>
 </div>
 </div>
 </section>
@@ -817,6 +828,12 @@ function startQuiz(){document.getElementById('landing').style.display='none';doc
 function smoothScroll(e,id){e.preventDefault();document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});const links=document.querySelector('.ln-links');if(links)links.classList.remove('show')}
 function toggleNav(){document.querySelector('.ln-links').classList.toggle('show')}
 function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');document.getElementById('landing').style.display='block';document.getElementById('quizSection').style.display='none';document.querySelector('.site-header').style.display='none';Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
+
+// Counter animation
+(function(){const target=7122600;const el=document.getElementById('heroCounter');if(!el)return;let current=5000000;const step=Math.ceil((target-current)/60);const interval=setInterval(()=>{current+=step;if(current>=target){current=target;clearInterval(interval)}el.textContent='$'+current.toLocaleString('es-CL')},30)})();
+
+// Scroll reveal observer
+(function(){const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.scroll-reveal').forEach(el=>obs.observe(el))})()
 </script>
 </body>
 </html>
