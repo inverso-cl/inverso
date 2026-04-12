@@ -141,6 +141,10 @@
 /* Chat Assistant */
 .chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#00a876);display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(0,232,162,.3);animation:fabPulse 2.5s infinite;font-size:1.4rem;z-index:300;border:none}
 .chat-fab.show{display:flex}
+.chat-tip{position:fixed;bottom:2rem;right:5rem;background:var(--bg-card);border:1px solid var(--accent);color:var(--accent);padding:.5rem 1rem;border-radius:20px;font-size:.8rem;font-weight:600;z-index:300;display:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.3);animation:tipIn .4s ease-out}
+.chat-tip.show{display:block}
+.chat-tip::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);border:6px solid transparent;border-left-color:var(--accent)}
+@keyframes tipIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
 @keyframes fabPulse{0%,100%{box-shadow:0 4px 20px rgba(0,232,162,.3)}50%{box-shadow:0 4px 30px rgba(0,232,162,.5)}}
 .chat-overlay{position:fixed;bottom:1.5rem;right:1.5rem;width:380px;height:520px;z-index:301;display:none;flex-direction:column}
 .chat-overlay.open{display:flex}
@@ -873,6 +877,7 @@ function restart(){document.getElementById('report').classList.remove('active');
 </script>
 <!-- Chat FAB + Overlay -->
 <button class="chat-fab" id="chatFab" onclick="toggleChat()">💬</button>
+<div class="chat-tip" id="chatTip">¿Dudas? Pregúntame 👋</div>
 <div class="chat-overlay" id="chatOv">
 <div class="chat-box">
 <div class="chat-hdr"><div class="chat-av">i.</div><div class="chat-inf"><div class="chat-nm">Asistente Inverso</div><div class="chat-st">En línea</div></div><button class="chat-cls" onclick="toggleChat()">✕</button></div>
@@ -965,9 +970,9 @@ function cShowNode(id){const node=chatTree[id];if(!node)return;let i=0;
 (function next(){if(i<node.bot.length){cTypeThen(()=>{cAddBot(node.bot[i]);cM.scrollTop=cM.scrollHeight;i++;if(i<node.bot.length)setTimeout(next,250);else setTimeout(()=>{cAddOpts(node.options);cM.scrollTop=cM.scrollHeight},350)})}})()}
 
 function initChat(){cM.innerHTML='';buildChatTree();cShowNode('start')}
-function toggleChat(){const o=document.getElementById('chatOv'),f=document.getElementById('chatFab');
+function toggleChat(){const o=document.getElementById('chatOv'),f=document.getElementById('chatFab');document.getElementById('chatTip').classList.remove('show');
 if(o.classList.contains('open')){o.classList.remove('open');f.style.display='flex'}else{o.classList.add('open');f.style.display='none';if(!chatTree)initChat()}}
-function showChatFab(){document.getElementById('chatFab').classList.add('show')}
+function showChatFab(){document.getElementById('chatFab').classList.add('show');setTimeout(()=>{document.getElementById('chatTip').classList.add('show');setTimeout(()=>{document.getElementById('chatTip').classList.remove('show')},5000)},1500)}
 </script>
 
 </body>
