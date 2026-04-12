@@ -137,6 +137,42 @@
 .landing-footer p{font-size:.72rem;color:var(--text-muted);margin-top:.2rem}
 
 @media(max-width:640px){.how-steps,.features-grid{grid-template-columns:1fr}.diff-grid{grid-template-columns:1fr}.inst-grid{grid-template-columns:repeat(2,1fr)}.hero-section{padding:3.5rem 1.2rem 2rem}.land-section{padding:2.5rem 0}}
+
+/* Chat Assistant */
+.chat-fab{position:fixed;bottom:1.5rem;right:1.5rem;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#00a876);display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(0,232,162,.3);animation:fabPulse 2.5s infinite;font-size:1.4rem;z-index:300;border:none}
+.chat-fab.show{display:flex}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 20px rgba(0,232,162,.3)}50%{box-shadow:0 4px 30px rgba(0,232,162,.5)}}
+.chat-overlay{position:fixed;bottom:1.5rem;right:1.5rem;width:380px;height:520px;z-index:301;display:none;flex-direction:column}
+.chat-overlay.open{display:flex}
+.chat-box{width:100%;height:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.chat-hdr{padding:.8rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+.chat-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#00a876);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.7rem;color:#06090f;flex-shrink:0}
+.chat-inf{flex:1}.chat-nm{font-weight:700;font-size:.82rem}.chat-st{font-size:.62rem;color:var(--accent);display:flex;align-items:center;gap:3px}.chat-st::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.chat-cls{background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;padding:4px}
+.chat-msgs{flex:1;overflow-y:auto;padding:.8rem;display:flex;flex-direction:column;gap:.4rem;scroll-behavior:smooth}
+.chat-msgs::-webkit-scrollbar{width:3px}.chat-msgs::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:4px}
+.c-msg{max-width:88%;padding:.6rem .85rem;border-radius:14px;font-size:.8rem;line-height:1.55;animation:cmIn .3s ease-out}
+.c-bot{background:var(--bg-card);color:var(--text);border-bottom-left-radius:4px;align-self:flex-start}
+.c-usr{background:var(--accent);color:#06090f;border-bottom-right-radius:4px;align-self:flex-end;font-weight:500}
+.c-bot strong{color:var(--accent)}
+@keyframes cmIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.c-typing{display:flex;gap:3px;padding:.6rem .85rem;align-self:flex-start}
+.c-typing span{width:5px;height:5px;border-radius:50%;background:var(--text-muted);animation:cDot 1.2s infinite}
+.c-typing span:nth-child(2){animation-delay:.2s}.c-typing span:nth-child(3){animation-delay:.4s}
+@keyframes cDot{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+.c-opts{display:flex;flex-direction:column;gap:.3rem;padding:.2rem 0;align-self:flex-start;width:100%;animation:cmIn .3s ease-out}
+.c-opt{background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);padding:.5rem .8rem;border-radius:12px;font-size:.75rem;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;font-weight:500;text-align:left;display:flex;align-items:center;gap:.4rem}
+.c-opt:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.c-opt.off{pointer-events:none;opacity:.25}
+.c-opt .c-oi{font-size:.85rem;flex-shrink:0}
+.c-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.6rem;margin-top:.3rem}
+.c-cr{display:flex;justify-content:space-between;padding:.2rem 0;font-size:.72rem}
+.c-cl{color:var(--text-muted)}.c-cv{font-weight:600}.c-cv.g{color:var(--accent)}.c-cv.r{color:var(--red)}.c-cv.a{color:var(--amber)}
+.chat-btm{padding:.6rem .8rem;border-top:1px solid var(--border);text-align:center}
+.chat-btm span{font-size:.65rem;color:var(--text-muted)}
+.chat-rst{background:none;border:1px solid var(--border);color:var(--text-muted);padding:.3rem .6rem;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:.65rem;cursor:pointer;margin-left:.4rem;transition:all .2s}
+.chat-rst:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:640px){.chat-overlay{bottom:0;right:0;width:100%;height:100%;border-radius:0}.chat-box{border-radius:0}.chat-fab{bottom:1rem;right:1rem}}
 </style>
 </head>
 <body>
@@ -319,7 +355,7 @@ function updSteps(s){document.querySelectorAll('.step-dot').forEach((d,i)=>{d.cl
 function showStep(n){for(let i=0;i<STEPS;i++)document.getElementById('step'+i).style.display=i===n?'block':'none';updSteps(n);cStep=n;window.scrollTo({top:180,behavior:'smooth'})}
 function nextStep(n){if(cStep===0){const nm=document.getElementById('uName').value.trim(),ag=parseInt(document.getElementById('uAge').value);if(!nm)return alert('Ingresa nombre');if(!ag||ag<18)return alert('Edad 18+');U.name=nm;U.age=ag}if(cStep===1){const am=parseM(document.getElementById('uAmt').value),hz=document.getElementById('uHz').value;if(!am||am<10000)return alert('Mínimo $10.000');if(!hz)return alert('Selecciona horizonte');U.amount=am;U.horizon=hz}showStep(n)}
 function prevStep(n){showStep(n)}
-function genReport(){document.getElementById('ov').style.display='flex';setTimeout(()=>{buildReport();document.getElementById('questionnaire').classList.remove('active');document.getElementById('report').classList.add('active');document.getElementById('ov').classList.add('hide');setTimeout(()=>{document.getElementById('ov').style.display='none';document.getElementById('ov').classList.remove('hide')},500);window.scrollTo({top:0})},1e3)}
+function genReport(){document.getElementById('ov').style.display='flex';setTimeout(()=>{buildReport();document.getElementById('questionnaire').classList.remove('active');document.getElementById('report').classList.add('active');document.getElementById('ov').classList.add('hide');setTimeout(()=>{document.getElementById('ov').style.display='none';document.getElementById('ov').classList.remove('hide')},500);window.scrollTo({top:0});showChatFab()},1e3)}
 
 function getEl(){const{horizon:h,risk:r,banks:bk}=U;return FUNDS_DATA.filter(f=>{if(r==='conservador'&&f.risk>2)return!1;if(r==='moderado'&&f.risk>3)return!1;if(!f.horizon.includes(h))return!1;if(!bk.includes('todos')&&!bk.includes(f.provider))return!1;return!0})}
 function getBPB(el){const bp={};el.forEach(f=>{if(!bp[f.provider]||f.rent360>bp[f.provider].rent360)bp[f.provider]=f});return Object.values(bp).sort((a,b)=>b.rent360-a.rent360)}
@@ -827,7 +863,7 @@ function toggleTheme(){const h=document.documentElement,b=document.getElementByI
 function startQuiz(){document.getElementById('landing').style.display='none';document.getElementById('quizSection').style.display='block';document.querySelector('.site-header').style.display='flex';showStep(0);window.scrollTo({top:0,behavior:'smooth'})}
 function smoothScroll(e,id){e.preventDefault();document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});const links=document.querySelector('.ln-links');if(links)links.classList.remove('show')}
 function toggleNav(){document.querySelector('.ln-links').classList.toggle('show')}
-function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');document.getElementById('landing').style.display='block';document.getElementById('quizSection').style.display='none';document.querySelector('.site-header').style.display='none';Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
+function restart(){document.getElementById('report').classList.remove('active');document.getElementById('questionnaire').classList.add('active');document.getElementById('landing').style.display='block';document.getElementById('quizSection').style.display='none';document.querySelector('.site-header').style.display='none';document.getElementById('chatFab').classList.remove('show');document.getElementById('chatOv').classList.remove('open');chatTree=null;Object.keys(U).forEach(k=>U[k]=typeof U[k]==='number'?0:'');U.banks=['todos'];document.getElementById('uName').value='';document.getElementById('uAge').value='';document.getElementById('uAmt').value='';document.getElementById('uHz').value='';document.querySelectorAll('.option-card,.bank-chip').forEach(c=>c.classList.remove('selected'));document.querySelector('.bank-chip').classList.add('selected');window.scrollTo({top:0})}
 
 // Counter animation
 (function(){const target=7122600;const el=document.getElementById('heroCounter');if(!el)return;let current=5000000;const step=Math.ceil((target-current)/60);const interval=setInterval(()=>{current+=step;if(current>=target){current=target;clearInterval(interval)}el.textContent='$'+current.toLocaleString('es-CL')},30)})();
@@ -835,5 +871,104 @@ function restart(){document.getElementById('report').classList.remove('active');
 // Scroll reveal observer
 (function(){const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.scroll-reveal').forEach(el=>obs.observe(el))})()
 </script>
+<!-- Chat FAB + Overlay -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()">💬</button>
+<div class="chat-overlay" id="chatOv">
+<div class="chat-box">
+<div class="chat-hdr"><div class="chat-av">i.</div><div class="chat-inf"><div class="chat-nm">Asistente Inverso</div><div class="chat-st">En línea</div></div><button class="chat-cls" onclick="toggleChat()">✕</button></div>
+<div class="chat-msgs" id="cMsgs"></div>
+<div class="chat-btm"><span>Selecciona una opción</span><button class="chat-rst" onclick="initChat()">↻ Reiniciar</button></div>
+</div>
+</div>
+
+<script>
+// Chat assistant
+const cM=document.getElementById('cMsgs');
+const fm=n=>'$'+Math.round(n).toLocaleString('es-CL');
+let chatTree=null;
+
+function buildChatTree(){
+const P={name:U.name||'',amount:U.amount||1000000,risk:U.risk||'moderado',horizon:U.horizon||'medio'};
+const el=getEl(),mt=getBPB(el),b=mt[0];
+const yrs=P.horizon==='corto'?1:P.horizon==='medio'?3:5;
+const pIdeal=P.horizon==='corto'?90:P.horizon==='medio'?180:360;
+let dB=null,dN='';const dBks=Object.keys(DEPOSITS_DATA);
+dBks.forEach(bk=>{const d=DEPOSITS_DATA[bk]?.find(d=>d.plazo===pIdeal&&P.amount>=d.minMonto);if(d&&(!dB||d.tasaAnual>dB.tasaAnual)){dB=d;dN=bk}});
+const pr=b?proj(P.amount,b.rent360,yrs):P.amount;
+const dG=dB?Math.round(P.amount*dB.tasa/100):0;
+
+chatTree={
+start:{bot:['¡Hola '+P.name+'! 👋 Soy el asistente de Inverso.','Ya revisé tu informe: '+fm(P.amount)+' para invertir, perfil '+P.risk+', horizonte '+P.horizon+'.','¿Qué te gustaría saber?'],
+options:[{i:'🎯',t:'¿Cuál es mi mejor opción?',n:'mejor'},{i:'⚠️',t:'¿Puedo perder plata?',n:'riesgo'},{i:'🏦',t:'¿Fondo o depósito a plazo?',n:'fvsd'},{i:'🚀',t:'¿Cómo empiezo a invertir?',n:'empezar'}]},
+
+mejor:{bot:['Tu mejor opción es <strong>'+(b?b.name:'—')+'</strong> ('+(b?CL[b.category]:'—')+').','Rentó <strong>'+(b?'+'+b.rent360.toFixed(2):'0')+'%</strong> en 12 meses. Proyección a '+yrs+' años:',
+'<div class="c-card"><div class="c-cr"><div class="c-cl">Inversión</div><div class="c-cv">'+fm(P.amount)+'</div></div><div class="c-cr"><div class="c-cl">Proyección '+yrs+'a</div><div class="c-cv g">'+fm(pr)+'</div></div><div class="c-cr"><div class="c-cl">Ganancia est.</div><div class="c-cv g">+'+fm(pr-P.amount)+'</div></div></div>',
+'La rentabilidad pasada no garantiza la futura. Es una estimación.'],
+options:[{i:'⚠️',t:'¿Y si el mercado cae?',n:'caida'},{i:'💰',t:'¿Cuánto cobran de comisión?',n:'comision'},{i:'🔄',t:'¿Puedo dividir mi plata?',n:'dividir'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+riesgo:{bot:['Sí, <strong>puedes perder plata</strong>. Los fondos mutuos no tienen garantía estatal.',
+'Con perfil '+P.risk+', tu fondo puede bajar 5-10% en un mes malo:',
+'<div class="c-card"><div class="c-cr"><div class="c-cl">Escenario pesimista (-3%/año)</div><div class="c-cv r">'+fm(P.amount*.97)+'</div></div><div class="c-cr"><div class="c-cl">Pérdida</div><div class="c-cv r">-'+fm(P.amount*.03)+'</div></div></div>',
+'Por eso el horizonte de '+(P.horizon==='corto'?'<1 año':'1-3 años')+' es clave: da tiempo para recuperarse.'],
+options:[{i:'🛡️',t:'¿Cómo me protejo?',n:'proteger'},{i:'🏦',t:'¿Y si pongo todo en DAP?',n:'tododap'},{i:'🎯',t:'¿Cuál es mi mejor opción?',n:'mejor'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+fvsd:{bot:['Buena pregunta. La diferencia clave:',
+'<div class="c-card"><div class="c-cr"><div class="c-cl">Fondo ('+(b?b.name:'—')+')</div><div class="c-cv g">'+(b?'+'+b.rent360.toFixed(2):'0')+'% (variable)</div></div><div class="c-cr"><div class="c-cl">DAP ('+dN+')</div><div class="c-cv a">'+(dB?dB.tasaAnual:0)+'% (fijo)</div></div><div class="c-cr"><div class="c-cl">Garantía estatal</div><div class="c-cv">Solo DAP (FOGADE)</div></div></div>',
+'El fondo renta más pero con riesgo. El DAP es seguro pero renta menos.'],
+options:[{i:'🔄',t:'¿Cómo divido mi plata?',n:'dividir'},{i:'🛡️',t:'¿Qué es FOGADE?',n:'fogade'},{i:'🚀',t:'¿Cómo empiezo?',n:'empezar'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+empezar:{bot:['Para invertir hoy:','<strong>1.</strong> Entra a la web de tu banco<br><strong>2.</strong> Abre cuenta de inversiones (online, gratis)<br><strong>3.</strong> Busca "'+(b?b.name:'')+'"<br><strong>4.</strong> Invierte tu monto','La mayoría procesa en 1-2 días hábiles.'],
+options:[{i:'💰',t:'¿Hay monto mínimo?',n:'minimo'},{i:'🎯',t:'¿Cuál es mi mejor opción?',n:'mejor'},{i:'📊',t:'¿Cuánto debería invertir?',n:'cuanto'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+dividir:{bot:['Con '+fm(P.amount)+', para perfil '+P.risk+':',
+'<div class="c-card"><div class="c-cr"><div class="c-cl">🛡️ DAP (seguro)</div><div class="c-cv g">'+fm(P.amount*.4)+' (40%)</div></div><div class="c-cr"><div class="c-cl">📈 Fondo balanceado</div><div class="c-cv g">'+fm(P.amount*.4)+' (40%)</div></div><div class="c-cr"><div class="c-cl">💧 Money market</div><div class="c-cv g">'+fm(P.amount*.2)+' (20%)</div></div></div>',
+'Money market = liquidez inmediata. DAP = seguridad. Fondo = crecimiento.'],
+options:[{i:'🏦',t:'¿Qué es money market?',n:'mm'},{i:'🚀',t:'¿Cómo empiezo?',n:'empezar'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+caida:{bot:['Si el mercado cae, <strong>no vendas en pánico</strong>. Es el error más común.','Históricamente siempre se recuperan: crisis 2008, COVID 2020... todos en 1-2 años.','Con tu horizonte tienes tiempo. Si te pone nervioso, quizás necesitas un perfil más conservador.'],
+options:[{i:'🔄',t:'¿Divido mi plata?',n:'dividir'},{i:'🛡️',t:'¿Cómo me protejo?',n:'proteger'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+proteger:{bot:['Tres formas de proteger tu inversión:','<strong>1. Diversifica:</strong> No todo en un solo fondo<br><strong>2. Complementa con DAP:</strong> 30-40% como base segura<br><strong>3. Colchón:</strong> 3-6 meses de gastos en money market','La diversificación es tu mejor escudo.'],
+options:[{i:'🔄',t:'¿Cómo divido?',n:'dividir'},{i:'🚀',t:'¿Cómo empiezo?',n:'empezar'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+tododap:{bot:['Podrías, pero dejas rentabilidad en la mesa.',
+'<div class="c-card"><div class="c-cr"><div class="c-cl">Todo DAP ('+(dB?dB.tasaAnual:0)+'%)</div><div class="c-cv a">+'+fm(dG*yrs)+' en '+yrs+'a</div></div><div class="c-cr"><div class="c-cl">Mezcla fondo+DAP</div><div class="c-cv g">+'+fm((pr-P.amount)*.7)+' en '+yrs+'a</div></div></div>',
+'Con horizonte de '+yrs+' años, vale la pena tomar algo de riesgo.'],
+options:[{i:'🔄',t:'¿Cómo divido?',n:'dividir'},{i:'🎯',t:'¿Cuál es mi mejor fondo?',n:'mejor'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+comision:{bot:['Las comisiones (TAC) se descuentan automáticamente. No las pagas aparte.','La rentabilidad que ves ya tiene descontada la comisión.','<strong>Menos TAC = más plata para ti.</strong> Fintual cobra 1.19%. Bancos cobran entre 1% y 4%.'],
+options:[{i:'🎯',t:'¿Mi mejor opción?',n:'mejor'},{i:'🚀',t:'¿Cómo empiezo?',n:'empezar'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+fogade:{bot:['FOGADE = <strong>Garantía Estatal de Depósitos</strong>.','Protege DAP hasta ~200 UF (~$8M) por persona por banco. Si el banco quiebra, el Estado te devuelve.','⚠️ Fondos mutuos <strong>NO</strong> tienen esta garantía.'],
+options:[{i:'🏦',t:'¿Fondo o DAP?',n:'fvsd'},{i:'🚀',t:'¿Cómo empiezo?',n:'empezar'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+mm:{bot:['Money market = fondo de <strong>riesgo mínimo</strong>.','Renta 4-5% anual pero puedes sacar tu plata en 1-2 días. Como una cuenta corriente que renta.','Ideal para fondo de emergencia.'],
+options:[{i:'🚀',t:'¿Cómo empiezo?',n:'empezar'},{i:'🎯',t:'¿Mi mejor fondo?',n:'mejor'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+minimo:{bot:['Depende del banco:',
+'<div class="c-card"><div class="c-cr"><div class="c-cl">Fintual</div><div class="c-cv g">$1</div></div><div class="c-cr"><div class="c-cl">BICE</div><div class="c-cv g">$1</div></div><div class="c-cr"><div class="c-cl">BCI / Banchile</div><div class="c-cv">$1.000</div></div><div class="c-cr"><div class="c-cl">BancoEstado</div><div class="c-cv">$5.000</div></div><div class="c-cr"><div class="c-cl">Scotiabank / Itaú</div><div class="c-cv">$10.000</div></div><div class="c-cr"><div class="c-cl">LarrainVial</div><div class="c-cv">$100.000</div></div></div>',
+'Con tus '+fm(P.amount)+' no tendrás problema.'],
+options:[{i:'🚀',t:'¿Cómo empiezo?',n:'empezar'},{i:'←',t:'Volver al inicio',n:'start'}]},
+
+cuanto:{bot:['Regla: <strong>invierte solo plata que no necesites pronto</strong>.','Antes: cero deudas caras (tarjetas), 3-6 meses de gastos guardados. El resto sí va a inversión.','Con '+fm(P.amount)+', si cumples eso, podrías invertir todo.'],
+options:[{i:'🔄',t:'¿Cómo divido?',n:'dividir'},{i:'🎯',t:'¿Mi mejor opción?',n:'mejor'},{i:'←',t:'Volver al inicio',n:'start'}]}
+}}
+
+function cAddBot(t){const d=document.createElement('div');d.className='c-msg c-bot';d.innerHTML=t.replace(/\n/g,'<br>');cM.appendChild(d)}
+function cAddUsr(t){const d=document.createElement('div');d.className='c-msg c-usr';d.textContent=t;cM.appendChild(d)}
+function cAddOpts(opts){const d=document.createElement('div');d.className='c-opts';
+opts.forEach(o=>{const b=document.createElement('button');b.className='c-opt';b.innerHTML='<span class="c-oi">'+o.i+'</span>'+o.t;
+b.onclick=()=>{d.querySelectorAll('.c-opt').forEach(x=>x.classList.add('off'));cAddUsr(o.t);cM.scrollTop=cM.scrollHeight;setTimeout(()=>cShowNode(o.n),400)};d.appendChild(b)});
+cM.appendChild(d);cM.scrollTop=cM.scrollHeight}
+function cTypeThen(cb){const t=document.createElement('div');t.className='c-typing';t.innerHTML='<span></span><span></span><span></span>';cM.appendChild(t);cM.scrollTop=cM.scrollHeight;setTimeout(()=>{t.remove();cb()},800)}
+function cShowNode(id){const node=chatTree[id];if(!node)return;let i=0;
+(function next(){if(i<node.bot.length){cTypeThen(()=>{cAddBot(node.bot[i]);cM.scrollTop=cM.scrollHeight;i++;if(i<node.bot.length)setTimeout(next,250);else setTimeout(()=>{cAddOpts(node.options);cM.scrollTop=cM.scrollHeight},350)})}})()}
+
+function initChat(){cM.innerHTML='';buildChatTree();cShowNode('start')}
+function toggleChat(){const o=document.getElementById('chatOv'),f=document.getElementById('chatFab');
+if(o.classList.contains('open')){o.classList.remove('open');f.style.display='flex'}else{o.classList.add('open');f.style.display='none';if(!chatTree)initChat()}}
+function showChatFab(){document.getElementById('chatFab').classList.add('show')}
+</script>
+
 </body>
 </html>
