@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://inverso-ten.vercel.app/sitemap.xml
