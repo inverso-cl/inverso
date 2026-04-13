@@ -994,7 +994,7 @@ function cShowNode(id){const node=chatTree[id];if(!node)return;let i=0;
 function initChat(){cM.innerHTML='';buildChatTree();cShowNode('start')}
 function toggleChat(){const o=document.getElementById('chatOv'),f=document.getElementById('chatFab');document.getElementById('chatTip').classList.remove('show');
 if(o.classList.contains('open')){o.classList.remove('open');f.style.display='flex'}else{o.classList.add('open');f.style.display='none';if(!chatTree)initChat()}}
-function showChatFab(){document.getElementById('chatFab').classList.add('show');setTimeout(()=>{document.getElementById('chatTip').classList.add('show');setTimeout(()=>{document.getElementById('chatTip').classList.remove('show')},5000)},1500)}
+function showChatFab(){document.getElementById('chatFab').classList.add('show');setTimeout(()=>{document.getElementById('chatTip').classList.add('show')},1500)}
 </script>
 
 </body>
